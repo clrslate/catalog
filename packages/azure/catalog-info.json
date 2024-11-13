@@ -3,7 +3,7 @@
   "displayName": "Azure",
   "description": "Azure services",
   "color": "#0080FF",
-  "icon": "https://portal.azure.com/Content/favicon.ico",
+  "icon": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg",
   "catalogItems": [
     {
       "id": "Azure.Aks.Create",

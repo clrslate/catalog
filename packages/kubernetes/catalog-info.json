@@ -3,7 +3,7 @@
   "displayName": "Kubernetes",
   "description": "Basic building blocks for working with Kubernetes",
   "color": "#326CE5",
-  "icon": "https://avatars.githubusercontent.com/u/13629408",
+  "icon": "https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg",
   "catalogItems": [
     {
       "id": "kubernetes.kubectl.script.remote",
