@@ -1,0 +1,93 @@
+{
+  "name": "kubernetes",
+  "displayName": "Kubernetes",
+  "description": "Basic building blocks for working with Kubernetes",
+  "color": "#326CE5",
+  "icon": "https://avatars.githubusercontent.com/u/13629408",
+  "catalogItems": [
+    {
+      "id": "kubernetes.kubectl.script.remote",
+      "displayName": "Kubectl Script Remote",
+      "description": "Apply kubectl script on a remote kubernetes cluster. Currently only supporting Azure AKS",
+      "parameterDefinitions": [
+        {
+          "name": "script",
+          "description": "kubectl script to execute",
+          "defaultValue": "kubectl get nodes"
+        },
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        }
+      ],
+      "activityType": "Console"
+    },
+    {
+      "id": "kubernetes.helm.deploy.remote",
+      "displayName": "Helm Upgrade/Install",
+      "description": "Deploy helm chart on a Remote kubernetes Cluster",
+      "parameterDefinitions": [
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "helmRepo",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "chartName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseVersion",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseNamespace",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "values",
+          "description": null,
+          "defaultValue": null
+        }
+      ],
+      "activityType": "Console"
+    },
+    {
+      "id": "kubernetes.helm.delete.remote",
+      "displayName": "Helm Delete",
+      "description": "Delete helm chart from a Remote kubernetes Cluster",
+      "activityType": "Console",
+      "parameterDefinitions": [
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseNamespace",
+          "description": null,
+          "defaultValue": null
+        }
+      ]
+    }
+  ]
+}
