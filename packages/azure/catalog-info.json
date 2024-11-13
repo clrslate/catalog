@@ -2,8 +2,9 @@
   "name": "azure",
   "displayName": "Azure",
   "description": "Azure services",
-  "catalogItems":[
+  "catalogItems": [
     {
+      "id": "Azure.Aks.Create",
       "displayName": "Create Azure AKS cluster",
       "description": "Create an Azure AKS cluster",
       "parameterDefinitions": [
@@ -44,10 +45,15 @@
         }
       ],
       "resultDefinitions": [],
-      "pipelineName": "azure-aks-create",
-      "id": "Azure.Aks.Create"
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "azure-aks-create"
+        }
+      },
+      "activityType": "TektonPipeline"
     },
     {
+      "id": "Azure.Aks.Delete",
       "displayName": "Delete Azure AKS cluster",
       "description": "Delete an Azure AKS cluster",
       "parameterDefinitions": [
@@ -67,11 +73,15 @@
           "defaultValue": "az-credentials"
         }
       ],
-      "resultDefinitions": [],
-      "pipelineName": "azure-aks-delete",
-      "id": "Azure.Aks.Delete"
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "azure-aks-delete"
+        }
+      },
+      "activityType": "TektonPipeline"
     },
     {
+      "id": "Azure.Aks.Delete",
       "displayName": "Kubectl Script",
       "description": "Apply kubectl script on Azure AKS Cluster",
       "parameterDefinitions": [
@@ -97,10 +107,15 @@
         }
       ],
       "resultDefinitions": [],
-      "pipelineName": "azure-aks-delete",
-      "id": "Azure.Aks.Delete"
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "azure-aks-delete"
+        }
+      },
+      "activityType": "TektonPipeline"
     },
     {
+      "id": "Azure.Aks.Helm.Deploy",
       "displayName": "Helm Deploy",
       "description": "Deploy helm chart on Azure AKS Cluster",
       "parameterDefinitions": [
@@ -151,8 +166,58 @@
         }
       ],
       "resultDefinitions": [],
-      "pipelineName": "azure-aks-helm-deploy",
-      "id": "Azure.Aks.Helm.Deploy"
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "azure-aks-helm-deploy"
+        }
+      },
+      "activityType": "TektonPipeline"
+    },
+    {
+      "id": "Azure.Aks.Start",
+      "displayName": "Start AKS",
+      "description": "Start an Azure AKS cluster",
+      "parameterDefinitions": [
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "resourceGroup",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "azCredentialRef",
+          "description": "Name of Azure credential to use",
+          "defaultValue": "az-credentials"
+        }
+      ],
+      "activityType": "Console"
+    },
+    {
+      "id": "Azure.Aks.Stop",
+      "displayName": "Stop AKS",
+      "description": "Stop an Azure AKS cluster",
+      "parameterDefinitions": [
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "resourceGroup",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "azCredentialRef",
+          "description": "Name of Azure credential to use",
+          "defaultValue": "az-credentials"
+        }
+      ],
+      "activityType": "Console"
     }
   ]
 }
