@@ -1,0 +1,44 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: azure-aks-login
+  labels:
+    app.kubernetes.io/version: "0.1"
+  annotations:
+    tekton.dev/pipelines.minVersion: "0.12.1"
+    tekton.dev/categories: CLI
+    tekton.dev/tags: cli
+    tekton.dev/displayName: "Login to Azure AKS"
+    tekton.dev/platforms: "linux/amd64"
+spec:
+  workspaces:
+    - name: shared-workspace
+  description: >-
+    This task logs in to an Azure Kubernetes Service (AKS) cluster and sets up the kubeconfig file to be used by subsequent tasks.
+  params:
+  - name: azImage
+    description: Azure CLI container image to run this task
+    default: mcr.microsoft.com/azure-cli:2.9.1
+  - name: azCredentialRef
+    description: Azure credentials to use for the az command
+    type: string
+    default: "az-credentials"
+  - name: clusterName
+    description: Azure Kubernetes Service cluster name
+    type: string
+  - name: resourceGroup
+    description: Azure resource group name
+    type: string
+  steps:
+  - name: az
+    image: "$(params.azImage)"
+    script: |
+      echo "az login --service-principal -u ${clientId} -p ${clientSecret} --tenant ${tenantId}"
+      az login --service-principal -u ${clientId} -p ${clientSecret} --tenant ${tenantId}
+      az account set --subscription=${subscriptionId}
+      az aks get-credentials --name $(params.clusterName) --resource-group $(params.resourceGroup) --overwrite-existing --file /workspace/shared-workspace/azure/$(params.clusterName)/kubeconfig
+      chmod 644 /workspace/shared-workspace/azure/$(params.clusterName)/kubeconfig
+    envFrom:
+    - secretRef:
+        name: az-credentials
+      

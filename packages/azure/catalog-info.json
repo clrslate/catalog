@@ -1,0 +1,158 @@
+{
+  "name": "azure",
+  "displayName": "Azure",
+  "description": "Azure services",
+  "catalogItems":[
+    {
+      "displayName": "Create Azure AKS cluster",
+      "description": "Create an Azure AKS cluster",
+      "parameterDefinitions": [
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "resourceGroup",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "azCredentialRef",
+          "description": "Name of Azure credential to use",
+          "defaultValue": "az-credentials"
+        },
+        {
+          "name": "location",
+          "description": "Cluster location",
+          "defaultValue": "CentralIndia"
+        },
+        {
+          "name": "nodeCount",
+          "description": "Number of nodes in system NodeGroup",
+          "defaultValue": "1"
+        },
+        {
+          "name": "nodeVmSize",
+          "description": "Node VM size to use for System NodeGroup",
+          "defaultValue": "Standard_DS2_v2"
+        },
+        {
+          "name": "kubernetesVersion",
+          "description": "Kubernetes version to use",
+          "defaultValue": "1.29.4"
+        }
+      ],
+      "resultDefinitions": [],
+      "pipelineName": "azure-aks-create",
+      "id": "Azure.Aks.Create"
+    },
+    {
+      "displayName": "Delete Azure AKS cluster",
+      "description": "Delete an Azure AKS cluster",
+      "parameterDefinitions": [
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "resourceGroup",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "azCredentialRef",
+          "description": "Name of Azure credential to use",
+          "defaultValue": "az-credentials"
+        }
+      ],
+      "resultDefinitions": [],
+      "pipelineName": "azure-aks-delete",
+      "id": "Azure.Aks.Delete"
+    },
+    {
+      "displayName": "Kubectl Script",
+      "description": "Apply kubectl script on Azure AKS Cluster",
+      "parameterDefinitions": [
+        {
+          "name": "script",
+          "description": "kubectl script to execute",
+          "defaultValue": "kubectl get nodes"
+        },
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "resourceGroup",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "azCredentialRef",
+          "description": "Name of Azure credential to use",
+          "defaultValue": "az-credentials"
+        }
+      ],
+      "resultDefinitions": [],
+      "pipelineName": "azure-aks-delete",
+      "id": "Azure.Aks.Delete"
+    },
+    {
+      "displayName": "Helm Deploy",
+      "description": "Deploy helm chart on Azure AKS Cluster",
+      "parameterDefinitions": [
+        {
+          "name": "clusterName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "resourceGroup",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "helmRepo",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "chartName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseVersion",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseName",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "releaseNamespace",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "values",
+          "description": null,
+          "defaultValue": null
+        },
+        {
+          "name": "azCredentialRef",
+          "description": "Name of Azure credential to use",
+          "defaultValue": "az-credentials"
+        }
+      ],
+      "resultDefinitions": [],
+      "pipelineName": "azure-aks-helm-deploy",
+      "id": "Azure.Aks.Helm.Deploy"
+    }
+  ]
+}

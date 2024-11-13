@@ -1,0 +1,66 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: azure-aks-helm-deploy
+spec:
+  workspaces:
+    - name: shared-workspace
+  params:
+    - name: azCredentialRef
+      description: Name of Azure credential to use
+      type: string
+      default: "az-credentials"
+    - name: resourceGroup
+      type: string
+    - name: clusterName
+      type: string
+    - name: helmRepo
+      description: "Specify a specific helm repo"
+    - name: chartName
+      description: "Specify chart name that will be deployed"
+    - name: releaseVersion
+      description: The helm release version in semantic versioning format
+      default: "v1.0.0"
+    - name: releaseName
+      description: The helm release name
+      default: "helm-release"
+    - name: releaseNamespace
+      description: The helm release namespace
+      default: ""
+    - name: values
+      description: "Specify the values you want to overwrite, comma separated: autoscaling.enabled=true,replicas=1"
+      default: ""
+  tasks:
+  - name: aks-login
+    description: "Login to Azure AKS"
+    workspaces:
+    - name: shared-workspace
+      workspace: shared-workspace
+    taskRef:
+      name: azure-aks-login
+    params:
+    - name: azCredentialRef
+      value: $(params.azCredentialRef)
+    - name: resourceGroup
+      value: $(params.resourceGroup)
+    - name: clusterName
+      value: $(params.clusterName)
+  - name: deploy-helm
+    runAfter:
+      - aks-login
+    workspaces:
+    - name: shared-workspace
+      workspace: shared-workspace
+    taskSpec:
+      steps:
+      - name: deploy-helm
+        image: bitnami/kubectl
+        script: |
+          #!/usr/bin/env bash
+
+          [[ "$(workspaces.shared-workspace.bound)" == "true" ]] && \
+          [[ -f /workspace/shared-workspace/azure/$(params.clusterName)/kubeconfig ]] && \
+          export KUBECONFIG=/workspace/shared-workspace/azure/$(params.clusterName)/kubeconfig
+
+          kubectl get nodes
+    

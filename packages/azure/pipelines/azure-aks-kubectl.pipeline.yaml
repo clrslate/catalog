@@ -1,0 +1,54 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: azure-aks-kubectl
+spec:
+  workspaces:
+    - name: shared-workspace
+  params:
+    - name: azCredentialRef
+      description: Name of Azure credential to use
+      type: string
+      default: "az-credentials"
+    - name: resourceGroup
+      type: string
+    - name: clusterName
+      type: string
+    - name: script
+      description: The Kubernetes CLI script to run
+      type: string
+      default: "kubectl $@"
+  tasks:
+  - name: aks-login
+    description: "Login to Azure AKS"
+    workspaces:
+    - name: shared-workspace
+      workspace: shared-workspace
+    taskRef:
+      name: azure-aks-login
+    params:
+    - name: azCredentialRef
+      value: $(params.azCredentialRef)
+    - name: resourceGroup
+      value: $(params.resourceGroup)
+    - name: clusterName
+      value: $(params.clusterName)
+  - name: deploy-helm
+    runAfter:
+      - aks-login
+    workspaces:
+    - name: shared-workspace
+      workspace: shared-workspace
+    taskSpec:
+      steps:
+      - name: deploy-helm
+        image: bitnami/kubectl
+        script: |
+          #!/usr/bin/env bash
+
+          [[ "$(workspaces.shared-workspace.bound)" == "true" ]] && \
+          [[ -f /workspace/shared-workspace/azure/$(params.clusterName)/kubeconfig ]] && \
+          export KUBECONFIG=/workspace/shared-workspace/azure/$(params.clusterName)/kubeconfig
+
+          $(params.script)
+    

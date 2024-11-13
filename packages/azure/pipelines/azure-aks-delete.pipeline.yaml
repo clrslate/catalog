@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: azure-aks-delete
+spec:
+  params:
+    - name: azCredentialRef
+      description: Name of Azure credential to use
+      type: string
+      default: "az-credentials"
+    - name: resourceGroup
+      type: string
+    - name: clusterName
+      type: string
+  tasks:
+  - name: az-aks-delete
+    taskSpec:
+      steps:
+      - name: delete-cluster
+        image: mcr.microsoft.com/azure-cli:2.9.1
+        script: |
+          echo "Deleting resource group $(params.resourceGroup)"
+          echo "Deleting cluster $(params.clusterName)"

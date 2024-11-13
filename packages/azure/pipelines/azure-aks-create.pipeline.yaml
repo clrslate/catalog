@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: azure-aks-create
+spec:
+  params:
+    - name: azCredentialRef
+      description: Name of Azure credential to use
+      type: string
+      default: "az-credentials"
+    - name: resourceGroup
+      type: string
+    - name: clusterName
+      type: string
+    - name: location
+      type: string
+    - name: nodeCount
+      type: string
+      description: Number of nodes in the node pool
+      default: "1"
+    - name: nodeVmSize
+      type: string
+      description: Size of the VMs in the node pool
+      default: "Standard_DS2_v2"
+    - name: kubernetesVersion
+      type: string
+      description: Version of Kubernetes to use
+      default: "1.29.4"
+  tasks:
+  - name: az-aks-create
+    taskSpec:
+      steps:
+      - name: create-cluster
+        image: mcr.microsoft.com/azure-cli:2.9.1
+        script: |
+          echo "Creating resource group $(params.resourceGroup)"
+          echo "Creating cluster $(params.clusterName)"
+

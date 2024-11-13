@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: aks-deploy-helm-
+spec:
+  pipelineRef:
+    name: azure-aks-helm-deploy
+  workspaces:
+    - name: shared-workspace
+      persistentVolumeClaim:
+        claimName: shared-workspace-pvc
+  params:
+    - name: resourceGroup
+      value: rg-clrslate-net-aks
+    - name: clusterName
+      value: clrslate-net-aks
+
+
