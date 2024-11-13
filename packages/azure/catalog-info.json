@@ -5,8 +5,8 @@
   "catalogItems": [
     {
       "id": "Azure.Aks.Create",
-      "displayName": "Create Azure AKS cluster",
-      "description": "Create an Azure AKS cluster",
+      "displayName": "Create AKS cluster",
+      "description": "Create a new Azure AKS cluster",
       "parameterDefinitions": [
         {
           "name": "clusterName",
@@ -54,8 +54,8 @@
     },
     {
       "id": "Azure.Aks.Delete",
-      "displayName": "Delete Azure AKS cluster",
-      "description": "Delete an Azure AKS cluster",
+      "displayName": "Delete AKS cluster",
+      "description": "Delete an existing Azure AKS cluster",
       "parameterDefinitions": [
         {
           "name": "clusterName",
@@ -81,7 +81,7 @@
       "activityType": "TektonPipeline"
     },
     {
-      "id": "Azure.Aks.Delete",
+      "id": "Azure.Aks.Script",
       "displayName": "Kubectl Script",
       "description": "Apply kubectl script on Azure AKS Cluster",
       "parameterDefinitions": [
@@ -109,7 +109,7 @@
       "resultDefinitions": [],
       "config": {
         "pipelineConfig": {
-          "pipelineName": "azure-aks-delete"
+          "pipelineName": "azure-aks-kubectl"
         }
       },
       "activityType": "TektonPipeline"
@@ -176,7 +176,7 @@
     {
       "id": "Azure.Aks.Start",
       "displayName": "Start AKS",
-      "description": "Start an Azure AKS cluster",
+      "description": "Start an Azure AKS cluster if it is not already running",
       "parameterDefinitions": [
         {
           "name": "clusterName",
@@ -199,7 +199,7 @@
     {
       "id": "Azure.Aks.Stop",
       "displayName": "Stop AKS",
-      "description": "Stop an Azure AKS cluster",
+      "description": "Stop an Azure AKS cluster if it is running",
       "parameterDefinitions": [
         {
           "name": "clusterName",
