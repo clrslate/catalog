@@ -2,11 +2,14 @@
   "name": "azure",
   "displayName": "Azure",
   "description": "Azure services",
+  "color": "#0080FF",
+  "icon": "https://portal.azure.com/Content/favicon.ico",
   "catalogItems": [
     {
       "id": "Azure.Aks.Create",
       "displayName": "Create AKS cluster",
       "description": "Create a new Azure AKS cluster",
+      "icon": "https://code.benco.io/icon-collection/azure-icons/Kubernetes-Services.svg",
       "parameterDefinitions": [
         {
           "name": "clusterName",
@@ -56,6 +59,8 @@
       "id": "Azure.Aks.Delete",
       "displayName": "Delete AKS cluster",
       "description": "Delete an existing Azure AKS cluster",
+      "icon": "https://code.benco.io/icon-collection/azure-icons/Kubernetes-Services.svg",
+      "color": "#FF0000",
       "parameterDefinitions": [
         {
           "name": "clusterName",
