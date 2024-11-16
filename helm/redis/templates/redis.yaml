@@ -1,9 +1,8 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: "{{ .Release.Name }}"
 spec:
-  serviceName: "{{ .Release.Name }}"
   replicas: 1
   selector:
     matchLabels:
@@ -19,8 +18,3 @@ spec:
           ports:
             - name: "{{ .Chart.Name }}"
               containerPort: {{ .Values.port }}
-          env:
-          - name: "MONGODB_USERNAME"
-            value: "{{ .Values.defaultUser.userName }}"
-          - name: "MONGODB_PASSWORD"
-            value: "{{ .Values.defaultUser.password }}"

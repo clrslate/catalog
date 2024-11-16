@@ -17,10 +17,9 @@ spec:
         - image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: "{{ .Release.Name }}"
           ports:
-            - name: "{{ .Chart.Name }}"
-              containerPort: {{ .Values.port }}
-          env:
-          - name: "MONGODB_USERNAME"
-            value: "{{ .Values.defaultUser.userName }}"
-          - name: "MONGODB_PASSWORD"
-            value: "{{ .Values.defaultUser.password }}"
+            - name: "http"
+              protocol: TCP
+              containerPort: {{ .Values.ports.http }}
+            - name: "amqp"
+              protocol: TCP
+              containerPort: {{ .Values.ports.amqp }}
