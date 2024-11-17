@@ -3,13 +3,13 @@
   "displayName": "Azure",
   "description": "Azure services",
   "color": "#0080FF",
-  "icon": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg",
+  "icon": "https://localhost:7267/icons/azure.svg",
   "catalogItems": [
     {
       "id": "Azure.Aks.Create",
       "displayName": "Create AKS cluster",
       "description": "Create a new Azure AKS cluster",
-      "icon": "https://code.benco.io/icon-collection/azure-icons/Kubernetes-Services.svg",
+      "icon": "https://localhost:7267/icons/azure-kubernetes.svg",
       "parameterDefinitions": [
         {
           "name": "clusterName",
@@ -47,7 +47,6 @@
           "defaultValue": "1.29.4"
         }
       ],
-      "resultDefinitions": [],
       "config": {
         "pipelineConfig": {
           "pipelineName": "azure-aks-create"
@@ -59,7 +58,7 @@
       "id": "Azure.Aks.Delete",
       "displayName": "Delete AKS cluster",
       "description": "Delete an existing Azure AKS cluster",
-      "icon": "https://code.benco.io/icon-collection/azure-icons/Kubernetes-Services.svg",
+      "icon": "https://localhost:7267/icons/azure-kubernetes.svg",
       "color": "#FF0000",
       "parameterDefinitions": [
         {
@@ -111,7 +110,6 @@
           "defaultValue": "az-credentials"
         }
       ],
-      "resultDefinitions": [],
       "config": {
         "pipelineConfig": {
           "pipelineName": "azure-aks-kubectl"
@@ -170,7 +168,6 @@
           "defaultValue": "az-credentials"
         }
       ],
-      "resultDefinitions": [],
       "config": {
         "pipelineConfig": {
           "pipelineName": "azure-aks-helm-deploy"

@@ -3,7 +3,7 @@
   "displayName": "Kubernetes",
   "description": "Basic building blocks for working with Kubernetes",
   "color": "#326CE5",
-  "icon": "https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg",
+  "icon": "https://localhost:7267/icons/kubernetes.svg",
   "catalogItems": [
     {
       "id": "kubernetes.kubectl.script.remote",
@@ -14,14 +14,18 @@
           "name": "script",
           "description": "kubectl script to execute",
           "defaultValue": "kubectl get nodes"
-        },
-        {
-          "name": "clusterName",
-          "description": null,
-          "defaultValue": null
         }
       ],
-      "activityType": "Console"
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "k8s-kubectl-script",
+          "parameters": {
+            "script": "{{script}}"
+          },
+          "serviceAccount": "kubernetes-actions-account"
+        }
+      },
+      "activityType": "TektonPipeline"
     },
     {
       "id": "kubernetes.helm.deploy.remote",
@@ -88,6 +92,28 @@
           "defaultValue": null
         }
       ]
+    },
+    {
+      "id": "kubernetes.namespace.create",
+      "displayName": "Create Namespace",
+      "description": "Create a namespace on a remote Kubernetes cluster",
+      "activityType": "TektonPipeline",
+      "parameterDefinitions": [
+        {
+          "name": "namespace",
+          "description": "Namespace to create",
+          "defaultValue": null
+        }
+      ],
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "k8s-kubectl-script",
+          "parameters": {
+            "script": "kubectl create namespace {{namespace}} --dry-run=client -o yaml | kubectl apply -f -"
+          },
+          "serviceAccount": "kubernetes-actions-account"
+        }
+      }
     }
   ]
 }

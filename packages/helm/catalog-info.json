@@ -1,0 +1,114 @@
+{
+  "name": "helm",
+  "displayName": "Helm",
+  "description": "Building blocks for working with helm",
+  "color": "#326CE5",
+  "icon": "https://localhost:7267/icons/helm.svg",
+  "catalogItems": [
+    {
+      "id": "helm.deploy.mongodb",
+      "displayName": "Deploy MongoDB",
+      "description": "Deploy MongoDB using Helm",
+      "activityType": "TektonPipeline",
+      "parameterDefinitions": [
+        {
+          "name": "releaseName",
+          "description": "Name of the release",
+          "defaultValue": "mongodb"
+        },
+        {
+          "name": "namespace",
+          "description": "Namespace to deploy the MongoDB",
+          "defaultValue": "default"
+        }
+      ],
+      "resultDefinitions":{
+        "connectionString":{
+          "description": "MongoDb connection string",
+          "template": "mongodb://{{releaseName}}:27017"
+        }
+      },
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "helm-install-upgrade",
+          "parameters": {
+            "githubUrl": "https://github.com/clrslate/catalog",
+            "chartsDir": "helm/mongodb",
+            "releaseName": "{{releaseName}}",
+            "namespace": "{{namespace}}"
+          },
+          "serviceAccount": "kubernetes-actions-account",
+          "persistentVolumeClaim":{
+            "shared-workspace":"shared-workspace-pvc"
+          }
+        }
+      }
+    },
+    {
+      "id": "helm.deploy.rabbitmq",
+      "displayName": "Deploy RabbitMq",
+      "description": "Deploy RabbitMq using Helm",
+      "activityType": "TektonPipeline",
+      "parameterDefinitions": [
+        {
+          "name": "releaseName",
+          "description": "Name of the release",
+          "defaultValue": "rabbitmq"
+        },
+        {
+          "name": "namespace",
+          "description": "Namespace to deploy the RabbitMq",
+          "defaultValue": "default"
+        }
+      ],
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "helm-install-upgrade",
+          "parameters": {
+            "githubUrl": "https://github.com/clrslate/catalog",
+            "chartsDir": "helm/rabbitmq",
+            "releaseName": "{{releaseName}}",
+            "namespace": "{{namespace}}"
+          },
+          "serviceAccount": "kubernetes-actions-account",
+          "persistentVolumeClaim":{
+            "shared-workspace":"shared-workspace-pvc"
+          }
+        }
+      }
+    },
+    {
+      "id": "helm.deploy.redis",
+      "displayName": "Deploy Redis",
+      "description": "Deploy Redis using Helm",
+      "activityType": "TektonPipeline",
+      "parameterDefinitions": [
+        {
+          "name": "releaseName",
+          "description": "Name of the release",
+          "defaultValue": "redis"
+        },
+        {
+          "name": "namespace",
+          "description": "Namespace to deploy the Redis",
+          "defaultValue": "default"
+        }
+      ],
+      "config": {
+        "pipelineConfig": {
+          "pipelineName": "helm-install-upgrade",
+          "parameters": {
+            "githubUrl": "https://github.com/clrslate/catalog",
+            "chartsDir": "helm/redis",
+            "releaseName": "{{releaseName}}",
+            "namespace": "{{namespace}}"
+          },
+          "serviceAccount": "kubernetes-actions-account",
+          "persistentVolumeClaim":{
+            "shared-workspace":"shared-workspace-pvc"
+          }
+        }
+      }
+    }
+  ]
+}
