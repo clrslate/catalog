@@ -3,13 +3,13 @@
   "displayName": "Azure",
   "description": "Azure services",
   "color": "#0080FF",
-  "icon": "https://localhost:7267/icons/azure.svg",
+  "icon": "https://raw.githubusercontent.com/clrslate/catalog/refs/heads/main/icons/azure.svg",
   "catalogItems": [
     {
       "id": "Azure.Aks.Create",
       "displayName": "Create AKS cluster",
       "description": "Create a new Azure AKS cluster",
-      "icon": "https://localhost:7267/icons/azure-kubernetes.svg",
+      "icon": "https://raw.githubusercontent.com/clrslate/catalog/refs/heads/main/icons/azure-kubernetes.svg",
       "parameterDefinitions": [
         {
           "name": "clusterName",
@@ -58,7 +58,7 @@
       "id": "Azure.Aks.Delete",
       "displayName": "Delete AKS cluster",
       "description": "Delete an existing Azure AKS cluster",
-      "icon": "https://localhost:7267/icons/azure-kubernetes.svg",
+      "icon": "https://raw.githubusercontent.com/clrslate/catalog/refs/heads/main/icons/azure-kubernetes.svg",
       "color": "#FF0000",
       "parameterDefinitions": [
         {

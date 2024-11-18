@@ -3,7 +3,7 @@
   "displayName": "Helm",
   "description": "Building blocks for working with helm",
   "color": "#326CE5",
-  "icon": "https://localhost:7267/icons/helm.svg",
+  "icon": "https://raw.githubusercontent.com/clrslate/catalog/refs/heads/main/icons/helm.svg",
   "catalogItems": [
     {
       "id": "helm.deploy.mongodb",
