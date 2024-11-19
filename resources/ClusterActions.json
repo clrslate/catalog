@@ -1,0 +1,60 @@
+[
+  {
+    "identifier": "create_aks_cluster",
+    "title": "Create an Azure AKS cluster",
+    "description": "automation description",
+    "trigger": {
+      "resourceType": "cluster",
+      "instenceType": "collection",
+      "userInputs": {
+        "properties": {
+          "cluster_name": {
+            "title": "Cluster Name",
+            "description": "The name of the AKS Cluster",
+            "type": "string"
+          },
+          "region": {
+            "type": "enum",
+            "title": "Region",
+            "description": "The region in which the AKS cluster should be created",
+            "enum": [
+              "Central India",
+              "East US",
+              "West US"
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "identifier": "start_cluster",
+    "title": "Start cluster",
+    "description": "Start Cluster if it is not-running", 
+    "trigger": {
+      "resourceType": "cluster",
+      "instenceType": "instance",
+      "userInputs": { }
+    }
+  },
+  {
+    "identifier": "stop_cluster",
+    "title": "Stop cluster",
+    "description": "Stop Cluster if it is running", 
+    "trigger": {
+      "resourceType": "cluster",
+      "instenceType": "instance",
+      "userInputs": { }
+    }
+  },
+  {
+    "identifier": "delete_cluster",
+    "title": "Delete cluster",
+    "description": "Delete Cluster",
+    "trigger": {
+      "resourceType": "cluster",
+      "instenceType": "instance",
+      "userInputs": { }
+    }
+  }
+]

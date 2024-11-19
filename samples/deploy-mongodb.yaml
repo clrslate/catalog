@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: install-mongodb-
+spec:
+  serviceAccountName: kubernetes-actions-account
+  pipelineRef:
+    name: helm-install-upgrade
+  params:
+    - name: githubUrl
+      value: https://github.com/clrslate/catalog
+    - name: chartsDir
+      value: helm/mongodb
+    - name: releaseName
+      value: mongodb
+    - name: values
+      value: "password=secretpassword"
+    - name: namespace
+      value: photokrafters
+  workspaces:
+    - name: shared-workspace
+      persistentvolumeclaim:
+        claimName: shared-workspace-pvc

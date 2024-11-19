@@ -1,0 +1,55 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: helm-install-upgrade
+spec:
+  params:
+    - name: githubUrl
+      description: github repo url to clone
+      type: string
+    - name: chartsDir
+      description: charts directory
+      type: string
+    - name: releaseName
+      description: helm release name
+      type: string
+    - name: values
+      description: values to overwrite
+      type: string
+      default: ""
+    - name: namespace
+      description: namespace to install the chart
+      type: string
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: fetch-repository
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: $(params.githubUrl)
+        - name: subdirectory
+          value: $(context.pipelineRun.name)
+        - name: deleteExisting
+          value: "true"
+    - name: helm-upgrade-from-source
+      taskRef:
+        name: helm-upgrade-from-source
+      runAfter:
+        - fetch-repository
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: charts_dir
+          value: $(context.pipelineRun.name)/$(params.chartsDir)
+        - name: release_name
+          value: $(params.releaseName)
+        - name: overwrite_values
+          value: $(params.values)
+        - name: release_namespace
+          value: $(params.namespace)

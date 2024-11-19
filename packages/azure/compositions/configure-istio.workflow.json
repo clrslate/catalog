@@ -1,0 +1,420 @@
+{
+  "$schema": "https://elsaworkflows.io/schemas/workflow-definition/v3.0.0/schema.json",
+  "id": "c7c20d64d261ff97",
+  "definitionId": "ad84d99358a48c63",
+  "name": "Configure Istio",
+  "description": "Setup Istio on the target cluster",
+  "createdAt": "2024-11-11T22:53:16.6635071\u002B00:00",
+  "version": 3,
+  "toolVersion": "3.2.0.0",
+  "variables": [
+    {
+      "id": "65d361b5f5b88fbb",
+      "name": "istioVersion",
+      "typeName": "String",
+      "isArray": false,
+      "value": "1.22.0",
+      "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowInstanceStorageDriver, Elsa.Workflows.Core"
+    },
+    {
+      "id": "ebcf853fe1a2d5e9",
+      "name": "helmRepo",
+      "typeName": "String",
+      "isArray": false,
+      "value": "https://istio-release.storage.googleapis.com/charts",
+      "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowInstanceStorageDriver, Elsa.Workflows.Core"
+    },
+    {
+      "id": "d64954fe94f06a7",
+      "name": "istioNamespace",
+      "typeName": "String",
+      "isArray": false,
+      "value": "istio-system",
+      "storageDriverTypeName": "Elsa.Workflows.Services.WorkflowInstanceStorageDriver, Elsa.Workflows.Core"
+    }
+  ],
+  "inputs": [
+    {
+      "uiHint": "singleline",
+      "storageDriverType": "Elsa.Workflows.Services.WorkflowInstanceStorageDriver, Elsa.Workflows.Core",
+      "type": "String",
+      "name": "clusterName",
+      "displayName": "Cluster Name",
+      "description": "Name of the cluster where you want to deploy Istio",
+      "category": "Primitives",
+      "isArray": false
+    },
+    {
+      "uiHint": "singleline",
+      "storageDriverType": "Elsa.Workflows.Services.WorkflowInstanceStorageDriver, Elsa.Workflows.Core",
+      "type": "String",
+      "name": "resourceGroup",
+      "displayName": "Resource Group",
+      "description": "Resource Group for the target Cluster",
+      "category": "Primitives",
+      "isArray": false
+    }
+  ],
+  "outputs": [],
+  "outcomes": [],
+  "customProperties": {},
+  "isReadonly": false,
+  "isSystem": false,
+  "isLatest": true,
+  "isPublished": true,
+  "options": {
+    "usableAsActivity": true,
+    "autoUpdateConsumingWorkflows": true,
+    "activityCategory": "Helm Compositions"
+  },
+  "root": {
+    "type": "Elsa.Flowchart",
+    "version": 1,
+    "id": "c1d221ba252554a9",
+    "nodeId": "Workflow1:c1d221ba252554a9",
+    "metadata": {},
+    "customProperties": {
+      "source": "FlowchartJsonConverter.cs:45",
+      "notFoundConnections": [],
+      "canStartWorkflow": false,
+      "runAsynchronously": false
+    },
+    "activities": [
+      {
+        "result": null,
+        "id": "1a24d31e817464f8",
+        "nodeId": "Workflow1:c1d221ba252554a9:1a24d31e817464f8",
+        "name": "istioBase",
+        "type": "clrslate.azure.aks.helm.deploy",
+        "version": 1,
+        "customProperties": {
+          "logPersistenceMode": {
+            "default": "Inherit",
+            "inputs": {},
+            "outputs": {}
+          },
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": {
+              "x": -340,
+              "y": -100
+            },
+            "size": {
+              "width": 100.8125,
+              "height": 50
+            }
+          },
+          "displayText": "Istio Base",
+          "description": "Istio Base deployment",
+          "showDescription": false
+        },
+        "clusterName": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getClusterName()"
+          },
+          "memoryReference": {
+            "id": "1a24d31e817464f8:input-cluster-name"
+          }
+        },
+        "resourceGroup": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getResourceGroup()"
+          },
+          "memoryReference": {
+            "id": "1a24d31e817464f8:input-resource-group"
+          }
+        },
+        "helmRepo": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getHelmRepo()"
+          },
+          "memoryReference": {
+            "id": "1a24d31e817464f8:input-helm-repo"
+          }
+        },
+        "chartName": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": "base"
+          },
+          "memoryReference": {
+            "id": "1a24d31e817464f8:input-chart-name"
+          }
+        },
+        "releaseVersion": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getIstioVersion()"
+          },
+          "memoryReference": {
+            "id": "1a24d31e817464f8:input-release-version"
+          }
+        },
+        "releaseName": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": "istio-base"
+          },
+          "memoryReference": {
+            "id": "1a24d31e817464f8:input-release-name"
+          }
+        },
+        "releaseNamespace": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getIstioNamespace()"
+          },
+          "memoryReference": {
+            "id": "1a24d31e817464f8:input-release-namespace"
+          }
+        }
+      },
+      {
+        "result": null,
+        "id": "3501052183784b12",
+        "nodeId": "Workflow1:c1d221ba252554a9:3501052183784b12",
+        "name": "istiod",
+        "type": "clrslate.azure.aks.helm.deploy",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": {
+              "x": -111.796875,
+              "y": -100
+            },
+            "size": {
+              "width": 72.421875,
+              "height": 50
+            }
+          },
+          "displayText": "IstioD"
+        },
+        "clusterName": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getClusterName()"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-cluster-name"
+          }
+        },
+        "resourceGroup": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getResourceGroup()"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-resource-group"
+          }
+        },
+        "helmRepo": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getHelmRepo()"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-helm-repo"
+          }
+        },
+        "chartName": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": "istiod"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-chart-name"
+          }
+        },
+        "releaseVersion": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getIstioVersion()"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-release-version"
+          }
+        },
+        "releaseName": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": "istiod"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-release-name"
+          }
+        },
+        "releaseNamespace": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getIstioNamespace()"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-release-namespace"
+          }
+        },
+        "values": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": "meshConfig.accessLogFile=/dev/stdout,global.proxy.logLevel=info"
+          },
+          "memoryReference": {
+            "id": "3501052183784b12:input-values"
+          }
+        }
+      },
+      {
+        "result": null,
+        "id": "e5cfcefbec607f95",
+        "nodeId": "Workflow1:c1d221ba252554a9:e5cfcefbec607f95",
+        "name": "ingressGateway",
+        "type": "clrslate.azure.aks.helm.deploy",
+        "version": 1,
+        "customProperties": {
+          "canStartWorkflow": false,
+          "runAsynchronously": false
+        },
+        "metadata": {
+          "designer": {
+            "position": {
+              "x": 72.203125,
+              "y": -100
+            },
+            "size": {
+              "width": 149.15625,
+              "height": 50
+            }
+          },
+          "displayText": "Ingress Gateway",
+          "description": "Istio Ingress gateway setup"
+        },
+        "clusterName": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getClusterName()"
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-cluster-name"
+          }
+        },
+        "resourceGroup": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getResourceGroup()"
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-resource-group"
+          }
+        },
+        "helmRepo": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getHelmRepo()"
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-helm-repo"
+          }
+        },
+        "chartName": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": "gateway"
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-chart-name"
+          }
+        },
+        "releaseVersion": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getIstioVersion()"
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-release-version"
+          }
+        },
+        "releaseName": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": "istio-ingressgateway"
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-release-name"
+          }
+        },
+        "releaseNamespace": {
+          "typeName": "String",
+          "expression": {
+            "type": "JavaScript",
+            "value": "return getIstioNamespace()"
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-release-namespace"
+          }
+        },
+        "values": {
+          "typeName": "String",
+          "expression": {
+            "type": "Literal",
+            "value": ""
+          },
+          "memoryReference": {
+            "id": "e5cfcefbec607f95:input-values"
+          }
+        }
+      }
+    ],
+    "connections": [
+      {
+        "source": {
+          "activity": "1a24d31e817464f8",
+          "port": "Done"
+        },
+        "target": {
+          "activity": "3501052183784b12",
+          "port": "In"
+        }
+      },
+      {
+        "source": {
+          "activity": "3501052183784b12",
+          "port": "Done"
+        },
+        "target": {
+          "activity": "e5cfcefbec607f95",
+          "port": "In"
+        }
+      }
+    ]
+  }
+}

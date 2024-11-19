@@ -1,0 +1,24 @@
+{
+  "identifier": "cluster",
+  "title": "Cluster",
+  "description": "Kubernetes cluster",
+  "schema": {
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "Name",
+        "description": "Name of the cluster"
+      },
+      "location": {
+        "type": "string",
+        "title": "Location",
+        "description": "Location of the cluster"
+      },
+      "cloudProvider": {
+        "type": "string",
+        "title": "Cloud Provider",
+        "description": "Cloud provider of the cluster"
+      }
+    }
+  }
+}

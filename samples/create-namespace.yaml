@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: create-namespace-
+spec:
+  pipelineRef:
+    name: k8s-kubectl-script
+  taskRunTemplate:
+    serviceAccountName: kubernetes-actions-account
+  params:
+    - name: script
+      value: |
+        kubectl get namespace
+
+

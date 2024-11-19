@@ -1,0 +1,22 @@
+[
+  {
+    "identifier": "dev",
+    "title": "Development",
+    "resourceType": "cluster",
+    "properties": {
+      "name": "dev",
+      "location": "CentralIndia",
+      "cloudProvider": "azure"
+    }
+  },
+  {
+    "identifier": "prod",
+    "title": "Production",
+    "resourceType": "cluster",
+    "properties": {
+      "name": "prod",
+      "location": "us-east",
+      "cloudProvider": "gcp"
+    }
+  }
+]

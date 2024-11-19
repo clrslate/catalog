@@ -1,0 +1,57 @@
+{
+  "ApiVersion": "tekton.dev/v1",
+  "Kind": "PipelineRun",
+  "Metadata": {
+    "annotations": {
+      "taskId": "67d1aaf4b11add16",
+      "activityName": "clrslate.helm.deploy.mongodb",
+      "tenantId": "host",
+      "bookmarkId": "7fe6f14a1847db1c"
+    },
+    "creationTimestamp": null,
+    "deletionGracePeriodSeconds": null,
+    "deletionTimestamp": null,
+    "finalizers": null,
+    "generateName": null,
+    "generation": null,
+    "labels": null,
+    "managedFields": null,
+    "name": "host-helm-install-upgrade-wfya",
+    "namespace": "workflows",
+    "ownerReferences": null,
+    "resourceVersion": null,
+    "selfLink": null,
+    "uid": null
+  },
+  "Spec": {
+    "PipelineRef": {
+      "Name": "helm-install-upgrade"
+    },
+    "Params": [
+      {
+        "Name": "githubUrl",
+        "Value": "https://github.com/clrslate/catalog"
+      },
+      {
+        "Name": "chartsDir",
+        "Value": "helm/mongodb"
+      },
+      {
+        "Name": "releaseName",
+        "Value": "mongodb"
+      },
+      {
+        "Name": "values",
+        "Value": "defaultUser.userName=admin,defaultUser.password="
+      },
+      {
+        "Name": "namespace",
+        "Value": "default"
+      }
+    ],
+    "Workspaces": [],
+    "TaskRunTemplate": {
+      "ServiceAccountName": "kubernetes-actions-account"
+    }
+  }
+}
