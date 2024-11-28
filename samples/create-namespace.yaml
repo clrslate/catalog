@@ -4,7 +4,14 @@ metadata:
   generateName: create-namespace-
 spec:
   pipelineRef:
-    name: k8s-kubectl-script
+    resolver: git
+    params:
+    - name: url
+      value: https://github.com/clrslate/catalog.git
+    - name: revision
+      value: main
+    - name: pathInRepo
+      value: packages/kubernetes/pipelines/k8s-kubectl-script.yaml
   taskRunTemplate:
     serviceAccountName: kubernetes-actions-account
   params:
