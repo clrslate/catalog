@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: helm-install-upgrade
+  name: helm-install-upgrade-source
 spec:
   params:
     - name: githubUrl
