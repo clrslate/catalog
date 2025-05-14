@@ -1,0 +1,58 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: k8s.model.node
+  title: K8s Node
+  description: This blueprint represents a k8s Node
+  icon: Cluster
+  labels:
+    owner: clrslate
+    package: k8s
+spec:
+  schema:
+    properties:
+      creationTimestamp:
+        type: string
+        icon: DeployedAt
+        title: Created
+        format: date-time
+        description: When the Node was created (added to the cluster)
+      labels:
+        type: object
+        title: Labels
+        description: Labels of the Node
+      ready:
+        type: string
+        title: Node Readiness
+        description: Node ready status
+        enum:
+        - 'True'
+        - 'False'
+        - Unknown
+        enumColors:
+          'False': red
+          'True': green
+      totalMemory:
+        type: string
+        icon: GPU
+        title: Total Memory (kibibytes)
+        description: Total memory capacity of the Node
+      kubeletVersion:
+        type: string
+        title: Kubelet Version
+        description: The node's kubelet version
+      totalCPU:
+        type: string
+        icon: CPU
+        title: Total CPU (milli-cores)
+        description: Total CPU capacity of the Node
+    required: []
+  relations:
+    cluster:
+      title: Cluster
+      description: The Kubernetes cluster this Node belongs to
+      format: resource
+      required: false
+      many: false
+      specifications:
+        type: k8s.cluster

@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: k8s.activity.delete-namespace
+  title: Delete k8s Namespace
+  description: An activity that deletes namespaces in the given clusters
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: k8s
+  tags:
+    - tekton
+    - kubernetes
+    - delete
+spec:
+  inputs:
+    properties:
+      namespace:
+        type: object
+        format: resource
+        title: Target Namespace
+        description: Target Kubernetes Namespace to delete
+        specifications:
+          type: k8s.model.namespace
+    required:
+      - namespace
+  resources:
+    cluster:
+      type: RecordEntry
+      value: '{{inputs.namespace.cluster._metadata.name}}'
+  handler:
+    type: tekton
+    properties:
+      pipelineRef: k8s.script.pipeline
+      params:
+        image: "{{inputs.cluster.image}}"
+        script: |
+          {{inputs.cluster.loginScript}}
+          kubectl delete namespace {{inputs.namespace.name}}
+      secrets:
+        credentials:
+          name: "{{inputs.cluster.credentials._metadata.name}}"
+          mountParamName: credentialsRef

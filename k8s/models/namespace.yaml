@@ -1,0 +1,27 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: k8s.model.namespace
+  title: K8s Namespace
+  description: A Kubernetes namespace
+  icon: Cluster
+  labels:
+    owner: clrslate
+    package: k8s
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the namespace
+    required:
+      - name
+  relations:
+    cluster:
+      title: Cluster
+      description: The Kubernetes cluster this Node belongs to
+      format: resource
+      required: false
+      many: false
+      specifications:
+        type: k8s.cluster

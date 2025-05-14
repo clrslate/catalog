@@ -1,0 +1,55 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: github.activity.tekton.springBootScaffolder
+  title: GitHub Spring Boot Scaffolder
+  description: An activity that runs a Tekton pipeline to create a Spring Boot project from a GitHub template
+  labels:
+    category: GitHub
+    owner: clrslate
+    package: github
+  tags:
+    - tekton
+    - github
+    - list-repositories
+spec:
+  inputs:
+    properties:
+      githubToken:
+        type: object
+        format: secret
+        title: GitHub Token
+        description: Token to access GitHub resources
+        specifications:
+          type: github.secret.personalAccessToken
+          mount: true
+          mountParamName: secretRef
+      organization:
+        type: string
+        title: GitHub Organization
+        description: The GitHub organization to list repositories from
+        default: clrslate
+      projectName:
+        type: string
+        title: Project Name
+        description: The GitHub project name which is equivalent to repository name
+        default: sample-project
+      templateProject:
+        type: string
+        title: GitHub public template project
+        description: The GitHub public template project to use for creating the repository
+        default: hmcts/spring-boot-template
+    required:
+      - githubToken
+      - organization
+      - projectName
+      - templateProject
+  handler:
+    type: tekton
+    properties:
+      pipelineRef: clrslate.github.pipelines.script
+      params:
+        script: |
+          echo "Generating a repository from provided template project: {{inputs.templateProject}} for organization: {{inputs.organization}}"
+          gh repo create {{inputs.organization}}/{{inputs.projectName}} --public --template {{inputs.templateProject}}
+

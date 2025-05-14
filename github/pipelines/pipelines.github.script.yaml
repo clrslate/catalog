@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: clrslate.github.pipelines.script
+spec:
+  params:
+  - name: secretRef
+    type: string
+    description: kubernetes secret reference name
+  - name: script
+    type: string
+    description: GitHub script to run
+  tasks:
+  - name: list-repos
+    taskSpec:
+      steps:
+        - name: list-repos
+          image: ghcr.io/supportpal/github-gh-cli
+          env:
+          - name: GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: $(params.secretRef)
+                key: githubToken
+          script: |
+            $(params.script)

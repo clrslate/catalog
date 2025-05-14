@@ -1,0 +1,10 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: clrslatePlatform.records.helmChart.clrslateAppMinimal
+  title: ClrSlate App Minimal
+  description: Minimal Helm Chart for CLRSlate applications
+spec:
+  data:
+    name: oci://clrslatepublic.azurecr.io/helm/clrslate-app-minimal
+    version: 0.0.2

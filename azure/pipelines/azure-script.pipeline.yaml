@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: azure.pipelines.azure-script
+spec:
+  params:
+  - name: azureCredentialsRef
+    type: string
+    description: Azure credentials secret reference
+  - name: script
+    type: string
+    description: The script to run in the pipeline
+  - name: image
+    type: string
+    description: The image to use for the script step
+    default: clrslatepublic.azurecr.io/tools/azure:latest
+  tasks:
+  - name: script-task
+    taskSpec:
+      steps:
+      - name: script-step
+        image: $(params.image)
+        script: |
+          az config set core.only_show_errors=true --only-show-errors
+          az login --service-principal -u $clientId -p $clientSecret --tenant $tenantId -o none
+          az account set --subscription $subscriptionId -o none
+          $(params.script)
+        envFrom:
+        - secretRef:
+            name: $(params.azureCredentialsRef)
+        volumeMounts:
+        - name: manifests
+          mountPath: /manifests
+          readOnly: true
+            

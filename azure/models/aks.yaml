@@ -1,0 +1,42 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: azure.model.aks
+  title: Azure Kubernetes Service Cluster
+  description: Represents an Azure Kubernetes Service (AKS) cluster
+  labels:
+    implements: "k8s.model.cluster"
+    owner: clrslate
+    package: azure
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the AKS cluster
+    required:
+      - name
+  relations:
+    resourceGroup:
+      title: Azure Resource Group
+      description: The Azure Resource Group associated with this Key Vault.
+      format: resource
+      required: true
+      specifications:
+        type: azure.model.resourceGroup
+  mirrored:
+    credentials:
+      type: object
+      format: secret
+      value: '{{resourceGroup.subscription.credentials._metadata.name}}'
+    loginScript:
+      type: string
+      value: |
+        az config set core.only_show_errors=true --only-show-errors
+        az login --service-principal -u $clientId -p $clientSecret --tenant $tenantId -o none
+        az account set --subscription $subscriptionId -o none
+        az aks get-credentials --name {{name}} --resource-group {{resourceGroup.name}} -o none
+    image:
+      type: string
+      value: clrslatepublic.azurecr.io/tools/azure:20250513.210758
+

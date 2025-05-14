@@ -1,0 +1,29 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: azure.model.resourceGroup
+  title: Azure Resource Group
+  description: Represents an Azure Resource Group that contains resources
+  labels:
+    owner: clrslate
+    package: azure
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the resource group.
+      location:
+        type: string
+        description: The Azure region where the resource group is located.
+    required:
+      - name
+      - location
+  relations:
+    subscription:
+      title: Azure Subscription
+      description: The Azure Subscription associated with this resource group.
+      format: resource
+      required: true
+      specifications:
+        type: azure.model.subscription

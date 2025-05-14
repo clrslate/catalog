@@ -1,0 +1,8 @@
+name: k8s
+version: 1.0.0
+title: Kubernetes
+description: Kubernetes resource models and integrations
+icon: Kubernetes.Logo
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io

@@ -1,0 +1,11 @@
+apiVersion: core.clrslate.io
+kind: Settings
+metadata:
+  name: clrslatePlatform.settings
+  title: Clrslate Platform Settings
+  description: Settings for the Clrslate Platform
+  labels:
+    owner: clrslate
+    package: clrslatePlatform
+spec:
+  

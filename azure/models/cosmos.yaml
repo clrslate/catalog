@@ -1,0 +1,50 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: azure.model.cosmos
+  title: Azure Cosmos DB Account
+  description: Represents an Azure Cosmos DB database account
+  labels:
+    owner: clrslate
+    package: azure
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the Cosmos DB account.
+      endpoint:
+        type: string
+        format: uri
+        description: The endpoint URI of the Cosmos DB account.
+      kind:
+        type: string
+        description: The kind of Cosmos DB account (e.g., GlobalDocumentDB, MongoDB).
+      databaseApi:
+        type: string
+        enum: [SQL, MongoDB, Cassandra, Gremlin, Table]
+        description: The database API type for the Cosmos DB account
+      consistencyLevel:
+        type: string
+        enum: [Strong, BoundedStaleness, Session, ConsistentPrefix, Eventual]
+        description: The default consistency level for the account
+      enableMultipleWriteLocations:
+        type: boolean
+        description: Whether to enable multi-region writes
+        default: false
+      requestUnits:
+        type: integer
+        description: The provisioned throughput in Request Units per second (RU/s)
+        minimum: 400
+    required:
+      - name
+      - endpoint
+      - kind
+  relations:
+    resourceGroup:
+      title: Azure Resource Group
+      description: The Azure Resource Group associated with this Key Vault.
+      format: resource
+      required: true
+      specifications:
+        type: azure.model.resourceGroup

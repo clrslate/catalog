@@ -1,0 +1,66 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azure.tekton.pipelinerun.azure-aks-get-namespaces
+  title: Tekton Azure AKS Get Namespaces
+  description: An activity that runs a Tekton pipeline to get namespaces of Azure AKS clusters
+  icon: Kubernetes.Logo
+  labels:
+    category: Dummy
+    owner: clrslate
+    package: dummy
+  tags:
+    - tekton
+    - azure
+spec:
+  inputs:
+    properties:
+      aksCluster:
+        type: object
+        format: resource
+        title: AKS Cluster
+        description: Azure Kubernetes Service Cluster
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: The name of the namespace to create
+    required:
+      - aksCluster
+      - namespace
+  handler:
+    type: tekton
+    properties:
+      pipelineRef: azure.pipelines.aks-script
+      params:
+        aksCluster: "{{inputs.aksCluster.name}}"
+        resourceGroup: "{{inputs.aksCluster.resourceGroup.name}}"
+        script: |
+          kubectl create namespace {{inputs.namespace}} --dry-run=client -o json | jq '.metadata += {"labels":{"istio-injection":"enabled"}}' | kubectl apply -f -
+      secrets:
+        azureCredentials:
+          name: "{{inputs.aksCluster.resourceGroup.subscription.credentials._metadata.name}}"
+          mountParamName: credentialsRef
+      resources:
+        newResourceGroup:
+          apiVersion: records.clrslate.io
+          kind: azure.model.resourceGroup
+          metadata:
+            name: "azure.model.resourceGroup.{{inputs.name}}"
+            title: "{{inputs.name}}"
+            description: "Azure resource group {{inputs.name}}"
+            icon: Azure.Logo
+            labels:
+              category: Azure
+            tags:
+              - azure
+              - resourceGroup
+          spec:
+            data:
+              name: "{{inputs.name}}"
+              location: "{{inputs.location}}"
+              subscription: "{{inputs.subscription._metadata.name}}"
+
+
+  

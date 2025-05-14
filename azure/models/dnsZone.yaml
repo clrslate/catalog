@@ -1,0 +1,29 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: azure.model.dnsZone
+  title: Azure DNS Zone
+  description: Represents an Azure DNS Zone
+  labels:
+    core.implements: "externalDns.provider"
+    owner: clrslate
+    package: azure
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the DNS zone.
+      recordSets:
+        type: integer
+        description: The number of record sets in the zone.
+    required:
+      - name
+  relations:
+    resourceGroup:
+      title: Azure Resource Group
+      description: The Azure Resource Group associated with this Key Vault.
+      format: resource
+      required: true
+      specifications:
+        type: azure.model.resourceGroup

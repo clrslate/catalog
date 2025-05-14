@@ -1,0 +1,24 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: helm.model.helmChart
+  title: Helm Chart
+  description: Helm Chart
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the Helm chart
+      version:
+        type: string
+        description: The version of the Helm chart
+      repository:
+        type: string
+        description: The URL of the Helm chart repository
+      values:
+        type: string
+        description: The values to be used for the Helm chart installation
+    required:
+      - chart
+  

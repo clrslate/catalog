@@ -1,0 +1,12 @@
+name: clrslate-platform
+version: 0.0.1
+title: ClrSlate Platform
+description: ClrSlate Platform
+owner: Team ClrSlate
+icon: Brands.Github
+color: '#181717'
+keywords:
+  - clrslate-platform
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io

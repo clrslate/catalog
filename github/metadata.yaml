@@ -1,0 +1,12 @@
+name: github
+version: 0.0.1
+title: GitHub Package
+description: GitHub Package
+owner: Team ClrSlate
+icon: Brands.GitHub
+color: '#181717'
+keywords:
+  - github
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io

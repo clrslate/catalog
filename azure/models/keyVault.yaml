@@ -1,0 +1,35 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: azure.model.keyVault
+  title: Azure Key Vault
+  description: Represents an Azure Key Vault instance
+  labels:
+    core.implements: "secrets.vaultProvider"
+    owner: clrslate
+    package: azure
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the Key Vault.
+      uri:
+        type: string
+        format: uri
+        description: The URI of the Key Vault.
+      sku:
+        type: string
+        description: The SKU (pricing tier) of the Key Vault.
+    required:
+      - name
+      - uri
+      - sku
+  relations:
+    resourceGroup:
+      title: Azure Resource Group
+      description: The Azure Resource Group associated with this Key Vault.
+      format: resource
+      required: true
+      specifications:
+        type: azure.model.resourceGroup

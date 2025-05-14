@@ -1,0 +1,78 @@
+# filepath: d:\repo\clrslate\ClrBridge\playground\azure\mappings\mappings.yaml
+mappings:
+  - kind: subscription
+    alias: 
+    - azure.model.subscription
+    template:
+      apiVersion: records.clrslate.io
+      kind: azure.model.subscription
+      metadata:
+        name: azure.subscription.{{display_name}}
+        title: '{{display_name}}'
+        description: '{{display_name}}'
+        icon: Azure.Logo
+        labels:
+          category: Azure
+        tags:
+          - azure
+          - subscription
+      spec:
+        data:
+          subscriptionId: '{{subscription_id}}'
+  - kind: Microsoft.Resources/resourceGroups
+    alias: 
+    - azure.model.resourceGroup
+    - resourceGroup
+    template:
+      apiVersion: records.clrslate.io
+      kind: azure.model.resourceGroup
+      metadata:
+        name: azure.resourceGroup.{{display_name}}
+        title: '{{display_name}}'
+        description: '{{display_name}}'
+        icon: Azure.Logo
+        labels:
+          category: Azure
+          subscription: '{{subscription_name}}'
+        tags:
+          - azure
+          - resourceGroup
+      spec:
+        data:
+          name: '{{name}}'
+          id: '{{id}}'
+          location: '{{location}}'
+          subscription_id: '{{subscription_id}}'
+          provisioning_state: '{{provisioning_state}}'
+  - kind: Microsoft.ContainerService/managedClusters
+    alias:
+    - azure.model.aks
+    - aks
+    template:
+      apiVersion: records.clrslate.io
+      kind: azure.model.aks
+      metadata:
+        name: azure.aks.{{display_name}}
+        title: '{{display_name}}'
+        description: 'AKS Cluster: {{display_name}}'
+        icon: Azure.Logo
+        labels:
+          category: Azure
+          subscription: '{{subscription_name}}'
+          resourceGroup: '{{resource_group_name}}'
+        tags:
+          - azure
+          - managedCluster
+      spec:
+        data:
+          clusterId: '{{id}}'
+          name: '{{name}}'
+          location: '{{location}}'
+          kubernetes_version: '{{kubernetes_version}}'
+          dns_prefix: '{{dns_prefix}}'
+          fqdn: '{{fqdn}}'
+          provisioning_state: '{{provisioning_state}}'
+          node_count: '{{agent_pool_profiles.0.count}}'
+          vm_size: '{{agent_pool_profiles.0.vm_size}}'
+          status: '{{power_state.code}}'
+          resourceGroup: azure.resourceGroup.{{resource_group_name}}

@@ -1,0 +1,11 @@
+name: helm
+version: 0.0.1
+title: Helm Package
+description: Helm Package
+owner: Team ClrSlate
+icon: Kubernetes.Helm
+keywords:
+  - helm
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io

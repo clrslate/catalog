@@ -1,0 +1,73 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: github.activity.tekton.springbootinitializer
+  title: GitHub Spring Boot Initializr
+  description: An activity that runs a Tekton pipeline to create a Spring Boot project from the Initializr
+  labels:
+    category: GitHub
+    owner: clrslate
+    package: github
+  tags:
+    - tekton
+    - github
+    - list-repositories
+spec:
+  inputs:
+    properties:
+      githubToken:
+        type: object
+        format: secret
+        title: GitHub Token
+        description: Token to access GitHub resources
+        specifications:
+          type: github.secret.personalAccessToken
+          mount: true
+          mountParamName: secretRef
+      organization:
+        type: string
+        title: GitHub Organization
+        description: The GitHub organization to list repositories from
+        default: clrslate
+      projectName:
+        type: string
+        title: Project Name
+        description: The GitHub project name which is equivalent to repository name
+        default: sample
+      description:
+        type: string
+        title: Project Description
+        description: The GitHub project description
+        default: Sample Project generated using spring initializr
+      artifactId:
+        type: string
+        title: Artifact Id
+        description: The artifact id for the project
+        default: demo-web-app
+      package:
+        type: string
+        title: Package to be used
+        description: The package name for the project
+        default: com.clrslate.sample
+      dependencies:
+        type: string
+        title: Select dependencies
+        description: Applicable project dependencies as comma separated values
+        default: web,data-jpa,lombok,actuator
+    required:
+      - githubToken
+      - organization
+      - projectName
+      - description
+      - artifactId
+      - package
+      - dependencies
+  handler:
+    type: tekton
+    properties:
+      pipelineRef: clrslate.github.pipelines.script
+      params:
+        script: |
+          echo "Generating a repository with spring boot structure and dependencies for organization: {{inputs.organization}}"
+          gh repo create {{inputs.projectName}} --public --template {{inputs.templateProject}}
+

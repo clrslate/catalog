@@ -1,0 +1,25 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: azure.model.subscription
+  title: Azure Subscription
+  description: Represents an Azure Subscription
+  labels:
+    owner: clrslate
+    package: azure
+spec:
+  schema:
+    properties:
+      subscriptionId:
+        type: string
+        description: The Azure Subscription ID.
+    required:
+      - subscriptionId
+  relations:
+    credentials:
+      title: Azure Credentials
+      description: The Azure Service Principal credentials for this subscription.
+      format: secret
+      required: true
+      specifications:
+        type: azure.secret.clientCredentials

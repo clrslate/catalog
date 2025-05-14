@@ -1,0 +1,58 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: helm.activity.install
+  title: Install Helm Chart
+  description: An activity that installs Helm charts in the given clusters
+  labels:
+    category: Helm
+    owner: clrslate
+    package: k8s
+  tags:
+    - tekton
+    - kubernetes
+    - create
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      helmRelease:
+        type: object
+        format: resource
+        title: Target Helm Release
+        description: Target Helm Release
+        specifications:
+          type: helm.model.helmRelease
+    required:
+      - helmRelease
+  handler:
+    type: tekton
+    properties:
+      pipelineRef: k8s.script.pipeline
+      params:
+        image: "{{inputs.cluster.image}}"
+        script: |
+          {{inputs.cluster.loginScript}}
+          {{inputs.helmRelease.command}} --values manifests/values.yaml
+      secrets:
+        credentials:
+          name: "{{inputs.cluster.credentials._metadata.name}}"
+          mountParamName: credentialsRef
+      files:
+        values.yaml: |
+          {{inputs.helmRelease.valuesFile}}
+    type: console
+    properties:
+      output: |
+        {{inputs.helmRelease.command}}
+        {%- if inputs.helmRelease.valuesFile and inputs.helmRelease.valuesFile != "" -%}
+          valuesFile: 
+            {{inputs.helmRelease.valuesFile}}
+        {%- endif -%}
+  

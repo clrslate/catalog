@@ -1,0 +1,67 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: k8s.activity.create-namespaces
+  title: Create k8s Namespace
+  description: An activity that creates namespaces in the given clusters
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: k8s
+  tags:
+    - tekton
+    - kubernetes
+    - create
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: The name of the namespace to create
+    required:
+      - cluster
+      - namespace
+  reflections:
+    pipelineRef: 
+  handler:
+    type: tekton
+    properties:
+      pipelineRef: k8s.script.pipeline
+      params:
+        image: "{{inputs.cluster.image}}"
+        script: |
+          {{inputs.cluster.loginScript}}
+          kubectl create namespace {{inputs.namespace}} --dry-run=client -o yaml | yq '.metadata += {"labels":{"istio-injection":"enabled"}}' | kubectl apply -f -
+      secrets:
+        credentials:
+          name: "{{inputs.cluster.credentials._metadata.name}}"
+          mountParamName: credentialsRef
+      resources:
+        newResourceGroup:
+          apiVersion: records.clrslate.io
+          kind: k8s.model.namespace
+          metadata:
+            name: "k8s.model.namespace.{{inputs.namespace}}"
+            title: "{{inputs.namespace}}"
+            description: "Kubernetes namespace {{inputs.namespace}}"
+            icon: Kubernetes.Logo
+            labels:
+              category: Kubernetes
+            tags:
+              - kubernetes
+              - namespace
+          spec:
+            data:
+              name: "{{inputs.namespace}}"
+              cluster: "{{inputs.cluster._metadata.name}}"
+
+
+  
