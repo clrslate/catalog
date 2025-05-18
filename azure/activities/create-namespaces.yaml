@@ -57,10 +57,9 @@ spec:
               - azure
               - resourceGroup
           spec:
-            data:
-              name: "{{inputs.name}}"
-              location: "{{inputs.location}}"
-              subscription: "{{inputs.subscription._metadata.name}}"
+            name: "{{inputs.name}}"
+            location: "{{inputs.location}}"
+            subscription: "{{inputs.subscription._metadata.name}}"
 
 
   

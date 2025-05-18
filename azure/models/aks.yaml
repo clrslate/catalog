@@ -38,5 +38,10 @@ spec:
         az aks get-credentials --name {{name}} --resource-group {{resourceGroup.name}} -o none
     image:
       type: string
-      value: clrslatepublic.azurecr.io/tools/azure:20250513.210758
+      value: clrslatepublic.azurecr.io/tools/azure:latest
+    pipelineRef:
+      type: object
+      format: pipelineRef
+      value: azure.pipelines.aks-script
+
 

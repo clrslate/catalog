@@ -5,6 +5,5 @@ metadata:
   title: ClrSlate MongoDB
   description: Minimal Helm Chart for CLRSlate applications
 spec:
-  data:
-    name: oci://clrslatepublic.azurecr.io/helm/mongodb
-    version: 1.0.1
+  name: oci://clrslatepublic.azurecr.io/helm/mongodb
+  version: 1.0.1

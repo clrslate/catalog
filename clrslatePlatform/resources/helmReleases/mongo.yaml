@@ -5,7 +5,6 @@ metadata:
   title: MongoDB
   description: MongoDB instance
 spec:
-  data:
-    name: mongo
-    namespace: temp1
-    chart: clrslatePlatform.records.helmChart.clrslate-mongo
+  name: mongo
+  namespace: temp1
+  chart: clrslatePlatform.records.helmChart.clrslate-mongo

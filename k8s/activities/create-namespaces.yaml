@@ -59,9 +59,8 @@ spec:
               - kubernetes
               - namespace
           spec:
-            data:
-              name: "{{inputs.namespace}}"
-              cluster: "{{inputs.cluster._metadata.name}}"
+            name: "{{inputs.namespace}}"
+            cluster: "{{inputs.cluster._metadata.name}}"
 
 
   

@@ -1,13 +1,35 @@
-apiVersion: core.clrslate.io
-kind: ModelDefinition
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
 metadata:
-  name: helm.model.helmRelease
-  title: Helm Release
-  description: Helm Release
+  name: helm.pipelineRef.helm-install
+  title: Helm Install
+  description: An activity that installs Helm releases in the given clusters
+  labels:
+    category: Helm
+    owner: clrslate
+    package: k8s
+  tags:
+    - tekton
+    - kubernetes
+    - create
 spec:
   schema:
     properties:
-      name:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      helmChart:
+        type: object
+        format: resource
+        title: Target Helm Chart
+        description: Target Helm Chart
+        specifications:
+          type: helm.model.helmChart
+      releaseName:
         type: string
         description: The name of the Helm release
       namespace:
@@ -20,13 +42,13 @@ spec:
       values:
         type: object
         description: Collection of key-value pairs to be used for the Helm chart installation
-        additionalProperties:
-          type: string
       valuesFile:
         type: string
         description: Values file template to be used for the Helm chart installation
     required:
-      - name
+      - cluster
+      - helmChart
+      - releaseName
       - namespace  
   mirrored:
     command:
@@ -37,14 +59,13 @@ spec:
           {%- assign versionFlag = " --version " | append: versionFlag -%}
         {%- endif -%}
         {%- assign repoFlag = "" -%}
-        {%- if chart.repository and chart.repository != "" -%}
-          {%- assign repoFlag = " --repo " | append: chart.repository -%}
+        {%- if helmChart.repository and helmChart.repository != "" -%}
+          {%- assign repoFlag = " --repo " | append: helmChart.repository -%}
         {%- endif -%}
         {%- assign createNsFlag = "" -%}
         {%- if createNamespace -%}
           {%- assign createNsFlag = " --create-namespace" -%}
         {%- endif -%}
-        {%- assign valuesFileFlag = "" -%}
         {%- assign setValues = "" -%}
         {%- if values and values != empty -%}
           {%- assign setPairs = "" -%}
@@ -53,14 +74,17 @@ spec:
           {%- endfor -%}
           {%- assign setValues = " --set " | append: setPairs -%}
         {%- endif -%}
-        {%- capture command -%}helm upgrade --install {{name}} {{chart.name}} {{versionFlag}}{{repoFlag}} --namespace {{namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
+        {%- capture command -%}helm upgrade --install {{releaseName}} {{helmChart.name}} {{versionFlag}} {{repoFlag}} --namespace {{namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
         {{- command | strip -}}
-  relations:
-    chart:
-      title: Helm Chart
-      description: The Helm chart to be used for the release
-      format: resource
-      required: true
-      many: false
-      specifications:
-        type: helm.model.helmChart
+  pipeline:
+    pipelineRef: k8s.script.pipeline
+    params:
+      image: "{{inputs.cluster.image}}"
+      script: |
+        {{inputs.cluster.loginScript}}
+        {{inputs.command}} --values manifests/values.yaml
+    secretMounts:
+      credentialsRef: "{{inputs.cluster.credentials._name}}"
+    files:
+      values.yaml: |
+        {{inputs.helmChart.valuesFile}}
