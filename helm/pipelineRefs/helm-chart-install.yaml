@@ -54,27 +54,27 @@ spec:
     command:
       type: string
       value: |
-        {%- assign versionFlag = chart.version | default: "" -%}
+        {%- assign versionFlag = inputs.chart.version | default: "" -%}
         {%- if versionFlag != "" -%}
           {%- assign versionFlag = " --version " | append: versionFlag -%}
         {%- endif -%}
         {%- assign repoFlag = "" -%}
-        {%- if helmChart.repository and helmChart.repository != "" -%}
-          {%- assign repoFlag = " --repo " | append: helmChart.repository -%}
+        {%- if inputs.helmChart.repository and inputs.helmChart.repository != "" -%}
+          {%- assign repoFlag = " --repo " | append: inputs.helmChart.repository -%}
         {%- endif -%}
         {%- assign createNsFlag = "" -%}
-        {%- if createNamespace -%}
+        {%- if inputs.createNamespace -%}
           {%- assign createNsFlag = " --create-namespace" -%}
         {%- endif -%}
         {%- assign setValues = "" -%}
-        {%- if values and values != empty -%}
+        {%- if inputs.values and inputs.values != empty -%}
           {%- assign setPairs = "" -%}
-          {%- for key in values -%}
-            {%- assign setPairs = setPairs | append: key | append: "=" | append: values[key] | append: "," -%}
+          {%- for key in inputs.values -%}
+            {%- assign setPairs = setPairs | append: key | append: "=" | append: inputs.values[key] | append: "," -%}
           {%- endfor -%}
           {%- assign setValues = " --set " | append: setPairs -%}
         {%- endif -%}
-        {%- capture command -%}helm upgrade --install {{releaseName}} {{helmChart.name}} {{versionFlag}} {{repoFlag}} --namespace {{namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
+        {%- capture command -%}helm upgrade --install {{inputs.releaseName}} {{inputs.helmChart.name}} {{versionFlag}} {{repoFlag}} --namespace {{inputs.namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
         {{- command | strip -}}
   pipeline:
     pipelineRef: k8s.script.pipeline

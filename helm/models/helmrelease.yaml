@@ -32,28 +32,28 @@ spec:
     command:
       type: string
       value: |
-        {%- assign versionFlag = chart.version | default: "" -%}
+        {%- assign versionFlag = inputs.chart.version | default: "" -%}
         {%- if versionFlag != "" -%}
           {%- assign versionFlag = " --version " | append: versionFlag -%}
         {%- endif -%}
         {%- assign repoFlag = "" -%}
-        {%- if chart.repository and chart.repository != "" -%}
-          {%- assign repoFlag = " --repo " | append: chart.repository -%}
+        {%- if inputs.chart.repository and inputs.chart.repository != "" -%}
+          {%- assign repoFlag = " --repo " | append: inputs.chart.repository -%}
         {%- endif -%}
         {%- assign createNsFlag = "" -%}
-        {%- if createNamespace -%}
+        {%- if inputs.createNamespace -%}
           {%- assign createNsFlag = " --create-namespace" -%}
         {%- endif -%}
         {%- assign valuesFileFlag = "" -%}
         {%- assign setValues = "" -%}
-        {%- if values and values != empty -%}
+        {%- if inputs.values and inputs.values != empty -%}
           {%- assign setPairs = "" -%}
-          {%- for key in values -%}
-            {%- assign setPairs = setPairs | append: key | append: "=" | append: values[key] | append: "," -%}
+          {%- for key in inputs.values -%}
+            {%- assign setPairs = setPairs | append: key | append: "=" | append: inputs.values[key] | append: "," -%}
           {%- endfor -%}
           {%- assign setValues = " --set " | append: setPairs -%}
         {%- endif -%}
-        {%- capture command -%}helm upgrade --install {{name}} {{chart.name}} {{versionFlag}}{{repoFlag}} --namespace {{namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
+        {%- capture command -%}helm upgrade --install {{inputs.name}} {{inputs.chart.name}} {{inputs.versionFlag}}{{repoFlag}} --namespace {{inputs.namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
         {{- command | strip -}}
   relations:
     chart:

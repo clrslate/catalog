@@ -1,0 +1,51 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azure.tekton.pipelinerun.create-aks-cluster
+  title: Create AKS Cluster
+  description: An activity that runs a Tekton pipeline to create a new Azure AKS cluster
+  icon: Azure.AKS
+  labels:
+    category: Azure
+  tags:
+    - azure
+    - aks
+    - create
+spec:
+  inputs:
+    properties:
+      resourceGroup:
+        type: object
+        format: resource        
+        title: Resource Group
+        description: Parent Resource group
+        specifications:
+          type: azure.model.resourceGroup
+      clusterName:
+        type: string
+        title: Cluster Name
+        required: true
+        description: The name of the AKS cluster
+      nodeCount:
+        type: integer
+        title: Node Count
+        description: The number of nodes in the AKS cluster
+        default: 1
+      nodeVmSize:
+        type: string
+        title: Node VM Size
+        required: true
+        default: Standard_D4ds_v5
+        description: The size of the VMs for the system node pool in the AKS cluster
+    required:
+      - azCredentials
+      - resourceGroup
+      - clusterName
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs:
+        credentials: '{{inputs.resourceGroup.subscription.credentials._name}}'
+        script: |
+          az aks create --name {{clusterName}} --resource-group {{resourceGroup.name}}-rg --location '{{resourceGroup.location}}' --vm-set-type VirtualMachineScaleSets --node-count {{nodeCount}} --node-vm-size {{nodeVmSize}} --enable-cluster-autoscaler --min-count 1 --max-count 6 --max-pods 100 --no-ssh-key --service-principal ${clientId} --client-secret ${clientSecret}

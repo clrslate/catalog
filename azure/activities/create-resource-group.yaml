@@ -29,22 +29,24 @@ spec:
         format: lookup
         title: Location           
         description: The location of the resource group
-        defaultValue: eastus
+        default: centralindia
         specifications:
           type: azure.lookups.locations
     required:
       - azCredentials
+  mirrored:
+    command:
+      type: string
+      value: |
+        echo "Creating Azure resource group {{inputs.name}} in {{inputs.location}}"
+        az group create --name {{inputs.name}} --location {{inputs.location}}
   handler:
-    type: tekton
+    type: tekton.pipelineRef
     properties:
-      pipelineRef: azure.pipelines.azure-script
-      secrets:
-        azureCredentials:
-          name: "{{inputs.subscription.credentials._metadata.name}}"
-          mountParamName: credentialsRef
-      params:
-        script: |
-          az group create --name {{inputs.name}} --location {{inputs.location}}
+      pipeline: azure.pipelineRef.azure-script
+      inputs:
+        credentials: '{{inputs.subscription.credentials._name}}'
+        script: '{{inputs.command}}'
       resources:
         newResourceGroup:
           apiVersion: records.clrslate.io
@@ -63,7 +65,3 @@ spec:
             name: "{{inputs.name}}"
             location: "{{inputs.location}}"
             subscription: "{{inputs.subscription._metadata.name}}"
-
-
-
-  

@@ -23,6 +23,15 @@ spec:
         description: The namespace of the Helm release
     required:
       - cluster
+  mirrored:
+    credentials:
+      type: object
+      format: secret
+      value: '{{inputs.cluster.credentials._metadata.name}}'
+      specifications:
+        type: azure.secret.clientCredentials
+        mount: true
+        mountParamName: credentialsRef
   handler:
     type: tekton.pipelineRef
     properties:

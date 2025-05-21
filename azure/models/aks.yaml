@@ -28,14 +28,14 @@ spec:
     credentials:
       type: object
       format: secret
-      value: '{{resourceGroup.subscription.credentials._metadata.name}}'
+      value: '{{inputs.resourceGroup.subscription.credentials._metadata.name}}'
     loginScript:
       type: string
       value: |
         az config set core.only_show_errors=true --only-show-errors
         az login --service-principal -u $clientId -p $clientSecret --tenant $tenantId -o none
         az account set --subscription $subscriptionId -o none
-        az aks get-credentials --name {{name}} --resource-group {{resourceGroup.name}} -o none
+        az aks get-credentials --name {{inputs.name}} --resource-group {{inputs.resourceGroup.name}} -o none
     image:
       type: string
       value: clrslatepublic.azurecr.io/tools/azure:latest

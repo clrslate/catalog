@@ -1,0 +1,33 @@
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: azure.pipelineRef.azure-script
+  title: Azure script
+  description: A pipeline reference that allows you to run a script in an Azure environment
+  tags:
+    - tekton
+    - kubernetes
+    - create
+spec:
+  schema:
+    properties:
+      credentials:
+        type: object
+        format: secret
+        title: Azure Credentials
+        description: Azure credentials for authentication
+        specifications:
+          type: azure.secret.clientCredentials
+          mount: true
+          mountParamName: azureCredentialsRef
+      script:
+        type: string
+        title: Target Script
+        description: Target Script
+    required:
+      - credentials
+      - script
+  pipeline:
+    pipelineRef: azure.pipelines.azure-script
+    params:
+      script: '{{inputs.script}}'
