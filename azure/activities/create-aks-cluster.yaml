@@ -41,11 +41,33 @@ spec:
       - azCredentials
       - resourceGroup
       - clusterName
+  mirrored:
+    command:
+      type: string
+      value: |
+        echo "Creating Azure AKS cluster {{inputs.clusterName}} in {{inputs.resourceGroup.name}}"
+        az aks create --name {{inputs.clusterName}} --resource-group {{inputs.resourceGroup.name}} --location '{{inputs.resourceGroup.location}}' --vm-set-type VirtualMachineScaleSets --node-count {{inputs.nodeCount}} --node-vm-size {{inputs.nodeVmSize}} --enable-cluster-autoscaler --min-count 1 --max-count 6 --max-pods 100 --no-ssh-key --service-principal ${clientId} --client-secret ${clientSecret}
   handler:
     type: tekton.pipelineRef
     properties:
-      pipeline: helm.pipelineRef.helm-install
+      pipeline: azure.pipelineRef.azure-script
       inputs:
         credentials: '{{inputs.resourceGroup.subscription.credentials._name}}'
-        script: |
-          az aks create --name {{clusterName}} --resource-group {{resourceGroup.name}}-rg --location '{{resourceGroup.location}}' --vm-set-type VirtualMachineScaleSets --node-count {{nodeCount}} --node-vm-size {{nodeVmSize}} --enable-cluster-autoscaler --min-count 1 --max-count 6 --max-pods 100 --no-ssh-key --service-principal ${clientId} --client-secret ${clientSecret}
+        script: '{{inputs.command}}'
+      resources:
+        newResourceGroup:
+          apiVersion: records.clrslate.io
+          kind: azure.model.aks
+          metadata:
+            name: "azure.model.aks.{{inputs.clusterName}}"
+            title: "{{inputs.clusterName}}"
+            description: "Azure AKS cluster {{inputs.clusterName}}"
+            icon: Azure.AKS
+            labels:
+              category: Azure
+            tags:
+              - azure
+              - aks
+          spec:
+            name: "{{inputs.clusterName}}"
+            resourceGroup: "{{inputs.resourceGroup._name}}"
