@@ -15,7 +15,7 @@ spec:
         description: The version of the Helm chart
       repository:
         type: string
-        description: The URL of the Helm chart repository
+        description: The URL of the Helm chart repository    
     required:
-      - chart
+      - name
   

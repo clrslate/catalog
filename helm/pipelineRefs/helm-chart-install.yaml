@@ -54,7 +54,7 @@ spec:
     command:
       type: string
       value: |
-        {%- assign versionFlag = inputs.chart.version | default: "" -%}
+        {%- assign versionFlag = inputs.helmChart.version | default: "" -%}
         {%- if versionFlag != "" -%}
           {%- assign versionFlag = " --version " | append: versionFlag -%}
         {%- endif -%}
@@ -70,7 +70,11 @@ spec:
         {%- if inputs.values and inputs.values != empty -%}
           {%- assign setPairs = "" -%}
           {%- for key in inputs.values -%}
-            {%- assign setPairs = setPairs | append: key | append: "=" | append: inputs.values[key] | append: "," -%}
+            {%- if forloop.last -%}
+              {%- assign setPairs = setPairs | append: key | append: "=" | append: '"' | append: inputs.values[key] | append: '"' -%}
+            {%- else -%}
+              {%- assign setPairs = setPairs | append: key | append: "=" | append: '"' | append: inputs.values[key] | append: '"' | append: "," -%}
+            {%- endif -%}
           {%- endfor -%}
           {%- assign setValues = " --set " | append: setPairs -%}
         {%- endif -%}
@@ -84,7 +88,7 @@ spec:
         {{inputs.cluster.loginScript}}
         {{inputs.command}} --values manifests/values.yaml
     secretMounts:
-      credentialsRef: "{{inputs.cluster.credentials._name}}"
+      credentialsRef: "{{inputs.cluster.credentials._name}}"    
     files:
       values.yaml: |
-        {{inputs.helmChart.valuesFile}}
+        {% if inputs.helmChart.valuesFile %}{{inputs.helmChart.valuesFile}}{% else %}# Default empty values file{% endif %}
