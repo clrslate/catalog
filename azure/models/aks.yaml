@@ -28,7 +28,7 @@ spec:
     credentials:
       type: object
       format: secret
-      value: '{{inputs.resourceGroup.subscription.credentials._metadata.name}}'
+      value: '{{resourceGroup.subscription.credentials._name}}'
     loginScript:
       type: string
       value: |

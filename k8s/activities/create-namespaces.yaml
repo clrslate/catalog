@@ -29,23 +29,20 @@ spec:
     required:
       - cluster
       - namespace
-  reflections:
-    pipelineRef: 
+  mirrored:
+    command:
+      type: string
+      value: |
+        kubectl create namespace {{inputs.namespace}} --dry-run=client -o yaml | kubectl apply -f -
   handler:
-    type: tekton
+    type: tekton.pipelineRef
     properties:
-      pipelineRef: k8s.script.pipeline
-      params:
-        image: "{{inputs.cluster.image}}"
-        script: |
-          {{inputs.cluster.loginScript}}
-          kubectl create namespace {{inputs.namespace}} --dry-run=client -o yaml | yq '.metadata += {"labels":{"istio-injection":"enabled"}}' | kubectl apply -f -
-      secrets:
-        credentials:
-          name: "{{inputs.cluster.credentials._metadata.name}}"
-          mountParamName: credentialsRef
+      pipeline: k8s.pipelineRef.kubectl-script
+      inputs:
+        script: '{{inputs.command}}'
+        cluster: '{{inputs.cluster._name}}'
       resources:
-        newResourceGroup:
+        newNamespace:
           apiVersion: records.clrslate.io
           kind: k8s.model.namespace
           metadata:

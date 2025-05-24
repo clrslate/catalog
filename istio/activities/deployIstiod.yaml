@@ -1,11 +1,12 @@
+
 apiVersion: core.clrslate.io
 kind: Activity
 metadata:
-  name: clrslatePlatform.activity.deployClrSlateMongo
-  title: Deploy ClrSlate Mongo
-  description: Deploy ClrSlate Mongo
+  name: istio.activity.deployIstiod
+  title: Deploy Istiod
+  description: Deploy Istiod Helm Chart
   labels:
-    category: ClrSlate Platform
+    category: Istio
   tags:
     - create
 spec:
@@ -18,9 +19,6 @@ spec:
         description: Target Kubernetes Cluster
         specifications:
           type: azure.model.aks
-      namespace:
-        type: string
-        description: The namespace of the Helm release
     required:
       - cluster
   handler:
@@ -29,6 +27,6 @@ spec:
       pipeline: helm.pipelineRef.helm-install
       inputs: 
         cluster: "{{inputs.cluster._name}}"
-        helmChart: "clrslatePlatform.records.helmChart.clrslate-mongo"
-        releaseName: mongo
+        helmChart: "istio.records.helmChart.istiod"
+        releaseName: istiod
         namespace: "{{inputs.namespace}}"

@@ -1,0 +1,42 @@
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: k8s.pipelineRef.kubectl-script
+  title: Kubernetes script
+  description: An activity that runs kubectl commands in the given clusters
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: k8s
+  tags:
+    - tekton
+    - kubernetes
+    - create
+spec:
+  schema:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      script:
+        type: string
+        description: The script to be executed in the Kubernetes cluster
+    required:
+      - cluster
+      - script
+  mirrored:
+    command:
+      type: string
+      value: '{{script}}'        
+  pipeline:
+    pipelineRef: azure.pipelines.aks-script
+    params:
+      script: '{{inputs.script}}'
+      clusterName: '{{inputs.cluster.name}}'
+      resourceGroupName: '{{inputs.cluster.resourceGroup.name}}'
+    secretMounts:
+      azureCredentialsRef: "{{inputs.cluster.credentials._name}}"

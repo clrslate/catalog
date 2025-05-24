@@ -41,15 +41,14 @@ spec:
         default: false
       values:
         type: object
-        description: Collection of key-value pairs to be used for the Helm chart installation
+        description: Collection of key-value pairs to be used for the Helm chart installation (simple per-activity overrides, passed via --set)
       valuesFile:
         type: string
-        description: Values file template to be used for the Helm chart installation
+        description: Values file template to be used for the Helm chart installation (per-activity override, rendered as values.yaml)
     required:
       - cluster
       - helmChart
       - releaseName
-      - namespace  
   mirrored:
     command:
       type: string
@@ -78,17 +77,33 @@ spec:
           {%- endfor -%}
           {%- assign setValues = " --set " | append: setPairs -%}
         {%- endif -%}
-        {%- capture command -%}helm upgrade --install {{inputs.releaseName}} {{inputs.helmChart.name}} {{versionFlag}} {{repoFlag}} --namespace {{inputs.namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
+        {%- assign valuesFileFlag = "" -%}
+        {%- if inputs.valuesFile and inputs.valuesFile != "" -%}
+          {%- assign valuesFileFlag = valuesFileFlag | append: " --values manifests/values.yaml" -%}
+        {%- endif -%}
+        {%- assign chartValuesFileFlag = "" -%}
+        {%- if inputs.helmChart.values and inputs.helmChart.values != "" -%}
+          {%- assign chartValuesFileFlag = chartValuesFileFlag | append: " --values manifests/chart-values.yaml" -%}
+        {%- endif -%}
+        {%- assign nsFlag = "" -%}
+        {%- if inputs.namespace and inputs.namespace != "" -%}
+          {%- assign nsFlag = " --namespace " | append: inputs.namespace -%}
+        {%- elsif inputs.helmChart.namespace and inputs.helmChart.namespace != "" -%}
+          {%- assign nsFlag = " --namespace " | append: inputs.helmChart.namespace -%}
+        {%- endif -%}
+        {%- capture command -%}helm upgrade --install {{inputs.releaseName}} {{inputs.helmChart.name}} {{versionFlag}} {{repoFlag}}{{nsFlag}} {{createNsFlag}} {{setValues}}{{chartValuesFileFlag}}{{valuesFileFlag}} --wait{%- endcapture -%}
         {{- command | strip -}}
   pipeline:
-    pipelineRef: k8s.script.pipeline
+    pipelineRef: azure.pipelines.aks-script
     params:
-      image: "{{inputs.cluster.image}}"
-      script: |
-        {{inputs.cluster.loginScript}}
-        {{inputs.command}} --values manifests/values.yaml
+      image: '{{inputs.cluster.image}}'
+      script: '{{inputs.command}}'
+      clusterName: '{{inputs.cluster.name}}'
+      resourceGroupName: '{{inputs.cluster.resourceGroup.name}}'
     secretMounts:
-      credentialsRef: "{{inputs.cluster.credentials._name}}"    
+      azureCredentialsRef: "{{inputs.cluster.credentials._name}}"
     files:
       values.yaml: |
-        {% if inputs.helmChart.valuesFile %}{{inputs.helmChart.valuesFile}}{% else %}# Default empty values file{% endif %}
+        {% if inputs.valuesFile %}{{inputs.valuesFile}}{% else %}# Default empty values file{% endif %}
+      chart-values.yaml: |
+        {% if inputs.helmChart.values %}{{inputs.helmChart.values}}{% else %}# Default empty chart values file{% endif %}

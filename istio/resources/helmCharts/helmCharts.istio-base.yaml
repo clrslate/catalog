@@ -1,0 +1,11 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: istio.records.helmChart.istio-base
+  title: Istio Base
+  description: Istio base helm chart
+spec:
+  name: base
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.21.1
+  namespace: istio-system

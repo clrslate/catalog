@@ -15,7 +15,13 @@ spec:
         description: The version of the Helm chart
       repository:
         type: string
-        description: The URL of the Helm chart repository    
+        description: The URL of the Helm chart repository
+      namespace:
+        type: string
+        description: The default namespace for the Helm chart
+      values:
+        type: string
+        description: default values to be used for the chart
     required:
       - name
   

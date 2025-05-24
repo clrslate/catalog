@@ -1,0 +1,11 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: istio.records.helmChart.istio-istioGateway
+  title: Istio Gateway
+  description: Istio gateway helm chart
+spec:
+  name: gateway
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.21.1
+  namespace: istio-system
