@@ -1,0 +1,44 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metricsServer.activity.uninstall-metrics-server
+  title: Uninstall Kubernetes Metrics Server
+  description: Remove Kubernetes Metrics Server deployment from the specified cluster
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: metricsServer
+  tags:
+    - kubernetes
+    - metrics
+    - monitoring
+    - helm
+    - uninstall
+    - cleanup
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster where Metrics Server is deployed
+        specifications:
+          type: azure.model.aks
+      helmRelease:
+        type: object
+        format: resource
+        title: Helm Release
+        description: Metrics Server Helm release to uninstall
+        specifications:
+          type: helm.model.helmRelease
+    required:
+      - cluster
+      - helmRelease
+  handler:
+    type: activity
+    properties:
+      activity: helm.activity.helm-uninstall
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmRelease: "{{inputs.helmRelease._name}}"

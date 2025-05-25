@@ -1,0 +1,94 @@
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: helm.pipelineRef.helm-uninstall
+  title: Helm Uninstall
+  description: Generic pipeline that uninstalls any Helm release from clusters
+  labels:
+    category: Helm
+    owner: clrslate
+    package: helm
+  tags:
+    - tekton
+    - kubernetes
+    - cleanup
+    - uninstall
+spec:
+  schema:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      helmRelease:
+        type: object
+        format: resource
+        title: Helm Release
+        description: Helm release to uninstall
+        specifications:
+          type: helm.model.helmRelease
+      keepHistory:
+        type: boolean
+        description: Whether to keep release history after uninstallation
+        default: false
+      timeout:
+        type: string
+        description: Time to wait for uninstallation to complete
+        default: "300s"
+    required:
+      - cluster
+      - helmRelease
+  mirrored:
+    command:
+      type: string
+      value: |
+        {%- assign historyFlag = "" -%}
+        {%- if inputs.keepHistory -%}
+          {%- assign historyFlag = " --keep-history" -%}
+        {%- endif -%}
+        {%- assign timeoutFlag = "" -%}
+        {%- if inputs.timeout and inputs.timeout != "" -%}
+          {%- assign timeoutFlag = " --timeout " | append: inputs.timeout -%}
+        {%- endif -%}
+        {%- assign nsFlag = "" -%}
+        {%- if inputs.helmRelease.namespace and inputs.helmRelease.namespace != "" -%}
+          {%- assign nsFlag = " --namespace " | append: inputs.helmRelease.namespace -%}
+        {%- endif -%}
+        {%- capture command -%}helm uninstall {{inputs.helmRelease.name}}{{nsFlag}}{{timeoutFlag}}{{historyFlag}} --wait{%- endcapture -%}
+        {{- command | strip -}}
+  pipeline:
+    pipelineRef: azure.pipelines.aks-script
+    params:
+      image: '{{inputs.cluster.image}}'
+      script: |
+        # Pre-uninstall verification
+        echo "Verifying Helm release exists..."
+        if helm list{{nsFlag}} | grep -q "{{inputs.helmRelease.name}}"; then
+          echo "Found Helm release: {{inputs.helmRelease.name}}"
+          
+          # Execute uninstall command
+          {{inputs.command}}
+          
+          # Verify uninstallation
+          echo "Verifying uninstallation..."
+          if ! helm list{{nsFlag}} | grep -q "{{inputs.helmRelease.name}}"; then
+            echo "Helm release '{{inputs.helmRelease.name}}' successfully uninstalled"
+          else
+            echo "Warning: Release may still exist"
+            helm list{{nsFlag}}
+            exit 1
+          fi
+          
+        else
+          echo "Helm release '{{inputs.helmRelease.name}}' not found"
+          echo "Available releases:"
+          helm list{{nsFlag}}
+          exit 1
+        fi
+      clusterName: '{{inputs.cluster.name}}'
+      resourceGroupName: '{{inputs.cluster.resourceGroup.name}}'
+    secretMounts:
+      azureCredentialsRef: "{{inputs.cluster.credentials._name}}"

@@ -1,0 +1,29 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: metricsServer.records.helmChart.metrics-server
+  title: Kubernetes Metrics Server
+  description: Official Kubernetes Metrics Server Helm chart
+spec:
+  name: metrics-server
+  repository: https://kubernetes-sigs.github.io/metrics-server/
+  version: 3.12.1
+  namespace: kube-system
+  values: |
+    # Minimal overrides - only essential configuration changes
+    args:
+      - --cert-dir=/tmp
+      - --secure-port=10250
+      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      - --kubelet-use-node-status-port
+      - --metric-resolution=15s
+    
+    # Ensure security context for production
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsUser: 1000
+    
+    # Set as system critical workload
+    priorityClassName: system-cluster-critical

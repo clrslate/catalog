@@ -1,0 +1,66 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metricsServer.activity.deploy-metrics-server
+  title: Deploy Kubernetes Metrics Server
+  description: Deploy Kubernetes Metrics Server using Helm chart
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: metricsServer
+  tags:
+    - kubernetes
+    - metrics
+    - monitoring
+    - helm
+    - deployment
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster for Metrics Server deployment
+        specifications:
+          type: azure.model.aks
+    required:
+      - cluster
+  resources:
+    helmChart:
+      type: RecordEntry
+      value: metricsServer.records.helmChart.metrics-server
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: metricsServer.pipelineRef.metrics-server-install
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "{{inputs.helmChart._name}}"
+        releaseName: "{{inputs.helmChart.name}}"
+        namespace: "{{inputs.helmChart.namespace}}"
+        createNamespace: false
+      resources:
+        helmRelease:
+          apiVersion: records.clrslate.io
+          kind: helm.model.helmRelease
+          metadata:
+            name: "metricsServer.release.{{inputs.cluster._metadata.name}}.{{inputs.helmChart.name}}"
+            title: "Metrics Server Release"
+            description: "Metrics Server Helm release on {{inputs.cluster._metadata.title}}"
+            icon: Kubernetes.Metrics
+            labels:
+              category: Kubernetes
+              cluster: "{{inputs.cluster._metadata.name}}"
+              namespace: "{{inputs.helmChart.namespace}}"
+            tags:
+              - kubernetes
+              - metrics-server
+              - monitoring
+              - helm
+          spec:
+            name: "{{inputs.helmChart.name}}"
+            namespace: "{{inputs.helmChart.namespace}}"
+            createNamespace: false
+          relations:
+            chart: "{{inputs.helmChart._name}}"

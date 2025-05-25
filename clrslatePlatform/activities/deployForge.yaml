@@ -28,7 +28,7 @@ spec:
     type: console
     properties:
       output: |
-        {{helmChart.name}}.{{helmChart.version}}
+        {{inputs.helmChart.name}}.{{inputs.helmChart.version}}
 
 
   

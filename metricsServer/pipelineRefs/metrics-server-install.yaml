@@ -1,0 +1,139 @@
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: metricsServer.pipelineRef.metrics-server-install
+  title: Metrics Server Installation
+  description: Smart pipeline for deploying Kubernetes Metrics Server with pre-installation detection
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: metricsServer
+  tags:
+    - kubernetes
+    - metrics
+    - monitoring
+    - helm
+spec:
+  schema:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster for Metrics Server deployment
+        specifications:
+          type: azure.model.aks
+      helmChart:
+        type: object
+        format: resource
+        title: Helm Chart
+        description: Metrics Server Helm chart definition
+        specifications:
+          type: helm.model.helmChart
+    required:
+      - cluster
+      - helmChart
+  mirrored:
+    command:
+      type: string
+      value: |
+        set -e
+        echo "=== Metrics Server Installation ==="
+        echo "Cluster: {{inputs.cluster._metadata.title}}"
+        echo "Chart Version: {{inputs.helmChart.version}}"
+        
+        # Pre-deployment validation
+        echo "Validating cluster connectivity..."
+        kubectl cluster-info
+        
+        # Check for existing metrics-server deployment (any type)
+        echo "Checking for existing Metrics Server..."
+        
+        # Check if metrics-server deployment exists
+        if kubectl get deployment metrics-server -n kube-system &>/dev/null; then
+          echo "Found existing Metrics Server deployment"
+          
+          # Check if it's Helm-managed
+          if helm list -n kube-system | grep -q "metrics-server"; then
+            echo "Existing installation is Helm-managed, upgrading..."
+            OPERATION="upgrade"
+            PROCEED=true
+          else
+            echo "Existing installation is NOT Helm-managed (likely AKS pre-installed)"
+            
+            # Test if existing metrics server is working
+            echo "Testing existing Metrics Server functionality..."
+            if kubectl top nodes &>/dev/null; then
+              echo "✅ Existing Metrics Server is working properly"
+              echo "No installation needed - Metrics Server is already functional"
+              PROCEED=false
+            else
+              echo "⚠️  Existing Metrics Server exists but not working properly"
+              echo "Will replace with Helm-managed version..."
+              
+              # Remove existing non-Helm installation
+              echo "Removing existing non-Helm Metrics Server..."
+              kubectl delete deployment metrics-server -n kube-system --ignore-not-found=true
+              kubectl delete service metrics-server -n kube-system --ignore-not-found=true
+              kubectl delete serviceaccount metrics-server -n kube-system --ignore-not-found=true
+              kubectl delete clusterrole system:metrics-server --ignore-not-found=true
+              kubectl delete clusterrolebinding system:metrics-server --ignore-not-found=true
+              kubectl delete apiservice v1beta1.metrics.k8s.io --ignore-not-found=true
+              
+              # Wait for cleanup
+              echo "Waiting for cleanup to complete..."
+              sleep 10
+              
+              OPERATION="install"
+              PROCEED=true
+            fi
+          fi
+        else
+          echo "No existing Metrics Server found, installing new..."
+          OPERATION="install"
+          PROCEED=true
+        fi
+        
+        if [ "$PROCEED" = "true" ]; then
+          # Execute Helm installation
+          echo "Executing Helm $OPERATION..."
+          helm upgrade --install metrics-server {{inputs.helmChart.name}} \
+            --repo {{inputs.helmChart.repository}} \
+            --version {{inputs.helmChart.version}} \
+            --namespace kube-system \
+            --values manifests/chart-values.yaml \
+            --wait \
+            --timeout 600s
+          
+          # Post-deployment validation
+          echo "Validating deployment..."
+          kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=metrics-server -n kube-system --timeout=300s
+          
+          # Show final status
+          helm list -n kube-system | grep metrics-server
+        fi
+        
+        # Test metrics functionality (regardless of installation path)
+        echo "=== Final Validation ==="
+        echo "Testing metrics collection..."
+        sleep 10
+        
+        if kubectl top nodes; then
+          echo "✅ Metrics Server is working correctly!"
+        else
+          echo "⚠️  Metrics not yet available, may need more time to initialize"
+        fi
+        
+        echo "=== Installation Complete ==="
+  pipeline:
+    pipelineRef: azure.pipelines.aks-script
+    params:
+      image: '{{inputs.cluster.image}}'
+      script: '{{inputs.command}}'
+      clusterName: '{{inputs.cluster.name}}'
+      resourceGroupName: '{{inputs.cluster.resourceGroup.name}}'
+    secretMounts:
+      azureCredentialsRef: "{{inputs.cluster.credentials._name}}"
+    files:
+      chart-values.yaml: |
+        {% if inputs.helmChart.values %}{{inputs.helmChart.values}}{% else %}# Using chart defaults{% endif %}

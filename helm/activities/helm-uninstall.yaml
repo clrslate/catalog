@@ -1,0 +1,42 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: helm.activity.helm-uninstall
+  title: Uninstall Helm Release
+  description: Activity to uninstall a Helm release
+  labels:
+    category: Helm
+    owner: clrslate
+    package: helm
+  tags:
+    - helm
+    - kubernetes
+    - uninstall
+    - cleanup
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster containing the Helm release
+        specifications:
+          type: azure.model.aks
+      helmRelease:
+        type: object
+        format: resource
+        title: Helm Release
+        description: Helm release to uninstall
+        specifications:
+          type: helm.model.helmRelease
+    required:
+      - cluster
+      - helmRelease
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-uninstall
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmRelease: "{{inputs.helmRelease._name}}"

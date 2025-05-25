@@ -1,0 +1,20 @@
+name: metricsServer
+version: 0.1.0
+title: Kubernetes Metrics Server
+description: ClrSlate package for deploying and managing Kubernetes Metrics Server via Helm
+owner: Team ClrSlate
+icon: Kubernetes.Metrics
+color: '#326ce5'
+keywords:
+  - kubernetes
+  - metrics
+  - monitoring
+  - helm
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io
+dependencies:
+  - k8s
+  - helm
+optional_dependencies:
+  - azure
