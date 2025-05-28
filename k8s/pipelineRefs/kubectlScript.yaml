@@ -27,11 +27,7 @@ spec:
         description: The script to be executed in the Kubernetes cluster
     required:
       - cluster
-      - script
-  mirrored:
-    command:
-      type: string
-      value: '{{script}}'        
+      - script  
   pipeline:
     pipelineRef: azure.pipelines.aks-script
     params:

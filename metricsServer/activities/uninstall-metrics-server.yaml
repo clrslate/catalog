@@ -36,9 +36,9 @@ spec:
       - cluster
       - helmRelease
   handler:
-    type: activity
+    type: tekton.pipelineRef
     properties:
-      activity: helm.activity.helm-uninstall
+      pipeline: helm.pipelineRef.helm-uninstall
       inputs:
         cluster: "{{inputs.cluster._name}}"
         helmRelease: "{{inputs.helmRelease._name}}"
