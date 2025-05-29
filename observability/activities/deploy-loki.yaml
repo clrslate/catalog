@@ -1,0 +1,161 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: observability.activity.deploy-loki
+  title: Deploy Loki
+  description: Deploy Loki log aggregation system with configurable environment settings
+  labels:
+    category: Observability
+    package: observability
+    component: logging
+  tags:
+    - logging
+    - loki
+    - deployment
+    - helm
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster for deployment
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: Kubernetes namespace for Loki deployment
+        default: monitoring
+        pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+      config:
+        type: object
+        format: resource
+        title: Loki Configuration
+        description: Environment-specific configuration for Loki
+        specifications:
+          type: observability.model.lokiConfig
+      releaseName:
+        type: string
+        title: Release Name
+        description: Helm release name for Loki
+        default: loki
+      customValues:
+        type: string
+        title: Custom Values
+        description: Additional Helm values to override defaults
+        default: ""
+    required:
+      - cluster
+      - config
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "observability.records.helmChart.loki"
+        releaseName: "{{inputs.releaseName}}"
+        namespace: "{{inputs.namespace}}"
+        createNamespace: true
+        valuesFile: |
+          # Environment-specific configuration overrides
+          deploymentMode: {{inputs.config.deploymentMode}}
+          
+          loki:
+            commonConfig:
+              replication_factor: {{inputs.config.replication.factor}}
+            storage:
+              type: {{inputs.config.storage.type}}
+            limits_config:
+              ingestion_rate_mb: {{inputs.config.limits.ingestionRate | replace: "M", ""}}
+              retention_period: {{inputs.config.storage.retention}}
+              query_timeout: {{inputs.config.limits.queryTimeout}}
+          
+          {% if inputs.config.deploymentMode == "SingleBinary" %}
+          singleBinary:
+            replicas: 1
+            resources:
+              requests:
+                cpu: {{inputs.config.resources.requests.cpu}}
+                memory: {{inputs.config.resources.requests.memory}}
+              limits:
+                cpu: {{inputs.config.resources.limits.cpu}}
+                memory: {{inputs.config.resources.limits.memory}}
+            {% if inputs.config.storage.type == "filesystem" %}
+            persistence:
+              enabled: {% if inputs.config.environment == "prod" %}true{% else %}false{% endif %}
+              size: {{inputs.config.storage.size}}
+            {% endif %}
+            # Ensure writable directories for filesystem storage
+            {% if inputs.config.environment == "dev" %}
+            extraVolumes:
+              - name: loki-data
+                emptyDir: {}
+              - name: loki-rules
+                emptyDir: {}
+              - name: loki-compactor
+                emptyDir: {}
+            extraVolumeMounts:
+              - name: loki-data
+                mountPath: /var/loki
+              - name: loki-rules
+                mountPath: /var/loki/rules
+              - name: loki-compactor
+                mountPath: /var/loki/compactor
+            {% endif %}
+          
+          # Disable other components for single binary
+          write:
+            replicas: 0
+          read:
+            replicas: 0
+          backend:
+            replicas: 0
+          {% endif %}
+          
+          {% if inputs.config.deploymentMode == "SimpleScalable" %}
+          read:
+            replicas: 2
+            resources:
+              requests:
+                cpu: {{inputs.config.resources.requests.cpu}}
+                memory: {{inputs.config.resources.requests.memory}}
+              limits:
+                cpu: {{inputs.config.resources.limits.cpu}}
+                memory: {{inputs.config.resources.limits.memory}}
+          
+          write:
+            replicas: 2
+            resources:
+              requests:
+                cpu: {{inputs.config.resources.requests.cpu}}
+                memory: {{inputs.config.resources.requests.memory}}
+              limits:
+                cpu: {{inputs.config.resources.limits.cpu}}
+                memory: {{inputs.config.resources.limits.memory}}
+          
+          backend:
+            replicas: 2
+            resources:
+              requests:
+                cpu: {{inputs.config.resources.requests.cpu}}
+                memory: {{inputs.config.resources.requests.memory}}
+              limits:
+                cpu: {{inputs.config.resources.limits.cpu}}
+                memory: {{inputs.config.resources.limits.memory}}
+          
+          singleBinary:
+            replicas: 0
+          {% endif %}
+          
+          # Monitoring configuration
+          monitoring:
+            serviceMonitor:
+              enabled: true
+          
+          {% if inputs.customValues %}
+          # Custom user overrides
+          {{inputs.customValues}}
+          {% endif %}

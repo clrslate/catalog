@@ -1,0 +1,111 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: observability.activity.deploy-prometheus
+  title: Deploy Prometheus Stack
+  description: Deploy Prometheus monitoring stack with configurable environment settings
+  labels:
+    category: Observability
+    package: observability
+    component: monitoring
+  tags:
+    - monitoring
+    - prometheus
+    - alertmanager
+    - deployment
+    - helm
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster for deployment
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: Kubernetes namespace for Prometheus deployment
+        default: monitoring
+        pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+      config:
+        type: object
+        format: resource
+        title: Prometheus Configuration
+        description: Environment-specific configuration for Prometheus
+        specifications:
+          type: observability.model.prometheusConfig
+      releaseName:
+        type: string
+        title: Release Name
+        description: Helm release name for Prometheus
+        default: prometheus-stack
+      customValues:
+        type: string
+        title: Custom Values
+        description: Additional Helm values to override defaults
+        default: ""
+    required:
+      - cluster
+      - config
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "observability.records.helmChart.prometheus-stack"
+        releaseName: "{{inputs.releaseName}}"
+        namespace: "{{inputs.namespace}}"
+        createNamespace: true
+        valuesFile: |
+          # Environment-specific configuration overrides
+          prometheus:
+            prometheusSpec:
+              retention: {{inputs.config.retention}}
+              resources:
+                requests:
+                  cpu: {{inputs.config.resources.requests.cpu}}
+                  memory: {{inputs.config.resources.requests.memory}}
+                limits:
+                  cpu: {{inputs.config.resources.limits.cpu}}
+                  memory: {{inputs.config.resources.limits.memory}}
+              {% if inputs.config.storage.enabled %}
+              storageSpec:
+                volumeClaimTemplate:
+                  spec:
+                    {% if inputs.config.storage.storageClass %}
+                    storageClassName: {{inputs.config.storage.storageClass}}
+                    {% endif %}
+                    accessModes: ["ReadWriteOnce"]
+                    resources:
+                      requests:
+                        storage: {{inputs.config.storage.size}}
+              {% endif %}
+              serviceMonitorSelectorNilUsesHelmValues: false
+              {% if inputs.config.serviceMonitor.enabled %}
+              serviceMonitorSelector: {{inputs.config.serviceMonitor.namespaceSelector | to_yaml}}
+              serviceMonitorNamespaceSelector: {{inputs.config.serviceMonitor.namespaceSelector | to_yaml}}
+              {% endif %}
+          
+          alertmanager:
+            alertmanagerSpec:
+              retention: {{inputs.config.alerting.retention}}
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+          
+          # Disable Grafana - deployed separately
+          grafana:
+            enabled: false
+          
+          {% if inputs.customValues %}
+          # Custom user overrides
+          {{inputs.customValues}}
+          {% endif %}

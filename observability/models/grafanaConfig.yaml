@@ -1,0 +1,122 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: observability.model.grafanaConfig
+  title: Grafana Configuration
+  description: Configuration model for Grafana deployment settings
+  labels:
+    category: Observability
+    package: observability
+spec:
+  schema:
+    properties:
+      environment:
+        type: string
+        title: Environment Type
+        description: Deployment environment (dev or prod)
+        enum: ["dev", "prod"]
+        default: dev
+      persistence:
+        type: object
+        title: Persistence Configuration
+        description: Dashboard and configuration persistence
+        properties:
+          enabled:
+            type: boolean
+            title: Enable Persistence
+            description: Whether to persist Grafana data
+            default: false
+          size:
+            type: string
+            title: Storage Size
+            description: Size of persistent volume
+            default: "1Gi"
+          storageClass:
+            type: string
+            title: Storage Class
+            description: Kubernetes storage class name
+            default: ""
+      admin:
+        type: object
+        title: Admin Configuration
+        description: Admin user settings
+        properties:
+          user:
+            type: string
+            title: Admin Username
+            description: Default admin username
+            default: "admin"
+          password:
+            type: string
+            title: Admin Password
+            description: Default admin password (use secrets in production)
+            default: "admin123"
+      datasources:
+        type: object
+        title: Datasource Configuration
+        description: Pre-configured datasources
+        properties:
+          prometheus:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                title: Enable Prometheus Datasource
+                default: true
+              url:
+                type: string
+                title: Prometheus URL
+                description: Prometheus service URL
+                default: "http://prometheus-server:80"
+          loki:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                title: Enable Loki Datasource
+                default: true
+              url:
+                type: string
+                title: Loki URL
+                description: Loki service URL
+                default: "http://loki:3100"
+      dashboards:
+        type: object
+        title: Dashboard Configuration
+        description: Pre-installed dashboards
+        properties:
+          kubernetes:
+            type: boolean
+            title: Enable Kubernetes Dashboards
+            description: Install standard Kubernetes monitoring dashboards
+            default: true
+          prometheus:
+            type: boolean
+            title: Enable Prometheus Dashboards
+            description: Install Prometheus monitoring dashboards
+            default: true
+      resources:
+        type: object
+        title: Resource Limits
+        description: CPU and memory resource configuration
+        properties:
+          requests:
+            type: object
+            properties:
+              cpu:
+                type: string
+                default: "100m"
+              memory:
+                type: string
+                default: "128Mi"
+          limits:
+            type: object
+            properties:
+              cpu:
+                type: string
+                default: "200m"
+              memory:
+                type: string
+                default: "256Mi"
+    required:
+      - environment

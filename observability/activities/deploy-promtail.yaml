@@ -1,0 +1,163 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: observability.activity.deploy-promtail
+  title: Deploy Promtail
+  description: Deploy Promtail log collection agents as DaemonSet
+  labels:
+    category: Observability
+    package: observability
+    component: logging
+  tags:
+    - logging
+    - promtail
+    - log-collection
+    - deployment
+    - helm
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster for deployment
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: Kubernetes namespace for Promtail deployment
+        default: monitoring
+        pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+      lokiUrl:
+        type: string
+        title: Loki URL
+        description: URL of the Loki service to send logs to
+        default: "http://loki:3100/loki/api/v1/push"
+      releaseName:
+        type: string
+        title: Release Name
+        description: Helm release name for Promtail
+        default: promtail
+      customValues:
+        type: string
+        title: Custom Values
+        description: Additional Helm values to override defaults
+        default: ""
+    required:
+      - cluster
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "observability.records.helmChart.promtail"
+        releaseName: "{{inputs.releaseName}}"
+        namespace: "{{inputs.namespace}}"
+        createNamespace: true
+        valuesFile: |
+          # Promtail configuration
+          config:
+            logLevel: info
+            serverPort: 3101
+            clients:
+              - url: {{inputs.lokiUrl}}
+                tenant_id: ""
+            
+            positions:
+              filename: /tmp/positions.yaml
+            
+            target_config:
+              sync_period: 10s
+            
+            scrape_configs:
+              - job_name: kubernetes-pods
+                kubernetes_sd_configs:
+                  - role: pod
+                pipeline_stages:
+                  - cri: {}
+                relabel_configs:
+                  - source_labels:
+                      - __meta_kubernetes_pod_controller_name
+                    regex: ([0-9a-z-.]+?)(-[0-9a-f]{8,10})?
+                    target_label: __tmp_controller_name
+                  - source_labels:
+                      - __meta_kubernetes_pod_label_app_kubernetes_io_name
+                      - __meta_kubernetes_pod_label_app
+                      - __tmp_controller_name
+                      - __meta_kubernetes_pod_name
+                    regex: ^;*([^;]+)(;.*)?$
+                    target_label: app
+                    replacement: $1
+                  - source_labels:
+                      - __meta_kubernetes_pod_label_app_kubernetes_io_instance
+                      - __meta_kubernetes_pod_label_instance
+                    regex: ^;*([^;]+)(;.*)?$
+                    target_label: instance
+                    replacement: $1
+                  - source_labels:
+                      - __meta_kubernetes_pod_label_app_kubernetes_io_component
+                      - __meta_kubernetes_pod_label_component
+                    regex: ^;*([^;]+)(;.*)?$
+                    target_label: component
+                    replacement: $1
+                  - action: replace
+                    source_labels:
+                    - __meta_kubernetes_pod_node_name
+                    target_label: node_name
+                  - action: replace
+                    source_labels:
+                    - __meta_kubernetes_namespace
+                    target_label: namespace
+                  - action: replace
+                    replacement: /var/log/pods/*$1/*.log
+                    separator: /
+                    source_labels:
+                    - __meta_kubernetes_pod_uid
+                    - __meta_kubernetes_pod_container_name
+                    target_label: __path__
+          
+          # DaemonSet configuration
+          daemonset:
+            enabled: true
+          
+          # Resources
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          
+          # ServiceMonitor for Prometheus monitoring
+          serviceMonitor:
+            enabled: true
+            labels: {}
+            interval: 30s
+            scrapeTimeout: 10s
+          
+          # Tolerations for running on all nodes
+          tolerations:
+            - effect: NoSchedule
+              operator: Exists
+            - effect: NoExecute
+              operator: Exists
+          
+          # Security context
+          podSecurityContext:
+            runAsUser: 0
+            runAsGroup: 0
+          
+          # Update strategy
+          updateStrategy:
+            type: RollingUpdate
+            rollingUpdate:
+              maxUnavailable: 1
+          
+          {% if inputs.customValues %}
+          # Custom user overrides
+          {{inputs.customValues}}
+          {% endif %}

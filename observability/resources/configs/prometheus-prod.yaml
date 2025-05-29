@@ -1,0 +1,35 @@
+apiVersion: records.clrslate.io
+kind: observability.model.prometheusConfig
+metadata:
+  name: observability.records.config.prometheus-prod
+  title: Prometheus Production Configuration
+  description: Production environment configuration for Prometheus
+  labels:
+    category: Observability
+    package: observability
+    environment: prod
+    component: monitoring
+  tags:
+    - prometheus
+    - production
+    - monitoring
+spec:
+  environment: prod
+  retention: "30d"
+  storage:
+    enabled: true
+    size: "50Gi"
+    storageClass: "premium-ssd"
+  resources:
+    requests:
+      cpu: "1000m"
+      memory: "2Gi"
+    limits:
+      cpu: "2000m"
+      memory: "4Gi"
+  alerting:
+    enabled: true
+    retention: "168h"
+  serviceMonitor:
+    enabled: true
+    namespaceSelector: {}

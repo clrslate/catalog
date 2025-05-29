@@ -1,0 +1,147 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: observability.records.helmChart.grafana
+  title: Grafana
+  description: Grafana visualization platform helm chart
+  labels:
+    category: Observability
+    package: observability
+    component: visualization
+  tags:
+    - visualization
+    - grafana
+    - dashboards
+    - helm
+spec:
+  name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 7.3.9
+  namespace: monitoring
+  values: |
+    # Default values for Grafana
+    # Basic configuration - use config records for environment-specific overrides
+    
+    # Admin credentials (use secrets in production)
+    adminUser: admin
+    adminPassword: admin123
+    
+    # Persistence
+    persistence:
+      enabled: false
+      size: 1Gi
+      accessModes:
+        - ReadWriteOnce
+    
+    # Resources
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 200m
+        memory: 256Mi
+    
+    # Service configuration
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: 3000
+    
+    # Security context
+    securityContext:
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472
+    
+    # Datasources configuration
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-stack-kube-prom-prometheus:9090
+            access: proxy
+            isDefault: true
+            editable: true
+          - name: Loki
+            type: loki
+            url: http://loki:3100
+            access: proxy
+            editable: true
+    
+    # Dashboard providers
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: 'default'
+            orgId: 1
+            folder: ''
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+          - name: 'kubernetes'
+            orgId: 1
+            folder: 'Kubernetes'
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/kubernetes
+    
+    # Pre-configured dashboards - disabled to avoid download issues
+    dashboards: {}
+    
+    # Grafana configuration
+    grafana.ini:
+      analytics:
+        check_for_updates: false
+        check_for_plugin_updates: false
+      log:
+        mode: console
+      grafana_net:
+        url: https://grafana.net
+      server:
+        domain: "{{ if (and .Values.ingress.enabled .Values.ingress.hosts) }}{{ .Values.ingress.hosts | first }}{{ else }}''{{ end }}"
+      auth:
+        disable_login_form: false
+      auth.anonymous:
+        enabled: false
+    
+    # ServiceMonitor for Prometheus monitoring
+    serviceMonitor:
+      enabled: true
+      labels: {}
+      interval: 30s
+      scrapeTimeout: 30s
+      path: /metrics
+    
+    # Sidecar configuration for automatic dashboard discovery
+    sidecar:
+      dashboards:
+        enabled: true
+        label: grafana_dashboard
+        labelValue: "1"
+        folder: /tmp/dashboards
+        searchNamespace: ALL
+      datasources:
+        enabled: true
+        label: grafana_datasource
+        labelValue: "1"
+        searchNamespace: ALL
+    
+    # Image configuration
+    image:
+      repository: grafana/grafana
+      tag: "10.4.0"
+      pullPolicy: IfNotPresent
+    
+    # Environment variables
+    env:
+      GF_EXPLORE_ENABLED: true
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_LOG_FILTERS: rendering:debug

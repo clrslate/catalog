@@ -1,0 +1,35 @@
+apiVersion: records.clrslate.io
+kind: observability.model.prometheusConfig
+metadata:
+  name: observability.records.config.prometheus-dev
+  title: Prometheus Development Configuration
+  description: Development environment configuration for Prometheus
+  labels:
+    category: Observability
+    package: observability
+    environment: dev
+    component: monitoring
+  tags:
+    - prometheus
+    - development
+    - monitoring
+spec:
+  environment: dev
+  retention: "7d"
+  storage:
+    enabled: false
+    size: "5Gi"
+    storageClass: ""
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+  alerting:
+    enabled: true
+    retention: "72h"
+  serviceMonitor:
+    enabled: true
+    namespaceSelector: {}

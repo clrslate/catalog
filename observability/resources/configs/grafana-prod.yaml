@@ -1,0 +1,41 @@
+apiVersion: records.clrslate.io
+kind: observability.model.grafanaConfig
+metadata:
+  name: observability.records.config.grafana-prod
+  title: Grafana Production Configuration
+  description: Production environment configuration for Grafana
+  labels:
+    category: Observability
+    package: observability
+    environment: prod
+    component: visualization
+  tags:
+    - grafana
+    - production
+    - visualization
+spec:
+  environment: prod
+  persistence:
+    enabled: true
+    size: "10Gi"
+    storageClass: "premium-ssd"
+  admin:
+    user: "admin"
+    password: "CHANGE_ME_IN_PRODUCTION"
+  datasources:
+    prometheus:
+      enabled: true
+      url: "http://prometheus-stack-kube-prom-prometheus:9090"
+    loki:
+      enabled: true
+      url: "http://loki:3100"
+  dashboards:
+    kubernetes: true
+    prometheus: true
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"

@@ -1,0 +1,190 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: observability.activity.deploy-grafana
+  title: Deploy Grafana
+  description: Deploy Grafana visualization platform with configurable datasources and dashboards
+  labels:
+    category: Observability
+    package: observability
+    component: visualization
+  tags:
+    - visualization
+    - grafana
+    - dashboards
+    - deployment
+    - helm
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster for deployment
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: Kubernetes namespace for Grafana deployment
+        default: monitoring
+        pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+      config:
+        type: object
+        format: resource
+        title: Grafana Configuration
+        description: Environment-specific configuration for Grafana
+        specifications:
+          type: observability.model.grafanaConfig
+      releaseName:
+        type: string
+        title: Release Name
+        description: Helm release name for Grafana
+        default: grafana
+      customValues:
+        type: string
+        title: Custom Values
+        description: Additional Helm values to override defaults
+        default: ""
+    required:
+      - cluster
+      - config
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "observability.records.helmChart.grafana"
+        releaseName: "{{inputs.releaseName}}"
+        namespace: "{{inputs.namespace}}"
+        createNamespace: true
+        valuesFile: |
+          # Environment-specific configuration overrides
+          
+          # Admin credentials
+          adminUser: "{{inputs.config.admin.user}}"
+          adminPassword: "{{inputs.config.admin.password}}"
+          
+          # Persistence configuration
+          persistence:
+            enabled: {{inputs.config.persistence.enabled}}
+            size: {{inputs.config.persistence.size}}
+            {% if inputs.config.persistence.storageClass %}
+            storageClassName: {{inputs.config.persistence.storageClass}}
+            {% endif %}
+            accessModes:
+              - ReadWriteOnce
+          
+          # Resources
+          resources:
+            requests:
+              cpu: {{inputs.config.resources.requests.cpu}}
+              memory: {{inputs.config.resources.requests.memory}}
+            limits:
+              cpu: {{inputs.config.resources.limits.cpu}}
+              memory: {{inputs.config.resources.limits.memory}}
+          
+          # Service configuration
+          service:
+            type: ClusterIP
+            port: 80
+            targetPort: 3000
+          
+          # Datasources configuration
+          datasources:
+            datasources.yaml:
+              apiVersion: 1
+              datasources:
+                {% if inputs.config.datasources.prometheus.enabled %}
+                - name: Prometheus
+                  type: prometheus
+                  url: "{{inputs.config.datasources.prometheus.url}}"
+                  access: proxy
+                  isDefault: true
+                  editable: true
+                {% endif %}
+                {% if inputs.config.datasources.loki.enabled %}
+                - name: Loki
+                  type: loki
+                  url: "{{inputs.config.datasources.loki.url}}"
+                  access: proxy
+                  editable: true
+                {% endif %}
+          
+          # Dashboard providers
+          dashboardProviders:
+            dashboardproviders.yaml:
+              apiVersion: 1
+              providers:
+                - name: 'default'
+                  orgId: 1
+                  folder: ''
+                  type: file
+                  disableDeletion: false
+                  editable: true
+                  options:
+                    path: /var/lib/grafana/dashboards/default
+                {% if inputs.config.dashboards.kubernetes %}
+                - name: 'kubernetes'
+                  orgId: 1
+                  folder: 'Kubernetes'
+                  type: file
+                  disableDeletion: false
+                  editable: true
+                  options:
+                    path: /var/lib/grafana/dashboards/kubernetes
+                {% endif %}
+          
+          # Pre-configured dashboards - disabled to avoid download issues
+          dashboards: {}
+          
+          # Grafana configuration
+          grafana.ini:
+            analytics:
+              check_for_updates: false
+              check_for_plugin_updates: false
+            log:
+              mode: console
+            grafana_net:
+              url: https://grafana.net
+            server:
+              domain: ""
+            auth:
+              disable_login_form: false
+            auth.anonymous:
+              enabled: false
+          
+          # ServiceMonitor for Prometheus monitoring
+          serviceMonitor:
+            enabled: true
+            labels: {}
+            interval: 30s
+            scrapeTimeout: 30s
+            path: /metrics
+          
+          # Sidecar configuration for automatic discovery
+          sidecar:
+            dashboards:
+              enabled: true
+              label: grafana_dashboard
+              labelValue: "1"
+              folder: /tmp/dashboards
+              searchNamespace: ALL
+            datasources:
+              enabled: true
+              label: grafana_datasource
+              labelValue: "1"
+              searchNamespace: ALL
+          
+          # Environment variables
+          env:
+            GF_EXPLORE_ENABLED: true
+            GF_PANELS_DISABLE_SANITIZE_HTML: true
+            GF_LOG_FILTERS: rendering:debug
+          
+          {% if inputs.customValues %}
+          # Custom user overrides
+          {{inputs.customValues}}
+          {% endif %}

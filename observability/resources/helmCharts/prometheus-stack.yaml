@@ -1,0 +1,87 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: observability.records.helmChart.prometheus-stack
+  title: Prometheus Stack
+  description: Prometheus monitoring stack helm chart (kube-prometheus-stack)
+  labels:
+    category: Observability
+    package: observability
+    component: monitoring
+  tags:
+    - monitoring
+    - prometheus
+    - alertmanager
+    - helm
+spec:
+  name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 58.2.0
+  namespace: monitoring
+  values: |
+    # Default values for kube-prometheus-stack
+    # Basic configuration - use config records for environment-specific overrides
+    prometheus:
+      prometheusSpec:
+        enableRemoteWriteReceiver: true
+        serviceMonitorSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: {}
+        serviceMonitorNamespaceSelector: {}
+        retention: 15d
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+    
+    alertmanager:
+      alertmanagerSpec:
+        retention: 120h
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+    
+    grafana:
+      # Disable Grafana from prometheus stack - we deploy it separately
+      enabled: false
+    
+    nodeExporter:
+      enabled: true
+    
+    kubeStateMetrics:
+      enabled: true
+    
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: true
+        etcd: true
+        configReloaders: true
+        general: true
+        k8s: true
+        kubeApiserverAvailability: true
+        kubeApiserverBurnrate: true
+        kubeApiserverHistogram: true
+        kubeApiserverSlos: true
+        kubelet: true
+        kubeProxy: true
+        kubePrometheusGeneral: true
+        kubePrometheusNodeRecording: true
+        kubernetesApps: true
+        kubernetesResources: true
+        kubernetesStorage: true
+        kubernetesSystem: true
+        kubeScheduler: true
+        kubeStateMetrics: true
+        network: true
+        node: true
+        nodeExporterAlerting: true
+        nodeExporterRecording: true
+        prometheus: true
+        prometheusOperator: true

@@ -1,0 +1,98 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: observability.model.prometheusConfig
+  title: Prometheus Configuration
+  description: Configuration model for Prometheus deployment settings
+  labels:
+    category: Observability
+    package: observability
+spec:
+  schema:
+    properties:
+      environment:
+        type: string
+        title: Environment Type
+        description: Deployment environment (dev or prod)
+        enum: ["dev", "prod"]
+        default: dev
+      retention:
+        type: string
+        title: Data Retention Period
+        description: How long to retain metrics data
+        default: "15d"
+      storage:
+        type: object
+        title: Storage Configuration
+        description: Persistent storage settings
+        properties:
+          enabled:
+            type: boolean
+            title: Enable Persistent Storage
+            description: Whether to use persistent storage
+            default: false
+          size:
+            type: string
+            title: Storage Size
+            description: Size of persistent volume
+            default: "8Gi"
+          storageClass:
+            type: string
+            title: Storage Class
+            description: Kubernetes storage class name
+            default: ""
+      resources:
+        type: object
+        title: Resource Limits
+        description: CPU and memory resource configuration
+        properties:
+          requests:
+            type: object
+            properties:
+              cpu:
+                type: string
+                default: "500m"
+              memory:
+                type: string
+                default: "512Mi"
+          limits:
+            type: object
+            properties:
+              cpu:
+                type: string
+                default: "1000m"
+              memory:
+                type: string
+                default: "1Gi"
+      alerting:
+        type: object
+        title: Alerting Configuration
+        description: Alert Manager settings
+        properties:
+          enabled:
+            type: boolean
+            title: Enable Alerting
+            description: Whether to enable Alert Manager
+            default: true
+          retention:
+            type: string
+            title: Alert Retention
+            description: How long to retain alert data
+            default: "120h"
+      serviceMonitor:
+        type: object
+        title: Service Monitor Configuration
+        description: Service monitoring settings
+        properties:
+          enabled:
+            type: boolean
+            title: Enable Service Monitoring
+            description: Whether to enable automatic service discovery
+            default: true
+          namespaceSelector:
+            type: object
+            title: Namespace Selector
+            description: Which namespaces to monitor
+            default: {}
+    required:
+      - environment

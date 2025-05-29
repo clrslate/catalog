@@ -1,0 +1,34 @@
+apiVersion: records.clrslate.io
+kind: observability.model.lokiConfig
+metadata:
+  name: observability.records.config.loki-dev
+  title: Loki Development Configuration
+  description: Development environment configuration for Loki
+  labels:
+    category: Observability
+    package: observability
+    environment: dev
+    component: logging
+  tags:
+    - loki
+    - development
+    - logging
+spec:
+  environment: dev
+  deploymentMode: "SingleBinary"
+  storage:
+    type: "filesystem"
+    retention: "72h"
+    size: "5Gi"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "250m"
+      memory: "256Mi"
+  replication:
+    factor: 1
+  limits:
+    ingestionRate: "2M"
+    queryTimeout: "30s"

@@ -1,0 +1,42 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: observability.model.monitoringNamespace
+  title: Monitoring Namespace Configuration
+  description: Configuration model for monitoring namespace setup
+  labels:
+    category: Observability
+    package: observability
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        title: Namespace Name
+        description: Name of the monitoring namespace
+        default: monitoring
+        pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+      environment:
+        type: string
+        title: Environment Type
+        description: Deployment environment (dev or prod)
+        enum: ["dev", "prod"]
+        default: dev
+      createNamespace:
+        type: boolean
+        title: Create Namespace
+        description: Whether to create the namespace if it doesn't exist
+        default: true
+      labels:
+        type: object
+        title: Namespace Labels
+        description: Labels to apply to the namespace
+        additionalProperties:
+          type: string
+        default:
+          environment: "{{environment}}"
+          managed-by: clrslate
+          component: observability
+    required:
+      - name
+      - environment

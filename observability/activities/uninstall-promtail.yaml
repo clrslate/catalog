@@ -1,0 +1,68 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: observability.activity.uninstall-promtail
+  title: Uninstall Promtail
+  description: Remove Promtail log collection agents from the cluster
+  labels:
+    category: Observability
+    package: observability
+    component: logging
+  tags:
+    - logging
+    - promtail
+    - log-collection
+    - uninstall
+    - cleanup
+    - helm
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes cluster for uninstallation
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: Kubernetes namespace where Promtail is deployed
+        default: monitoring
+        pattern: "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+      releaseName:
+        type: string
+        title: Release Name
+        description: Helm release name for Promtail
+        default: promtail
+      keepHistory:
+        type: boolean
+        title: Keep History
+        description: Whether to keep release history after uninstallation
+        default: false
+      timeout:
+        type: string
+        title: Timeout
+        description: Time to wait for uninstallation to complete
+        default: "300s"
+    required:
+      - cluster
+  mirrored:
+    helmRelease:
+      type: object
+      format: resource
+      value: |
+        {
+          "name": "{{inputs.releaseName}}",
+          "namespace": "{{inputs.namespace}}"
+        }
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-uninstall
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmRelease: "{{inputs.helmRelease}}"
+        keepHistory: "{{inputs.keepHistory}}"
+        timeout: "{{inputs.timeout}}"
