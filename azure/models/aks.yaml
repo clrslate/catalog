@@ -5,7 +5,6 @@ metadata:
   title: Azure Kubernetes Service Cluster
   description: Represents an Azure Kubernetes Service (AKS) cluster
   labels:
-    implements: "k8s.model.cluster"
     owner: clrslate
     package: azure
 spec:
