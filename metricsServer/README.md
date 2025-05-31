@@ -1,17 +1,21 @@
 # Kubernetes Metrics Server Package
 
-This ClrSlate package provides simple deployment of Kubernetes Metrics Server via Helm charts.
+This ClrSlate package provides comprehensive deployment and management of Kubernetes Metrics Server for container resource metrics collection and autoscaling support.
 
 ## Overview
 
-The Metrics Server is a scalable, efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines. This package enables easy deployment and management of Metrics Server across Kubernetes clusters.
+The Metrics Server is a scalable, efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines. This package enables intelligent deployment, configuration, and lifecycle management of Metrics Server across Kubernetes clusters with production-ready security and monitoring capabilities.
 
 ## Features
 
-- **Helm-based Deployment**: Uses official Kubernetes SIGs Metrics Server Helm chart
-- **Cluster Integration**: Seamless integration with existing Kubernetes clusters
-- **Security Optimized**: Production-ready security configurations
-- **Minimal Configuration**: Sensible defaults with minimal user input required
+- **Intelligent Deployment**: Automatically detects and handles existing metrics-server installations
+- **Production Security**: Hardened security configurations with comprehensive access controls
+- **Cluster Integration**: Seamless integration with existing Kubernetes clusters and cloud providers
+- **High Availability**: Pod disruption budgets and anti-affinity rules for resilient deployments
+- **Network Security**: Built-in network policies for traffic isolation and protection
+- **Resource Optimization**: Efficient resource allocation and performance tuning
+- **Multi-Platform Support**: Compatible with standard Kubernetes, OpenShift, and major cloud providers
+- **Monitoring Ready**: Built-in Prometheus integration and comprehensive health checks
 
 ## Dependencies
 
@@ -95,20 +99,36 @@ The package includes intelligent pre-installation detection:
 - **Self-managed clusters**: Typically no pre-installed metrics-server
 - **Broken installations**: Automatically cleaned up and replaced
 
-### Helm Chart Configuration
+### Chart Configuration
 
-The package uses minimal overrides to the official metrics-server chart:
+The package leverages an enterprise-grade metrics-server chart with comprehensive production features:
 
-- **Security Context**: Non-root user, read-only filesystem
-- **Arguments**: Optimized for Kubernetes environments
-- **Priority Class**: Set as system-critical workload
+#### Security Features
+- **Enhanced Security Context**: Non-root user (UID 1001), read-only filesystem, dropped capabilities
+- **Security Profiles**: SELinux and seccomp profiles for enhanced container security
+- **Network Policies**: Built-in network policies for traffic isolation
+- **RBAC**: Fine-grained role-based access controls
+- **OpenShift Compatibility**: Automatic security context adaptation for OpenShift
+
+#### Production Features
+- **Pod Disruption Budget**: Ensures availability during cluster maintenance
+- **Anti-Affinity**: Soft pod anti-affinity for better distribution
+- **Health Checks**: Comprehensive liveness, readiness, and startup probes
+- **Resource Management**: Resource presets and limits for optimal performance
+- **Monitoring**: Built-in ServiceMonitor support for Prometheus integration
+
+#### Chart Versions
+- **Chart Version**: 7.4.5
+- **App Version**: 0.7.2 (metrics-server)
+- **Container Image**: metrics-server:0.7.2-debian-12-r24
 
 ### Resource Requirements
 
 Default resource configuration:
-- CPU: As per chart defaults
-- Memory: As per chart defaults
-- Priority: system-cluster-critical
+- **Resource Preset**: nano (optimized for metrics collection)
+- **Security Priority**: system-cluster-critical
+- **Memory**: Optimized for container metrics aggregation
+- **CPU**: Minimal CPU requirements with efficient metric collection
 
 ## Integration
 
@@ -155,9 +175,34 @@ kubectl top pods -A
 kubectl get apiservice v1beta1.metrics.k8s.io
 ```
 
+## Chart Benefits
+
+This package leverages an enterprise-grade metrics-server chart providing several key advantages:
+
+### Enterprise Features
+- **Enhanced Security**: Comprehensive security contexts, network policies, and RBAC
+- **Production Readiness**: Pod disruption budgets, health checks, and resource management
+- **Multi-Platform Support**: OpenShift compatibility with automatic security adaptation
+- **Monitoring Integration**: Built-in Prometheus ServiceMonitor support
+
+### Operational Benefits
+- **Optimized Images**: Security-patched and performance-optimized container images
+- **Regular Updates**: Frequent security updates and patches
+- **Comprehensive Configuration**: Extensive configuration options and examples
+- **Active Maintenance**: Well-maintained with community-driven improvements
+
+### Advanced Configuration
+The chart provides extensive configuration options including:
+- Fine-grained security controls
+- Resource management and optimization
+- Network policy configurations
+- Advanced scheduling options
+- Monitoring and observability features
+
 ## Support
 
 For issues and questions:
 - Check ClrSlate platform documentation
+- Review chart documentation and configuration guides
 - Review Kubernetes Metrics Server official documentation
 - Contact platform engineering team

@@ -2,28 +2,50 @@ apiVersion: records.clrslate.io
 kind: helm.model.helmChart
 metadata:
   name: metricsServer.records.helmChart.metrics-server
-  title: Kubernetes Metrics Server
-  description: Official Kubernetes Metrics Server Helm chart
+  title: Kubernetes Metrics Server (Bitnami)
+  description: Bitnami Metrics Server Helm chart for Kubernetes cluster resource metrics aggregation
 spec:
   name: metrics-server
-  repository: https://kubernetes-sigs.github.io/metrics-server/
-  version: 3.12.1
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 7.4.5
   namespace: kube-system
   values: |
-    # Minimal overrides - only essential configuration changes
-    args:
+    # OpenShift compatibility
+    global:
+      compatibility:
+        openshift:
+          adaptSecurityContext: auto
+
+    # Service Account security
+    serviceAccount:
+      automountServiceAccountToken: false
+
+    # API Service configuration - disable to use existing
+    apiService:
+      create: false
+      insecureSkipTLSVerify: true
+
+    # Essential metrics-server arguments for production
+    extraArgs:
       - --cert-dir=/tmp
-      - --secure-port=10250
+      - --secure-port=8443
       - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
       - --kubelet-use-node-status-port
       - --metric-resolution=15s
+
+    # Pod Disruption Budget for high availability
+    pdb:
+      create: true
+
+    # System-critical scheduling priority
+    priorityClassName: "system-cluster-critical"
     
-    # Ensure security context for production
-    securityContext:
-      allowPrivilegeEscalation: false
-      readOnlyRootFilesystem: true
-      runAsNonRoot: true
-      runAsUser: 1000
-    
-    # Set as system critical workload
-    priorityClassName: system-cluster-critical
+    # Soft anti-affinity for better distribution
+    podAntiAffinityPreset: soft
+
+    # Optimized resource allocation
+    resourcesPreset: "nano"
+
+    # Network policies for security
+    networkPolicy:
+      enabled: true
