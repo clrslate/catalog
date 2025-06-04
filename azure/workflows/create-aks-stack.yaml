@@ -1,0 +1,140 @@
+apiVersion: core.clrslate.io
+kind: WorkflowStack
+metadata:
+  name: azure.workflow.create-aks-stack
+  title: Create AKS Stack
+  description: A workflow to create an Azure Kubernetes Service (AKS) stack.
+spec:
+  variables:
+  - id: a4c151d45a386f22
+    name: NewResourceGroup
+    typeName: Resource Reference
+    isArray: false
+    storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+  inputs:
+  - uIHint: record-picker
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: Object
+    isArray: false
+    name: AzureSubscription
+    displayName: Azure Subscription
+    description: Azure Subscription where the target Cluster will be created
+    category: azure.model.subscription
+  - uIHint: singleline
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: String
+    isArray: false
+    name: NewClusterName
+    displayName: New Cluster name
+    description: Name of the new cluster to be created
+    category: ''
+  outputs:
+  - type: Object
+    isArray: false
+    name: KubernetesCluster
+    displayName: Kubernetes Cluster
+    description: ''
+    category: Primitives
+  customProperties:
+    icon: Azure.AKS
+    color: 
+    tags:
+    - Azure
+    - Create
+    - AKS
+    - Kubernetes
+    isSelfServiceAction: true
+  root:
+    id: bdb00a541bb59681
+    nodeId: Workflow1:bdb00a541bb59681
+    name: Flowchart1
+    type: Elsa.Flowchart
+    version: 1
+    customProperties:
+      notFoundConnections: []
+      canStartWorkflow: false
+      runAsynchronously: false
+    metadata: {}
+    activities:
+    - result: null
+      id: c8eac12710d5e41
+      nodeId: Workflow1:bdb00a541bb59681:c8eac12710d5e41
+      name: azure.tekton.pipelinerun.create-aks-cluster1
+      type: azure.tekton.pipelinerun.create-aks-cluster
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: -160
+            y: -247.5
+          size:
+            width: 202.640625
+            height: 50
+      inputResourceGroup:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: Variable
+          value:
+            id: a4c151d45a386f22
+            name: NewResourceGroup
+            typeName: Resource Reference
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        memoryReference:
+          id: 97086072cef14228abed1812ed2ddfb5
+      inputClusterName:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.NewClusterName}}'
+        memoryReference:
+          id: c8eac12710d5e41:input-input-cluster-name
+      newResourceGroup:
+        typeName: Resource
+        memoryReference:
+          id: KubernetesCluster
+    - result: null
+      id: a8075abca67b90a8
+      nodeId: Workflow1:bdb00a541bb59681:a8075abca67b90a8
+      name: azure.tekton.pipelinerun.create-resource-group1
+      type: azure.tekton.pipelinerun.create-resource-group
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: -580
+            y: -247.5
+          size:
+            width: 232.765625
+            height: 50
+      inputSubscription:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: Input
+          value: AzureSubscription
+        memoryReference:
+          id: a8075abca67b90a8:input-input-subscription
+      inputName:
+        typeName: String
+        expression:
+          type: Liquid
+          value: rg-{{Inputs.NewClusterName}}
+        memoryReference:
+          id: a8075abca67b90a8:input-input-name
+      newResourceGroup:
+        typeName: Resource
+        memoryReference:
+          id: a4c151d45a386f22
+    variables: []
+    connections:
+    - source:
+        activity: a8075abca67b90a8
+        port: Done
+      target:
+        activity: c8eac12710d5e41
+        port: In

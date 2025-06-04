@@ -1,7 +1,7 @@
 apiVersion: core.clrslate.io
 kind: Activity
 metadata:
-  name: azure.tekton.pipelinerun.create-resource-group
+  name: azure.activity.create-resource-group
   title: Create Resource Group
   description: An activity that runs a Tekton pipeline to create a new Azure resource group
   labels:

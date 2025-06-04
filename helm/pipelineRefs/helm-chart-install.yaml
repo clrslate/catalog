@@ -68,7 +68,7 @@ spec:
         {%- assign setValues = "" -%}
         {%- if inputs.values and inputs.values != empty -%}
           {%- assign setPairs = "" -%}
-          {%- for key in inputs.values -%}
+          {%- for key in inputs.values.keys -%}
             {%- if forloop.last -%}
               {%- assign setPairs = setPairs | append: key | append: "=" | append: '"' | append: inputs.values[key] | append: '"' -%}
             {%- else -%}
@@ -91,7 +91,7 @@ spec:
         {%- elsif inputs.helmChart.namespace and inputs.helmChart.namespace != "" -%}
           {%- assign nsFlag = " --namespace " | append: inputs.helmChart.namespace -%}
         {%- endif -%}
-        {%- capture command -%}helm upgrade --install {{inputs.releaseName}} {{inputs.helmChart.name}} {{versionFlag}} {{repoFlag}}{{nsFlag}} {{createNsFlag}} {{setValues}}{{chartValuesFileFlag}}{{valuesFileFlag}} --wait{%- endcapture -%}
+        {%- capture command -%}helm upgrade --install {{inputs.releaseName}} {{inputs.helmChart.name}} {{versionFlag}}{{repoFlag}}{{nsFlag}}{{createNsFlag}}{{setValues}}{{chartValuesFileFlag}}{{valuesFileFlag}} --wait{%- endcapture -%}
         {{- command | strip -}}
   pipeline:
     pipelineRef: azure.pipelines.aks-script
