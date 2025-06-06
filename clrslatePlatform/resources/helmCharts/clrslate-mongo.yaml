@@ -1,9 +1,0 @@
-apiVersion: records.clrslate.io
-kind: helm.model.helmChart
-metadata:
-  name: clrslatePlatform.records.helmChart.clrslate-mongo
-  title: ClrSlate MongoDB
-  description: Minimal Helm Chart for CLRSlate applications
-spec:
-  name: oci://clrslatepublic.azurecr.io/helm/mongodb
-  version: 1.0.1

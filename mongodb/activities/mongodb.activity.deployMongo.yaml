@@ -1,13 +1,13 @@
 apiVersion: core.clrslate.io
 kind: Activity
 metadata:
-  name: clrslatePlatform.activity.deployClrSlateMongo
-  title: Deploy ClrSlate Mongo
-  description: Deploy ClrSlate Mongo
-  labels:
-    category: ClrSlate Platform
+  name: mongodb.activity.deployMongo
+  title: Deploy MongoDB
+  description: Deploy MongoDB Helm Chart
   tags:
     - create
+    - helm
+    - deploy
 spec:
   inputs:
     properties:
@@ -27,8 +27,8 @@ spec:
     type: tekton.pipelineRef
     properties:
       pipeline: helm.pipelineRef.helm-install
-      inputs: 
+      inputs:
         cluster: "{{inputs.cluster._name}}"
-        helmChart: "clrslatePlatform.records.helmChart.clrslate-mongo"
+        helmChart: "mongodb.records.helmChart.mongodb"
         releaseName: mongo
         namespace: "{{inputs.namespace}}"

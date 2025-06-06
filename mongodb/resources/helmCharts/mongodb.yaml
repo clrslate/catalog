@@ -1,0 +1,10 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: mongodb.records.helmChart.mongodb
+  title: MongoDB Helm Chart
+  description: Official MongoDB Helm chart for Kubernetes deployment
+spec:
+  name: oci://clrslatepublic.azurecr.io/helm/mongodb
+  version: "1.0.1"
+  namespace: mongodb

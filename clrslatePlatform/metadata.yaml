@@ -3,7 +3,7 @@ version: 0.0.1
 title: ClrSlate Platform
 description: ClrSlate Platform
 owner: Team ClrSlate
-icon: Brands.Github
+icon: Brands.ClrSlate
 color: '#181717'
 keywords:
   - clrslate-platform
