@@ -1,0 +1,61 @@
+templateMetadata:
+  name: basic-pipelineref
+  category: execution
+  description: Basic Tekton PipelineRef with secret mounting and parameter handling
+  complexity: intermediate
+  tags: [tekton, pipeline, secrets, execution]
+  aiCriteria:
+    whenToUse: Define reusable pipeline execution patterns with credential handling
+    alternatives: [console-handler, direct-pipeline-execution]
+    customizationPoints: [schema, pipeline-reference, secret-mounting, file-templating]
+  validation:
+    required: [metadata.name, spec.schema, spec.pipeline.pipelineRef]
+    optional: [spec.mirrored, spec.pipeline.files, secret-mount-configuration]
+  examples:
+    basic: Simple pipeline with single parameter
+    advanced: Complex pipeline with multiple secrets and file templating
+
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: "{{QUALIFIED_NAME}}"  # e.g., azure.pipelineRef.azure-script
+  title: "{{DISPLAY_TITLE}}"  # e.g., Azure Script
+  description: "{{DESCRIPTION}}"  # e.g., Pipeline reference for executing Azure CLI scripts
+  tags:
+    - "{{TAG_1}}"  # e.g., tekton
+    - "{{TAG_2}}"  # e.g., azure
+spec:
+  schema:
+    properties:
+      "{{SECRET_PROPERTY}}":  # e.g., credentials
+        type: object
+        format: secret
+        title: "{{SECRET_TITLE}}"  # e.g., Azure Credentials
+        description: "{{SECRET_DESCRIPTION}}"  # e.g., Azure credentials for authentication
+        specifications:
+          type: "{{SECRET_TYPE}}"  # e.g., azure.secret.clientCredentials
+          mount: true
+          mountParamName: "{{MOUNT_PARAM_NAME}}"  # e.g., azureCredentialsRef
+      "{{INPUT_PROPERTY}}":  # e.g., script
+        type: "{{INPUT_TYPE}}"  # e.g., string
+        title: "{{INPUT_TITLE}}"  # e.g., Script Content
+        description: "{{INPUT_DESCRIPTION}}"  # e.g., Azure CLI script to execute
+    required:
+      - "{{REQUIRED_PROPERTY}}"  # e.g., credentials
+  pipeline:
+    pipelineRef: "{{TEKTON_PIPELINE_NAME}}"  # e.g., azure.pipelines.azure-script
+    params:
+      "{{PARAM_NAME}}": "{{PARAM_EXPRESSION}}"  # e.g., script: '{{inputs.script}}'
+    secretMounts:
+      "{{MOUNT_PARAM_NAME}}": "{{SECRET_MOUNT_EXPRESSION}}"  # e.g., azureCredentialsRef: "{{inputs.credentials._name}}"
+    files:
+      "{{FILE_NAME}}": |
+        {{FILE_CONTENT_TEMPLATE}}
+        # e.g.:
+        # apiVersion: v1
+        # kind: ConfigMap
+        # metadata:
+        #   name: {{inputs.configName}}
+        # data:
+        #   script.sh: |
+        #     {{inputs.script}}

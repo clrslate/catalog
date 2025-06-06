@@ -1,0 +1,48 @@
+templateMetadata:
+  name: basic-activity
+  category: activities
+  description: Basic activity with console handler for debugging and validation
+  complexity: basic
+  tags: [console, debugging, basic, validation]
+  aiCriteria:
+    whenToUse: Simple output, debugging scenarios, configuration validation, status display
+    alternatives: [tekton-activity, validation-activity]
+    customizationPoints: [inputs, output-template, metadata]
+  validation:
+    required: [metadata.name, spec.inputs, spec.handler]
+    optional: [metadata.labels, metadata.tags, spec.mirrored, spec.resources]
+  examples:
+    basic: Simple debugging output with single input
+    advanced: Multi-input validation with formatted output
+
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: "{{QUALIFIED_NAME}}"  # e.g., debug.activity.showConfig
+  title: "{{DISPLAY_TITLE}}"  # e.g., Show Configuration
+  description: "{{DESCRIPTION}}"  # e.g., Display configuration values for debugging
+  labels:
+    category: "{{CATEGORY}}"  # e.g., Debug
+  tags:
+    - "{{TAG_1}}"  # e.g., debug
+    - "{{TAG_2}}"  # e.g., console
+spec:
+  inputs:
+    properties:
+      "{{INPUT_NAME}}":  # e.g., environment
+        type: "{{INPUT_TYPE}}"  # e.g., string
+        title: "{{INPUT_TITLE}}"  # e.g., Environment
+        description: "{{INPUT_DESCRIPTION}}"  # e.g., Target environment name
+        # Optional: enum, default, format properties
+    required:
+      - "{{REQUIRED_INPUT}}"  # e.g., environment
+  handler:
+    type: console
+    properties:
+      output: |
+        {{OUTPUT_TEMPLATE}}
+        # e.g.:
+        # 🔍 Configuration Display
+        # =======================
+        # Environment: {{inputs.environment}}
+        # Status: Validated

@@ -1,0 +1,58 @@
+templateMetadata:
+  name: tekton-activity
+  category: activities
+  description: Activity with Tekton PipelineRef handler for complex execution
+  complexity: intermediate
+  tags: [tekton, pipeline, execution, complex]
+  aiCriteria:
+    whenToUse: Complex execution requiring containerized environment, multi-step operations, credential handling
+    alternatives: [basic-activity, console-activity]
+    customizationPoints: [inputs, pipeline-reference, parameter-mappings, secret-mounting]
+  validation:
+    required: [metadata.name, spec.inputs, spec.handler.properties.pipeline]
+    optional: [spec.mirrored, spec.resources, secret-mounting-configuration]
+  examples:
+    basic: Simple pipeline execution with single input
+    advanced: Multi-resource activity with secret mounting and file templating
+
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: "{{QUALIFIED_NAME}}"  # e.g., azure.activity.runScript
+  title: "{{DISPLAY_TITLE}}"  # e.g., Run Azure Script
+  description: "{{DESCRIPTION}}"  # e.g., Execute Azure CLI script with credential mounting
+  labels:
+    category: "{{CATEGORY}}"  # e.g., Azure
+  tags:
+    - "{{TAG_1}}"  # e.g., azure
+    - "{{TAG_2}}"  # e.g., script
+spec:
+  inputs:
+    properties:
+      "{{RESOURCE_INPUT}}":  # e.g., cluster
+        type: object
+        format: resource
+        title: "{{RESOURCE_TITLE}}"  # e.g., Target Cluster
+        description: "{{RESOURCE_DESCRIPTION}}"  # e.g., Kubernetes cluster for deployment
+        specifications:
+          type: "{{RESOURCE_TYPE}}"  # e.g., azure.model.aks
+      "{{SECRET_INPUT}}":  # e.g., credentials
+        type: object
+        format: secret
+        title: "{{SECRET_TITLE}}"  # e.g., Azure Credentials
+        description: "{{SECRET_DESCRIPTION}}"  # e.g., Azure service principal credentials
+        specifications:
+          type: "{{SECRET_TYPE}}"  # e.g., azure.secret.clientCredentials
+      "{{REGULAR_INPUT}}":  # e.g., script
+        type: "{{INPUT_TYPE}}"  # e.g., string
+        title: "{{INPUT_TITLE}}"  # e.g., Script Content
+        description: "{{INPUT_DESCRIPTION}}"  # e.g., Azure CLI script to execute
+    required:
+      - "{{REQUIRED_INPUT}}"  # e.g., credentials
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: "{{PIPELINE_REF_NAME}}"  # e.g., azure.pipelineRef.azure-script
+      inputs:
+        "{{PARAM_NAME}}": "{{PARAM_EXPRESSION}}"  # e.g., script: "{{inputs.script}}"
+        "{{SECRET_NAME}}": "{{SECRET_EXPRESSION}}"  # e.g., credentials: "{{inputs.credentials._name}}"

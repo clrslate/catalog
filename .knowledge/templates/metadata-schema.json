@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://clrslate.dev/schemas/template-metadata",
+  "title": "ClrSlate Template Metadata Schema",
+  "description": "JSON schema for validating ClrSlate template metadata structure",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "category",
+    "complexity",
+    "tags",
+    "use_cases",
+    "ai_decision_criteria",
+    "validation_rules",
+    "examples",
+    "last_updated",
+    "version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 3,
+      "maxLength": 50,
+      "description": "Unique identifier for the template using kebab-case"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100,
+      "description": "Human-readable name for the template"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "models",
+        "activities",
+        "secrets",
+        "handlers",
+        "workflows"
+      ],
+      "description": "Primary category classification for the template"
+    },
+    "subcategory": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 50,
+      "description": "Optional subcategory for more specific classification"
+    },
+    "complexity": {
+      "type": "string",
+      "enum": [
+        "basic",
+        "intermediate",
+        "advanced"
+      ],
+      "description": "Complexity level indicator for template usage"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$",
+        "minLength": 2,
+        "maxLength": 30
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "description": "Searchable tags for template discovery"
+    },
+    "use_cases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 100
+      },
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "Specific use cases where this template applies"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 50
+      },
+      "uniqueItems": true,
+      "description": "Required dependencies or prerequisites for template usage"
+    },
+    "ai_decision_criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["condition", "weight"],
+        "properties": {
+          "condition": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200,
+            "description": "Condition or criteria for template selection"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Weight factor for this criteria (0.0 to 1.0)"
+          },
+          "required": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether this criteria is required for template selection"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "description": "AI decision support criteria with weights"
+    },
+    "validation_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule", "type"],
+        "properties": {
+          "rule": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 200,
+            "description": "Validation rule description"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "schema",
+              "business",
+              "security",
+              "performance",
+              "compatibility"
+            ],
+            "description": "Type of validation rule"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ],
+            "default": "error",
+            "description": "Severity level of validation failure"
+          },
+          "automated": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether this rule can be automatically validated"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "description": "Validation rules that must be applied when using template"
+    },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 100,
+            "description": "Name of the example"
+          },
+          "path": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9/_.-]+$",
+            "description": "Relative path to example file or directory"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "Optional description of what the example demonstrates"
+          },
+          "complexity": {
+            "type": "string",
+            "enum": [
+              "basic",
+              "intermediate",
+              "advanced"
+            ],
+            "description": "Complexity level of this specific example"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "Working examples demonstrating template usage"
+    },
+    "documentation": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9/_.-]+\\.md$",
+      "description": "Path to detailed documentation file"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when template was last updated (YYYY-MM-DD format)"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version of the template"
+    },
+    "deprecated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this template is deprecated"
+    },
+    "replacement": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "ID of replacement template if this one is deprecated"
+    },
+    "author": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Template author or maintainer"
+    },
+    "license": {
+      "type": "string",
+      "maxLength": 50,
+      "description": "License under which template is distributed"
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "kubernetes",
+          "docker",
+          "tekton",
+          "azure",
+          "aws",
+          "gcp",
+          "on-premises"
+        ]
+      },
+      "uniqueItems": true,
+      "description": "Supported platforms for template deployment"
+    },
+    "minimum_platform_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Minimum ClrSlate platform version required"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "semver": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "kebab_case": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    }
+  }
+}
