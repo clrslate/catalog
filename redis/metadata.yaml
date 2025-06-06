@@ -1,0 +1,19 @@
+name: redis
+version: 0.1.0
+title: Redis
+description: Package for provisioning and managing Redis clusters and resources in Kubernetes and cloud environments.
+owner: Team ClrSlate
+icon: Brands.Redis
+required_dependencies:
+  - k8s
+optional_dependencies:
+  - observability
+color: "#D82C20"
+keywords:
+  - redis
+  - cache
+  - database
+  - in-memory
+  - broker
+maintainers:
+  - name: Team ClrSlate

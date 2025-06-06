@@ -1,0 +1,9 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: rabbitmq.records.helmChart.rabbitmq
+  title: RabbitMQ
+  description: RabbitMQ Helm chart for deploying a scalable message broker in Kubernetes.
+spec:
+  name: oci://clrslatepublic.azurecr.io/helm/rabbitmq
+  version: "1.0.1"

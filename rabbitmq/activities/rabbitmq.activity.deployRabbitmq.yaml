@@ -1,0 +1,35 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: rabbitmq.activity.deployRabbitmq
+  title: Deploy RabbitMQ
+  description: Deploy RabbitMQ Helm Chart to a Kubernetes cluster
+  tags:
+    - create
+    - helm
+    - deploy
+    - rabbitmq
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        description: The namespace of the Helm release (optional, defaults to chart namespace)
+    required:
+      - cluster
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "rabbitmq.records.helmChart.rabbitmq"
+        releaseName: rabbitmq
+        namespace: "{{inputs.namespace}}"

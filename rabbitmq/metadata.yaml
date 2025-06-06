@@ -1,0 +1,19 @@
+name: rabbitmq
+version: 0.1.0
+title: RabbitMQ
+description: Messaging package for provisioning and managing RabbitMQ clusters and resources in Kubernetes and cloud environments.
+owner: Team ClrSlate
+icon: Brands.RabbitMq
+required_dependencies:
+  - k8s
+optional_dependencies:
+  - observability
+color: "#FF6600"
+keywords:
+  - messaging
+  - queue
+  - broker
+  - amqp
+  - rabbitmq
+maintainers:
+  - name: Team ClrSlate

@@ -7,4 +7,3 @@ metadata:
 spec:
   name: oci://clrslatepublic.azurecr.io/helm/mongodb
   version: "1.0.1"
-  namespace: mongodb

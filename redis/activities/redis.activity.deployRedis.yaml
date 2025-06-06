@@ -1,0 +1,35 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.activity.deployRedis
+  title: Deploy Redis
+  description: Deploy Redis Helm Chart to a Kubernetes cluster
+  tags:
+    - create
+    - helm
+    - deploy
+    - redis
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        description: The namespace of the Helm release (optional, defaults to chart namespace)
+    required:
+      - cluster
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs:
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "redis.records.helmChart.redis"
+        releaseName: redis
+        namespace: "{{inputs.namespace}}"

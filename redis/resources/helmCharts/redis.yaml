@@ -1,0 +1,10 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: redis.records.helmChart.redis
+  title: Redis
+  description: Redis Helm chart for deploying a high-performance in-memory data store in Kubernetes.
+spec:
+  name: oci://clrslatepublic.azurecr.io/helm/redis
+  version: "1.0.1"
+  namespace: redis

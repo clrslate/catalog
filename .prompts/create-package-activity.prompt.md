@@ -205,10 +205,13 @@ Identify when to use the Helm chart installation pattern:
 #### Step 1: Create or Identify HelmChart Record
 Before creating the activity, ensure the HelmChart Record exists:
 
+
 **Use the create-helmChart prompt** to create the HelmChart Record if it doesn't exist:
-1. Gather chart information (name, version, repository)
+1. Gather chart information (name, version, repository, **title, description**)
 2. Create Record following `<domain>.records.helmChart.<instance-name>` pattern
 3. Place in appropriate package (e.g., `istio/resources/helmCharts/`, `mongodb/resources/helmCharts/`)
+
+**All HelmChart records MUST include `title` and `description` fields in the `metadata` section.**
 
 **Example HelmChart Records**:
 ```yaml
@@ -217,6 +220,8 @@ apiVersion: records.clrslate.io
 kind: helm.model.helmChart
 metadata:
   name: istio.records.helmChart.istio-base
+  title: Istio Base
+  description: Istio Base Helm Chart
 spec:
   name: istio/base
   version: "1.20.0"
@@ -228,6 +233,8 @@ apiVersion: records.clrslate.io
 kind: helm.model.helmChart
 metadata:
   name: clrslatePlatform.records.helmChart.clrslate-mongo
+  title: ClrSlate MongoDB
+  description: ClrSlate MongoDB Helm Chart
 spec:
   name: oci://clrslatepublic.azurecr.io/helm/mongodb
   version: "1.0.1"
