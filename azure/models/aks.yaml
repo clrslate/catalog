@@ -13,16 +13,15 @@ spec:
       name:
         type: string
         description: The name of the AKS cluster
+      resourceGroup:
+        title: Azure Resource Group
+        description: The Azure Resource Group associated with this Key Vault.
+        format: resource
+        required: true
+        specifications:
+          type: azure.model.resourceGroup
     required:
       - name
-  relations:
-    resourceGroup:
-      title: Azure Resource Group
-      description: The Azure Resource Group associated with this Key Vault.
-      format: resource
-      required: true
-      specifications:
-        type: azure.model.resourceGroup
   mirrored:
     credentials:
       type: object
@@ -40,7 +39,7 @@ spec:
       value: clrslatepublic.azurecr.io/tools/azure:latest
     pipelineRef:
       type: object
-      format: pipelineRef
+      format: resource
       value: azure.pipelines.aks-script
 
 

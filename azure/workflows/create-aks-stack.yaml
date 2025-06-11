@@ -59,8 +59,8 @@ spec:
     - result: null
       id: c8eac12710d5e41
       nodeId: Workflow1:bdb00a541bb59681:c8eac12710d5e41
-      name: azure.tekton.pipelinerun.create-aks-cluster1
-      type: azure.tekton.pipelinerun.create-aks-cluster
+      name: azure.activity.create-aks-cluster1
+      type: azure.activity.create-aks-cluster
       version: 1
       customProperties:
         canStartWorkflow: false
@@ -98,8 +98,8 @@ spec:
     - result: null
       id: a8075abca67b90a8
       nodeId: Workflow1:bdb00a541bb59681:a8075abca67b90a8
-      name: azure.tekton.pipelinerun.create-resource-group1
-      type: azure.tekton.pipelinerun.create-resource-group
+      name: azure.activity.create-resource-group1
+      type: azure.activity.create-resource-group
       version: 1
       customProperties:
         canStartWorkflow: false
