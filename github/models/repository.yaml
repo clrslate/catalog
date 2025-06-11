@@ -1,0 +1,25 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: github.model.repository
+  title: Github Repository
+  description: Represents a Github Repository
+  labels:
+    owner: clrslate
+    package: github
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the repository.
+      organisation:
+        title: Github Organisation
+        description: The Github Organisation associated with this repository.
+        format: resource
+        required: true
+        specifications:
+          type: github.model.organisation
+    required:
+      - name
+      - organisation

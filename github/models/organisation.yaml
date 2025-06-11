@@ -1,0 +1,24 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: github.model.organisation
+  title: Github Organisation
+  description: Represents a Github Organisation
+  labels:
+    owner: clrslate
+    package: github
+spec:
+  schema:
+    properties:
+      name:
+        type: string
+        description: The name of the resource group.
+      credentials:
+        title: Github Credentials
+        description: The Github Credentials associated with this organisation.
+        format: secret
+        required: true
+        specifications:
+          type: github.secret.personalAccessToken
+    required:
+      - name

@@ -22,8 +22,6 @@ spec:
         description: Token to access GitHub resources
         specifications:
           type: github.secret.personalAccessToken
-          mount: true
-          mountParamName: secretRef
       organization:
         type: string
         title: GitHub Organization
@@ -33,10 +31,11 @@ spec:
       - githubToken
       - organization
   handler:
-    type: tekton
+    type: tekton.pipelineRef
     properties:
-      pipelineRef: clrslate.github.pipelines.script
-      params:
+      pipeline: github.pipelineRef.gh-script
+      inputs:
+        credentials: '{{inputs.githubToken._name}}'
         script: |
           echo "Fetching repositories for organization: {{inputs.organization}}"
           gh repo list {{inputs.organization}} --json name --limit 1000
