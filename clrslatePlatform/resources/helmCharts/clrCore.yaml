@@ -1,0 +1,29 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: clrslatePlatform.records.helmChart.clrCore
+  title: ClrSlate Core
+  description: Helm Chart for CLRSlate Core applications
+spec:
+  name: oci://clrslatepublic.azurecr.io/helm/clrslate-app
+  version: 1.0.1
+  values: |
+    image:
+      repository: clrslate/demo/workflow.server
+      tag: latest
+      pullPolicy: IfNotPresent
+    env:
+      DOTNET_ENVIRONMENT: "beta"
+      Http__BaseUrl: "http://clrcore"
+      Backend__Url: "http://clrcore/elsa/api"
+      ConnectionStrings__elsa: "mongodb://mongo/elsa"
+      ConnectionStrings__messaging: "amqp://rabbitmq:5672 "
+      ConnectionStrings__redis: "redis:6379"
+      http__commandHub: "http://commandhub.platform"
+      tenant__identifier: "workflows"
+      tenant__title: "ClrSlate Control Panel"
+      host__publicBaseUrl: "http://clrcore.admin"
+    secrets:
+    - clrcore-secret
+    ingress:
+      enabled: false

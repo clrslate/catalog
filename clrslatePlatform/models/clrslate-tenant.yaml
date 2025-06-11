@@ -1,0 +1,33 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: clrslatePlatform.model.clrslate-tenant
+  title: ClrSlate Tenant
+  description: Represents a tenant with a name, environment reference, and a slug computed from the name.
+spec:
+  schema:
+    required:
+      - name
+      - environment
+    properties:
+      name:
+        type: string
+        description: User-given name of the tenant
+        minLength: 1
+      environment:
+        type: object
+        format: resource
+        description: Reference to the ClrSlateEnvironment for this tenant
+        specifications:
+          type: clrslatePlatform.model.clrslate-environment
+  mirrored:
+    slug:
+      type: string
+      value: "{{inputs.name | downcase | replace: ' ', '-' }}"
+    cluster:
+      type: object
+      format: resource
+      description: Reference to the AKS cluster for this tenant
+      value: "{{inputs.environment.cluster._name}}"
+      specifications:
+        type: azure.model.aks

@@ -1,0 +1,359 @@
+apiVersion: core.clrslate.io
+kind: WorkflowStack
+metadata:
+  name: clrslate-tenant-onboarding
+  title: Tenant Onboarding
+  description: Workflow for onboarding a new Tenant to ClrSlate Platform
+  icon: Brands.ClrSlate
+  color: '#52C8EF'
+  tags:
+  - clrslate
+  - tenant
+  - onboarding
+  - workflow
+  labels: {}
+  annotations: {}
+spec:
+  variables:
+  - id: fb7a00d2bf22a428
+    name: AppSecretName
+    typeName: String
+    isArray: false
+    value: clrcore-secret
+    storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+  inputs:
+  - uIHint: singleline
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: String
+    isArray: false
+    name: TenantName
+    displayName: New Tenant Name
+    description: Name of the tenant to onboard
+    category: ''
+  - uIHint: record-picker
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: Object
+    isArray: false
+    name: Environment
+    displayName: ClrSlate Environment
+    description: Environment where you want to onboard the Tenant
+    category: clrslatePlatform.model.clrslate-environment
+  outputs: []
+  customProperties:
+    icon: Brands.ClrSlate
+    color: '#52C8EF'
+    tags:
+    - clrslate
+    - tenant
+    - onboarding
+    - workflow
+  options:
+    autoUpdateConsumingWorkflows: false
+  root:
+    id: 869501addba8c28c
+    nodeId: Workflow1:869501addba8c28c
+    name: Flowchart1
+    type: Elsa.Flowchart
+    version: 1
+    customProperties:
+      notFoundConnections: []
+      canStartWorkflow: false
+      runAsynchronously: false
+    metadata: {}
+    activities:
+    - result: null
+      id: 6642907dd6a803d3
+      nodeId: Workflow1:869501addba8c28c:6642907dd6a803d3
+      name: clrslateplatform.activity.deploycore1
+      type: clrslateplatform.activity.deploycore
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1175.9453125
+            y: 40
+          size:
+            width: 214.109375
+            height: 50
+      inputAksCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: 6642907dd6a803d3:input-input-aks-cluster
+      inputNamespace:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: 6642907dd6a803d3:input-input-namespace
+    - result: null
+      id: f2d8fe2d7b24167e
+      nodeId: Workflow1:869501addba8c28c:f2d8fe2d7b24167e
+      name: clrslateplatform.activity.deployforge1
+      type: clrslateplatform.activity.deployforge
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1468.53125
+            y: 40
+          size:
+            width: 161.0625
+            height: 50
+      inputAksCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: f2d8fe2d7b24167e:input-input-aks-cluster
+      inputNamespace:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: f2d8fe2d7b24167e:input-input-namespace
+    - result: null
+      id: 2b26e00e99ed131d
+      nodeId: Workflow1:869501addba8c28c:2b26e00e99ed131d
+      name: k8s.activity.create-namespaces1
+      type: k8s.activity.create-namespaces
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 151.359375
+            y: 135
+          size:
+            width: 232.71875
+            height: 50
+      inputCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: 2b26e00e99ed131d:input-input-cluster
+      inputNamespace:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: 2b26e00e99ed131d:input-input-namespace
+    - result: null
+      id: d5c7721f6bb52ab2
+      nodeId: Workflow1:869501addba8c28c:d5c7721f6bb52ab2
+      name: mongodb.activity.deploymongo1
+      type: mongodb.activity.deploymongo
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 468.546875
+            y: 230
+          size:
+            width: 191.203125
+            height: 50
+      inputCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: d5c7721f6bb52ab2:input-input-cluster
+      inputNamespace:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: d5c7721f6bb52ab2:input-input-namespace
+    - result: null
+      id: 8134666f3f4e083a
+      nodeId: Workflow1:869501addba8c28c:8134666f3f4e083a
+      name: rabbitmq.activity.deployrabbitmq1
+      type: rabbitmq.activity.deployrabbitmq
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 468.546875
+            y: 135
+          size:
+            width: 191.65625
+            height: 50
+      inputCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: 8134666f3f4e083a:input-input-cluster
+      inputNamespace:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: 8134666f3f4e083a:input-input-namespace
+    - result: null
+      id: 677f378713a5602f
+      nodeId: Workflow1:869501addba8c28c:677f378713a5602f
+      name: redis.activity.deployredis1
+      type: redis.activity.deployredis
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 468.546875
+            y: 40
+          size:
+            width: 159.609375
+            height: 50
+      inputCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: 677f378713a5602f:input-input-cluster
+      inputNamespace:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: 677f378713a5602f:input-input-namespace
+    - result: null
+      id: 4aaf499e8e95b18b
+      nodeId: Workflow1:869501addba8c28c:4aaf499e8e95b18b
+      name: clrslateplatform.security.createclientcredentialssecret1
+      type: clrslateplatform.security.createclientcredentialssecret
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 816.6328125
+            y: 40
+          size:
+            width: 294.515625
+            height: 50
+        displayText: Configure Secrets
+        description: Configure ClrSlate application secrets on Kubernetes
+      inputAksCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: 4aaf499e8e95b18b:input-input-aks-cluster
+      inputSecretName:
+        typeName: String
+        expression:
+          type: Variable
+          value:
+            id: fb7a00d2bf22a428
+            name: AppSecretName
+            typeName: String
+            value: clrcore-secret
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        memoryReference:
+          id: 4aaf499e8e95b18b:input-input-secret-name
+      inputNamespace:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: 4aaf499e8e95b18b:input-input-namespace
+      inputCredentials:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.RealmCredentials
+        memoryReference:
+          id: 4aaf499e8e95b18b:input-input-credentials
+    variables: []
+    connections:
+    - source:
+        activity: 677f378713a5602f
+        port: Done
+      target:
+        activity: 4aaf499e8e95b18b
+        port: In
+      vertices: []
+    - source:
+        activity: 8134666f3f4e083a
+        port: Done
+      target:
+        activity: 4aaf499e8e95b18b
+        port: In
+      vertices: []
+    - source:
+        activity: d5c7721f6bb52ab2
+        port: Done
+      target:
+        activity: 4aaf499e8e95b18b
+        port: In
+      vertices: []
+    - source:
+        activity: 4aaf499e8e95b18b
+        port: Done
+      target:
+        activity: 6642907dd6a803d3
+        port: In
+      vertices: []
+    - source:
+        activity: 6642907dd6a803d3
+        port: Done
+      target:
+        activity: f2d8fe2d7b24167e
+        port: In
+      vertices: []
+    - source:
+        activity: 2b26e00e99ed131d
+        port: Done
+      target:
+        activity: 677f378713a5602f
+        port: In
+      vertices: []
+    - source:
+        activity: 2b26e00e99ed131d
+        port: Done
+      target:
+        activity: 8134666f3f4e083a
+        port: In
+      vertices: []
+    - source:
+        activity: 2b26e00e99ed131d
+        port: Done
+      target:
+        activity: d5c7721f6bb52ab2
+        port: In
+      vertices: []

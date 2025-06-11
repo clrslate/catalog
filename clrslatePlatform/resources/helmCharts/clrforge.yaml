@@ -1,9 +1,22 @@
 apiVersion: records.clrslate.io
 kind: helm.model.helmChart
 metadata:
-  name: clrslatePlatform.records.helmChart.clrslateAppMinimal
-  title: ClrSlate App Minimal
-  description: Minimal Helm Chart for CLRSlate applications
+  name: clrslatePlatform.records.helmChart.clrforge
+  title: ClrSlate Forge
+  description: Helm Chart for CLRSlate Forge applications
 spec:
-  name: oci://clrslatepublic.azurecr.io/helm/clrslate-app-minimal
-  version: 0.0.2
+  name: oci://clrslatepublic.azurecr.io/helm/clrslate-app
+  version: 1.0.1
+  values: |
+    env:
+      http__workflowServer: http://clrcore
+      Backend__Url: http://clrcore/elsa/api
+      DOTNET_ENVIRONMENT: beta
+      app__httpsMetadataRequired: false
+    image:
+      registry: clrslate.azurecr.io
+      repository: clrslate/demo/workflow.studio
+    ingress:
+      enabled: false
+    secrets:
+    - clrcore-secret

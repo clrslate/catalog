@@ -1,9 +1,9 @@
 apiVersion: core.clrslate.io
 kind: Activity
 metadata:
-  name: clrslatePlatform.activity.deployForge
-  title: Deploy Forge
-  description: Deploy Forge
+  name: clrslatePlatform.activity.deployCore
+  title: Deploy ClrSlate Core
+  description: Deploy ClrSlate Core
   labels:
     category: ClrSlate Platform
   tags:
@@ -26,7 +26,7 @@ spec:
   resources:
     helmChart:
       type: RecordEntry
-      value: clrslatePlatform.records.helmChart.clrforge
+      value: clrslatePlatform.records.helmChart.clrCore
   handler:
     type: tekton.pipelineRef
     properties:
@@ -34,8 +34,9 @@ spec:
       inputs:
         cluster: "{{inputs.aksCluster._name}}"
         helmChart: "{{inputs.helmChart._name}}"
-        releaseName: clrforge
+        releaseName: clrcore
         namespace: "{{inputs.namespace}}"
+
 
 
   

@@ -1,0 +1,20 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: clrslatePlatform.model.clrslate-gateway
+  title: ClrSlate Gateway
+  description: Represents an Istio gateway and its associated wildcard domain for routing traffic.
+spec:
+  schema:
+    required:
+      - name
+      - domain
+    properties:
+      name:
+        type: string
+        description: Fully qualified name of Istio gateway in '<namespace>/<name>' format
+        pattern: '^[a-z0-9-]+/[a-z0-9-]+$'
+      domain:
+        type: string
+        description: The base wildcard domain for this gateway (e.g., '*.example.com')
+        pattern: '^\*\.[a-z0-9.-]+$'

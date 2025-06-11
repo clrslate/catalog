@@ -1,0 +1,30 @@
+apiVersion: core.clrslate.io
+kind: ModelDefinition
+metadata:
+  name: clrslatePlatform.model.clrslate-environment
+  title: ClrSlate Environment
+  description: Represents an environment with a cluster and gateway association.
+spec:
+  schema:
+    required:
+      - cluster
+      - gateway
+    properties:
+      cluster:
+        type: object
+        format: resource
+        description: Reference to the AKS cluster for this environment
+        specifications:
+          type: azure.model.aks
+      gateway:
+        type: object
+        format: resource
+        description: Reference to the ClrSlateGateway for this environment
+        specifications:
+          type: clrslatePlatform.model.clrslate-gateway
+      realmCredentials:
+        type: object
+        format: secret
+        description: Reference to the ClrSlateGateway for this environment
+        specifications:
+          type: clrslatePlatform.secret.client-credentials
