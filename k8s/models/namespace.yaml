@@ -4,7 +4,6 @@ metadata:
   name: k8s.model.namespace
   title: K8s Namespace
   description: A Kubernetes namespace
-  icon: Cluster
   labels:
     owner: clrslate
     package: k8s

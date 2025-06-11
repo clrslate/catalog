@@ -4,7 +4,6 @@ metadata:
   name: k8s.model.node
   title: K8s Node
   description: This blueprint represents a k8s Node
-  icon: Cluster
   labels:
     owner: clrslate
     package: k8s
@@ -13,7 +12,6 @@ spec:
     properties:
       creationTimestamp:
         type: string
-        icon: DeployedAt
         title: Created
         format: date-time
         description: When the Node was created (added to the cluster)
@@ -29,12 +27,8 @@ spec:
         - 'True'
         - 'False'
         - Unknown
-        enumColors:
-          'False': red
-          'True': green
       totalMemory:
         type: string
-        icon: GPU
         title: Total Memory (kibibytes)
         description: Total memory capacity of the Node
       kubeletVersion:
@@ -43,7 +37,6 @@ spec:
         description: The node's kubelet version
       totalCPU:
         type: string
-        icon: CPU
         title: Total CPU (milli-cores)
         description: Total CPU capacity of the Node
     required: []

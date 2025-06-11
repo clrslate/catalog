@@ -4,7 +4,6 @@ metadata:
   name: k8s.model.deployment
   title: Deployment
   description: This blueprint represents a k8s Workload. This includes all k8s objects which can create pods (deployments[replicasets], daemonsets, statefulsets...)
-  icon: Deployment
   labels:
     owner: clrslate
     package: k8s
@@ -52,9 +51,6 @@ spec:
         enum:
         - Healthy
         - Unhealthy
-        enumColors:
-          Healthy: green
-          Unhealthy: red
         title: Workload Health
       kind:
         title: Workload Kind
