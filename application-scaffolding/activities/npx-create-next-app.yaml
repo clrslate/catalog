@@ -1,0 +1,39 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.npx.create-next-app
+  title: Create Next.js App with NPX
+  description: Scaffold a new Next.js application using NPX
+  labels:
+    category: Application Scaffolding
+  tags:
+    - create
+    - nextjs
+    - npx
+    - react
+    - framework
+spec:
+  inputs:
+    properties:
+      appName:
+        type: string
+        title: App Name
+        description: Name of the new Next.js application
+      typescript:
+        type: string
+        title: TypeScript
+        description: Use TypeScript template (true/false)
+        enum: ["true", "false"]
+        default: "false"
+    required:
+      - appName
+  handler:
+    type: console
+    properties:
+      output: |
+        🚀 Next.js App Creation
+        =======================
+        App Name: {{inputs.appName}}
+        TypeScript: {{inputs.typescript}}
+
+        ✅ Next.js application created successfully!

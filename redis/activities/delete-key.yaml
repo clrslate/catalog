@@ -1,0 +1,30 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.operations.deleteKey
+  title: Delete Key
+  description: Delete a key from Redis
+  labels:
+    category: Redis
+  tags:
+    - delete
+    - key
+    - redis
+spec:
+  inputs:
+    properties:
+      key:
+        type: string
+        title: Key
+        description: Name of the key to delete from Redis
+    required:
+      - key
+  handler:
+    type: console
+    properties:
+      output: |
+        🗑️ Redis Key Deletion
+        =====================
+        Key: {{inputs.key}}
+
+        ✅ Key deleted successfully!

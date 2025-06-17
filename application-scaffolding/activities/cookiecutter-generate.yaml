@@ -1,0 +1,44 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.cookiecutter.generate
+  title: Generate Project with Cookiecutter
+  description: Scaffold a new project using a Cookiecutter template
+  labels:
+    category: Application Scaffolding
+  tags:
+    - generate
+    - cookiecutter
+    - template
+    - project
+spec:
+  inputs:
+    properties:
+      templateUrl:
+        type: string
+        title: Template URL
+        description: URL of the Cookiecutter template repository
+      outputDir:
+        type: string
+        title: Output Directory
+        description: Directory to generate the project in
+      noInput:
+        type: string
+        title: No Input
+        description: Skip prompts and use default values
+        enum: ["true", "false"]
+        default: "false"
+    required:
+      - templateUrl
+      - outputDir
+  handler:
+    type: console
+    properties:
+      output: |
+        🍪 Cookiecutter Project Generation
+        =================================
+        Template URL: {{inputs.templateUrl}}
+        Output Directory: {{inputs.outputDir}}
+        No Input: {{inputs.noInput}}
+
+        ✅ Project generated successfully!

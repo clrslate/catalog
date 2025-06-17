@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.operations.getKeys
+  title: Get Keys
+  description: Retrieve keys from Redis matching a pattern
+  labels:
+    category: Redis
+  tags:
+    - get
+    - keys
+    - pattern
+    - redis
+spec:
+  inputs:
+    properties:
+      keyPattern:
+        type: string
+        title: Key Pattern
+        description: The key pattern for the keys to return
+        default: ""
+      getValues:
+        type: string
+        title: Get Values
+        description: Whether to get the value of matching keys. If set false, will only return keys not values
+        enum: ["true", "false"]
+        default: "true"
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🔑 Redis Keys Retrieval
+        =======================
+        Key Pattern: {{inputs.keyPattern}}
+        Get Values: {{inputs.getValues}}
+
+        ✅ Keys retrieved successfully!

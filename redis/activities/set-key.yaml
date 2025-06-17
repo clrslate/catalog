@@ -1,0 +1,63 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.operations.setKey
+  title: Set Key
+  description: Set a key-value pair in Redis
+  labels:
+    category: Redis
+  tags:
+    - set
+    - key
+    - value
+    - redis
+spec:
+  inputs:
+    properties:
+      key:
+        type: string
+        title: Key
+        description: Name of the key to set in Redis
+      value:
+        type: string
+        title: Value
+        description: The value to write in Redis
+      keyType:
+        type: string
+        title: Key Type
+        description: The type of the key to set
+        default: "automatic"
+      valueIsJSON:
+        type: string
+        title: Value Is JSON
+        description: Whether the value is JSON or key-value pairs
+        enum: ["true", "false"]
+        default: "true"
+      expire:
+        type: string
+        title: Expire
+        description: Whether to set a timeout on key
+        enum: ["true", "false"]
+        default: "false"
+      ttl:
+        type: string
+        title: TTL
+        description: Number of seconds before key expiration
+        default: "60"
+    required:
+      - key
+      - value
+  handler:
+    type: console
+    properties:
+      output: |
+        💾 Redis Key Set
+        ================
+        Key: {{inputs.key}}
+        Value: {{inputs.value}}
+        Key Type: {{inputs.keyType}}
+        Value Is JSON: {{inputs.valueIsJSON}}
+        Expire: {{inputs.expire}}
+        TTL: {{inputs.ttl}}
+
+        ✅ Key set successfully!

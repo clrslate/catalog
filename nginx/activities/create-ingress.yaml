@@ -1,0 +1,54 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: nginx.ingress.createIngress
+  title: Create NGINX Ingress Resource
+  description: Create an Ingress resource for routing traffic using NGINX
+  labels:
+    category: NGINX
+  tags:
+    - create
+    - ingress
+    - routing
+    - nginx
+spec:
+  inputs:
+    properties:
+      ingressName:
+        type: string
+        title: Ingress Name
+        description: Name of the Ingress resource
+      namespace:
+        type: string
+        title: Namespace
+        description: Namespace for the Ingress resource
+      host:
+        type: string
+        title: Host
+        description: Host for the Ingress resource (e.g., example.com)
+      serviceName:
+        type: string
+        title: Service Name
+        description: Name of the service to route traffic to
+      servicePort:
+        type: string
+        title: Service Port
+        description: Port of the service to route traffic to
+    required:
+      - ingressName
+      - namespace
+      - host
+      - serviceName
+      - servicePort
+  handler:
+    type: console
+    properties:
+      output: |
+        🌐 NGINX Ingress Creation
+        =========================
+        Ingress Name: {{inputs.ingressName}}
+        Namespace: {{inputs.namespace}}
+        Host: {{inputs.host}}
+        Service: {{inputs.serviceName}}:{{inputs.servicePort}}
+
+        ✅ Ingress resource created successfully!

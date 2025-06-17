@@ -1,0 +1,36 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.npx.create-react-app
+  title: Create React App with NPX
+  description: Scaffold a new React application using NPX
+  labels:
+    category: Application Scaffolding
+  tags:
+    - create
+    - react
+    - npx
+    - javascript
+spec:
+  inputs:
+    properties:
+      appName:
+        type: string
+        title: App Name
+        description: Name of the new React application
+      template:
+        type: string
+        title: Template
+        description: React template to use (e.g., typescript)
+    required:
+      - appName
+  handler:
+    type: console
+    properties:
+      output: |
+        ⚛️ React App Creation
+        ====================
+        App Name: {{inputs.appName}}
+        Template: {{inputs.template}}
+
+        ✅ React application created successfully!

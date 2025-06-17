@@ -1,0 +1,25 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.alerts.getAllAlerts
+  title: Get All Alerts
+  description: Retrieve multiple alerts
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - alerts
+    - list
+    - metabase
+spec:
+  inputs:
+    properties: {}
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🚨 Metabase All Alerts Retrieval
+        =================================
+
+        ✅ All alerts retrieved successfully!

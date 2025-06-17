@@ -1,0 +1,84 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: kafka.producer.sendMessage
+  title: Send Kafka Message
+  description: Sends messages to a Kafka topic
+  labels:
+    category: Kafka
+  tags:
+    - send
+    - message
+    - producer
+    - kafka
+spec:
+  inputs:
+    properties:
+      topic:
+        type: string
+        title: Topic
+        description: Name of the topic to publish to
+      sendInputData:
+        type: string
+        title: Send Input Data
+        description: Whether to send the data the node receives as JSON to Kafka
+        enum: ["true", "false"]
+        default: "true"
+      message:
+        type: string
+        title: Message
+        description: The message to be sent
+      useSchemaRegistry:
+        type: string
+        title: Use Schema Registry
+        description: Whether to use Confluent Schema Registry
+        enum: ["true", "false"]
+        default: "false"
+      schemaRegistryUrl:
+        type: string
+        title: Schema Registry URL
+        description: URL of the schema registry
+      useKey:
+        type: string
+        title: Use Key
+        description: Whether to use a message key
+        enum: ["true", "false"]
+        default: "false"
+      key:
+        type: string
+        title: Key
+        description: The message key
+      eventName:
+        type: string
+        title: Event Name
+        description: Namespace and Name of Schema in Schema Registry (namespace.name)
+      headers:
+        type: string
+        title: Headers
+        description: Header parameters as a JSON object
+        default: "{}"
+      options:
+        type: string
+        title: Options
+        description: Additional options like acks, compression, and timeout
+        default: "{}"
+    required:
+      - topic
+  handler:
+    type: console
+    properties:
+      output: |
+        📤 Kafka Message Producer
+        =========================
+        Topic: {{inputs.topic}}
+        Send Input Data: {{inputs.sendInputData}}
+        Message: {{inputs.message}}
+        Use Schema Registry: {{inputs.useSchemaRegistry}}
+        {{#if inputs.schemaRegistryUrl}}Schema Registry URL: {{inputs.schemaRegistryUrl}}{{/if}}
+        Use Key: {{inputs.useKey}}
+        {{#if inputs.key}}Key: {{inputs.key}}{{/if}}
+        {{#if inputs.eventName}}Event Name: {{inputs.eventName}}{{/if}}
+        Headers: {{inputs.headers}}
+        Options: {{inputs.options}}
+
+        ✅ Message sent to Kafka successfully!

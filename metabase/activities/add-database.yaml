@@ -1,0 +1,80 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.databases.addDatabase
+  title: Add Database
+  description: Add a new datasource to the metabase instance
+  labels:
+    category: Metabase
+  tags:
+    - add
+    - database
+    - datasource
+    - metabase
+spec:
+  inputs:
+    properties:
+      engine:
+        type: string
+        title: Engine
+        description: The database engine type
+        default: "postgres"
+      host:
+        type: string
+        title: Host
+        description: The database host
+        default: "localhost:5432"
+      name:
+        type: string
+        title: Name
+        description: The database name
+        default: "Database 1"
+      port:
+        type: string
+        title: Port
+        description: The database port
+        default: "5432"
+      user:
+        type: string
+        title: User
+        description: Database username
+      password:
+        type: string
+        title: Password
+        description: Database password
+      dbName:
+        type: string
+        title: Database Name
+        description: Database schema name
+        default: "Users"
+      filePath:
+        type: string
+        title: File Path
+        description: File path (for SQLite/H2)
+        default: ""
+      fullSync:
+        type: string
+        title: Full Sync
+        description: Enable full sync
+        enum: ["true", "false"]
+        default: "true"
+    required:
+      - user
+      - password
+  handler:
+    type: console
+    properties:
+      output: |
+        🗃️ Metabase Database Addition
+        =============================
+        Engine: {{inputs.engine}}
+        Host: {{inputs.host}}
+        Name: {{inputs.name}}
+        Port: {{inputs.port}}
+        User: {{inputs.user}}
+        Password: [PROTECTED]
+        Database Name: {{inputs.dbName}}
+        File Path: {{inputs.filePath}}
+        Full Sync: {{inputs.fullSync}}
+
+        ✅ Database added successfully!

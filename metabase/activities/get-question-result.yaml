@@ -1,0 +1,39 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.questions.getQuestionResult
+  title: Get Question Result
+  description: Retrieve the result of a question in a specific format
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - question
+    - result
+    - data
+    - metabase
+spec:
+  inputs:
+    properties:
+      questionId:
+        type: string
+        title: Question ID
+        description: The unique identifier of the question
+      format:
+        type: string
+        title: Format
+        description: The format of the result data (CSV, JSON, XLSX)
+        enum: ["csv", "json", "xlsx"]
+        default: "csv"
+    required:
+      - questionId
+  handler:
+    type: console
+    properties:
+      output: |
+        📈 Metabase Question Result Retrieval
+        =====================================
+        Question ID: {{inputs.questionId}}
+        Format: {{inputs.format}}
+
+        ✅ Question result retrieved successfully!

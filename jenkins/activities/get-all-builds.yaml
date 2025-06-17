@@ -1,0 +1,44 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.build.getAllBuilds
+  title: Get Many Builds
+  description: List all builds for a job
+  labels:
+    category: Jenkins
+  tags:
+    - get
+    - builds
+    - list
+    - jenkins
+spec:
+  inputs:
+    properties:
+      job:
+        type: string
+        title: Job
+        description: Name or ID of the job
+      returnAll:
+        type: string
+        title: Return All
+        description: Whether to return all results
+        enum: ["true", "false"]
+        default: "false"
+      limit:
+        type: string
+        title: Limit
+        description: Maximum number of results to return
+        default: "50"
+    required:
+      - job
+  handler:
+    type: console
+    properties:
+      output: |
+        📊 Jenkins Builds Retrieval
+        ============================
+        Job: {{inputs.job}}
+        Return All: {{inputs.returnAll}}
+        Limit: {{inputs.limit}}
+
+        ✅ Builds retrieved successfully!

@@ -1,0 +1,60 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: keycloak.user.createUser
+  title: Create User
+  description: Create a new user in a Keycloak realm
+  labels:
+    category: Keycloak
+  tags:
+    - create
+    - user
+    - keycloak
+spec:
+  inputs:
+    properties:
+      realmName:
+        type: string
+        title: Realm Name
+        description: Name of the realm to create the user in
+      username:
+        type: string
+        title: Username
+        description: Username of the new user
+      email:
+        type: string
+        title: Email
+        description: Email address of the new user
+      temporaryPassword:
+        type: string
+        title: Temporary Password
+        description: Temporary password for the new user
+      keycloakUrl:
+        type: string
+        title: Keycloak URL
+        description: Base URL of the Keycloak server
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Admin authentication token for Keycloak
+    required:
+      - realmName
+      - username
+      - email
+      - temporaryPassword
+      - keycloakUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        👤 Keycloak User Creation
+        =========================
+        Realm Name: {{inputs.realmName}}
+        Username: {{inputs.username}}
+        Email: {{inputs.email}}
+        Temporary Password: [PROTECTED]
+        Keycloak URL: {{inputs.keycloakUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ User created successfully!

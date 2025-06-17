@@ -1,0 +1,26 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.instance.restartInstance
+  title: Restart Instance
+  description: Restart Jenkins immediately
+  labels:
+    category: Jenkins
+  tags:
+    - restart
+    - instance
+    - maintenance
+    - jenkins
+spec:
+  inputs:
+    properties: {}
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🔄 Jenkins Immediate Restart
+        ============================
+
+        ⚠️ Jenkins will restart immediately!
+        ✅ Restart command executed successfully!

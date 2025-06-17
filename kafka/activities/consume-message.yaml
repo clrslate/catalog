@@ -1,0 +1,121 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: kafka.consumer.consumeMessage
+  title: Consume Kafka Message
+  description: Consumes messages from a Kafka topic
+  labels:
+    category: Kafka
+  tags:
+    - consume
+    - message
+    - consumer
+    - trigger
+    - kafka
+spec:
+  inputs:
+    properties:
+      topic:
+        type: string
+        title: Topic
+        description: Name of the queue of topic to consume from
+      groupId:
+        type: string
+        title: Group ID
+        description: ID of the consumer group
+      useSchemaRegistry:
+        type: string
+        title: Use Schema Registry
+        description: Whether to use Confluent Schema Registry
+        enum: ["true", "false"]
+        default: "false"
+      schemaRegistryUrl:
+        type: string
+        title: Schema Registry URL
+        description: URL of the schema registry
+      allowAutoTopicCreation:
+        type: string
+        title: Allow Auto Topic Creation
+        description: Whether to allow sending messages to a previously non-existing topic
+        enum: ["true", "false"]
+        default: "false"
+      autoCommitThreshold:
+        type: string
+        title: Auto Commit Threshold
+        description: The consumer will commit offsets after resolving a given number of messages
+        default: "0"
+      autoCommitInterval:
+        type: string
+        title: Auto Commit Interval
+        description: The consumer will commit offsets after a given period (in milliseconds)
+        default: "0"
+      heartbeatInterval:
+        type: string
+        title: Heartbeat Interval
+        description: Heartbeats are used to ensure that the consumer's session stays active
+        default: "3000"
+      maxInFlightRequests:
+        type: string
+        title: Max In Flight Requests
+        description: The maximum number of unacknowledged requests the client will send on a single connection
+        default: "1"
+      fromBeginning:
+        type: string
+        title: From Beginning
+        description: Whether to read messages from the beginning
+        enum: ["true", "false"]
+        default: "true"
+      jsonParseMessage:
+        type: string
+        title: JSON Parse Message
+        description: Whether to try to parse the message to an object
+        enum: ["true", "false"]
+        default: "false"
+      parallelProcessing:
+        type: string
+        title: Parallel Processing
+        description: Whether to process messages in parallel or sequentially
+        enum: ["true", "false"]
+        default: "true"
+      onlyMessage:
+        type: string
+        title: Only Message
+        description: Whether to return only the message property
+        enum: ["true", "false"]
+        default: "false"
+      returnHeaders:
+        type: string
+        title: Return Headers
+        description: Whether to return the headers received from Kafka
+        enum: ["true", "false"]
+        default: "false"
+      sessionTimeout:
+        type: string
+        title: Session Timeout
+        description: The time to await a response in milliseconds
+        default: "30000"
+    required:
+      - topic
+      - groupId
+  handler:
+    type: console
+    properties:
+      output: |
+        📥 Kafka Message Consumer
+        =========================
+        Topic: {{inputs.topic}}
+        Group ID: {{inputs.groupId}}
+        Use Schema Registry: {{inputs.useSchemaRegistry}}
+        Allow Auto Topic Creation: {{inputs.allowAutoTopicCreation}}
+        Auto Commit Threshold: {{inputs.autoCommitThreshold}}
+        Auto Commit Interval: {{inputs.autoCommitInterval}}
+        Heartbeat Interval: {{inputs.heartbeatInterval}}
+        Max In Flight Requests: {{inputs.maxInFlightRequests}}
+        From Beginning: {{inputs.fromBeginning}}
+        JSON Parse Message: {{inputs.jsonParseMessage}}
+        Parallel Processing: {{inputs.parallelProcessing}}
+        Only Message: {{inputs.onlyMessage}}
+        Return Headers: {{inputs.returnHeaders}}
+        Session Timeout: {{inputs.sessionTimeout}}
+
+        ✅ Consumer configured successfully!

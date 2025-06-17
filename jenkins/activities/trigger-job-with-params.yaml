@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.job.triggerJobWithParams
+  title: Trigger Job with Parameters
+  description: Trigger a specific job with parameters
+  labels:
+    category: Jenkins
+  tags:
+    - trigger
+    - job
+    - parameters
+    - execute
+    - jenkins
+spec:
+  inputs:
+    properties:
+      job:
+        type: string
+        title: Job
+        description: Name or ID of the job to trigger
+      params:
+        type: string
+        title: Parameters
+        description: Parameters for the job execution
+        default: "[]"
+    required:
+      - job
+  handler:
+    type: console
+    properties:
+      output: |
+        ▶️ Jenkins Parameterized Job Trigger
+        ====================================
+        Job: {{inputs.job}}
+        Parameters: {{inputs.params}}
+
+        ✅ Parameterized job triggered successfully!

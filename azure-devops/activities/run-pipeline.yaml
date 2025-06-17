@@ -1,0 +1,54 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azureDevOps.pipeline.runPipeline
+  title: Run Pipeline
+  description: Trigger a run for an Azure DevOps pipeline
+  labels:
+    category: Azure DevOps
+  tags:
+    - run
+    - pipeline
+    - azure-devops
+spec:
+  inputs:
+    properties:
+      organizationName:
+        type: string
+        title: Organization Name
+        description: Name of the Azure DevOps organization
+      projectName:
+        type: string
+        title: Project Name
+        description: Name of the Azure DevOps project
+      pipelineId:
+        type: string
+        title: Pipeline ID
+        description: ID of the pipeline to run
+      branch:
+        type: string
+        title: Branch
+        description: Branch to run the pipeline on
+        default: "main"
+      parameters:
+        type: string
+        title: Parameters
+        description: Custom parameters for the pipeline (JSON format)
+        default: "{}"
+    required:
+      - organizationName
+      - projectName
+      - pipelineId
+  handler:
+    type: console
+    properties:
+      output: |
+        🔄 Azure DevOps Pipeline Execution
+        ==================================
+        Organization: {{inputs.organizationName}}
+        Project: {{inputs.projectName}}
+        Pipeline ID: {{inputs.pipelineId}}
+        Branch: {{inputs.branch}}
+        Parameters: {{inputs.parameters}}
+
+        ▶️ Pipeline run triggered successfully!

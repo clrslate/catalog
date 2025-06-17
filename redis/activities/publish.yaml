@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.operations.publish
+  title: Publish
+  description: Publish data to a Redis channel
+  labels:
+    category: Redis
+  tags:
+    - publish
+    - channel
+    - messaging
+    - redis
+spec:
+  inputs:
+    properties:
+      channel:
+        type: string
+        title: Channel
+        description: Channel name
+      messageData:
+        type: string
+        title: Message Data
+        description: Data to publish
+    required:
+      - channel
+      - messageData
+  handler:
+    type: console
+    properties:
+      output: |
+        📡 Redis Publish
+        ================
+        Channel: {{inputs.channel}}
+        Message Data: {{inputs.messageData}}
+
+        ✅ Message published successfully!

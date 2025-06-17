@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.operations.incrementKey
+  title: Increment Key
+  description: Increment a key in Redis
+  labels:
+    category: Redis
+  tags:
+    - increment
+    - key
+    - redis
+spec:
+  inputs:
+    properties:
+      key:
+        type: string
+        title: Key
+        description: Name of the key to increment
+      expire:
+        type: string
+        title: Expire
+        description: Whether to set a timeout on the key
+        enum: ["true", "false"]
+        default: "false"
+      ttl:
+        type: string
+        title: TTL
+        description: Number of seconds before key expiration
+        default: "60"
+    required:
+      - key
+  handler:
+    type: console
+    properties:
+      output: |
+        ➕ Redis Key Increment
+        ======================
+        Key: {{inputs.key}}
+        Expire: {{inputs.expire}}
+        TTL: {{inputs.ttl}}
+
+        ✅ Key incremented successfully!

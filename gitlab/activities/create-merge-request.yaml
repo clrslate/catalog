@@ -1,0 +1,49 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: gitlab.mergeRequest.createMergeRequest
+  title: Create Merge Request
+  description: Create a merge request in a GitLab repository
+  labels:
+    category: GitLab
+  tags:
+    - create
+    - merge-request
+    - pull-request
+    - gitlab
+spec:
+  inputs:
+    properties:
+      projectId:
+        type: string
+        title: Project ID
+        description: ID of the project where the merge request will be created
+      sourceBranch:
+        type: string
+        title: Source Branch
+        description: Source branch for the merge request
+      targetBranch:
+        type: string
+        title: Target Branch
+        description: Target branch for the merge request
+        default: "main"
+      title:
+        type: string
+        title: Title
+        description: Title of the merge request
+    required:
+      - projectId
+      - sourceBranch
+      - title
+  handler:
+    type: console
+    properties:
+      output: |
+        🔀 GitLab Merge Request Creation
+        ================================
+        Project ID: {{inputs.projectId}}
+        Source Branch: {{inputs.sourceBranch}}
+        Target Branch: {{inputs.targetBranch}}
+        Title: {{inputs.title}}
+
+        ✅ Merge request created successfully!

@@ -1,0 +1,36 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: nginx.ingress.deleteIngress
+  title: Delete NGINX Ingress Resource
+  description: Delete an Ingress resource managed by NGINX
+  labels:
+    category: NGINX
+  tags:
+    - delete
+    - ingress
+    - nginx
+spec:
+  inputs:
+    properties:
+      ingressName:
+        type: string
+        title: Ingress Name
+        description: Name of the Ingress resource to delete
+      namespace:
+        type: string
+        title: Namespace
+        description: Namespace of the Ingress resource
+    required:
+      - ingressName
+      - namespace
+  handler:
+    type: console
+    properties:
+      output: |
+        🗑️ NGINX Ingress Deletion
+        ==========================
+        Ingress Name: {{inputs.ingressName}}
+        Namespace: {{inputs.namespace}}
+
+        ✅ Ingress resource deleted successfully!

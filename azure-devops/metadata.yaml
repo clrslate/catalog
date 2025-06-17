@@ -1,0 +1,24 @@
+name: azure-devops
+version: 0.1.0
+title: Azure DevOps
+description: Building blocks for managing Azure DevOps projects, pipelines, repositories, and artifacts
+owner: Team ClrSlate
+icon: Azure.DevOps
+color: "#0078D7"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - azure
+  - devops
+  - cicd
+  - pipelines
+  - repositories
+  - artifacts
+  - boards
+
+maintainers:
+  - name: Team ClrSlate

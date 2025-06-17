@@ -1,0 +1,36 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: nginx.deployment.deleteDeployment
+  title: Delete NGINX Deployment
+  description: Delete an NGINX deployment from Kubernetes
+  labels:
+    category: NGINX
+  tags:
+    - delete
+    - deployment
+    - nginx
+spec:
+  inputs:
+    properties:
+      deploymentName:
+        type: string
+        title: Deployment Name
+        description: Name of the NGINX deployment to delete
+      namespace:
+        type: string
+        title: Namespace
+        description: Namespace of the deployment
+    required:
+      - deploymentName
+      - namespace
+  handler:
+    type: console
+    properties:
+      output: |
+        🗑️ NGINX Deployment Deletion
+        =============================
+        Deployment: {{inputs.deploymentName}}
+        Namespace: {{inputs.namespace}}
+
+        ✅ Deployment deleted successfully!

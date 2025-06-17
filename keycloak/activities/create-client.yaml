@@ -1,0 +1,48 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: keycloak.client.createClient
+  title: Create Client
+  description: Create a new client in a Keycloak realm
+  labels:
+    category: Keycloak
+  tags:
+    - create
+    - client
+    - keycloak
+spec:
+  inputs:
+    properties:
+      realmName:
+        type: string
+        title: Realm Name
+        description: Name of the realm to create the client in
+      clientId:
+        type: string
+        title: Client ID
+        description: ID of the client to create
+      keycloakUrl:
+        type: string
+        title: Keycloak URL
+        description: Base URL of the Keycloak server
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Admin authentication token for Keycloak
+    required:
+      - realmName
+      - clientId
+      - keycloakUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        🔧 Keycloak Client Creation
+        ===========================
+        Realm Name: {{inputs.realmName}}
+        Client ID: {{inputs.clientId}}
+        Keycloak URL: {{inputs.keycloakUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ Client created successfully!

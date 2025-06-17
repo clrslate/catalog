@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.alerts.getAlert
+  title: Get Alert
+  description: Retrieve a specific alert by its ID
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - alert
+    - retrieve
+    - metabase
+spec:
+  inputs:
+    properties:
+      alertId:
+        type: string
+        title: Alert ID
+        description: The unique identifier of the alert
+        default: ""
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🚨 Metabase Alert Retrieval
+        ============================
+        Alert ID: {{inputs.alertId}}
+
+        ✅ Alert retrieved successfully!

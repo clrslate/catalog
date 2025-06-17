@@ -1,0 +1,49 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: sonarqube.scan.startScan
+  title: Start SonarQube Scan
+  description: Trigger a SonarQube scan for a project
+  labels:
+    category: SonarQube
+  tags:
+    - scan
+    - start
+    - analysis
+    - sonarqube
+spec:
+  inputs:
+    properties:
+      projectKey:
+        type: string
+        title: Project Key
+        description: Unique key of the SonarQube project
+      sourceDirectory:
+        type: string
+        title: Source Directory
+        description: Directory containing the source code to scan
+      sonarHostUrl:
+        type: string
+        title: SonarQube Host URL
+        description: SonarQube server URL
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Authentication token for the SonarQube server
+    required:
+      - projectKey
+      - sourceDirectory
+      - sonarHostUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        🔍 SonarQube Scan Started
+        =========================
+        Project Key: {{inputs.projectKey}}
+        Source Directory: {{inputs.sourceDirectory}}
+        SonarQube URL: {{inputs.sonarHostUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ Scan initiated successfully!

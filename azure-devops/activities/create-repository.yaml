@@ -1,0 +1,50 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azureDevOps.repository.createRepository
+  title: Create Repository
+  description: Create a new Git repository in an Azure DevOps project
+  labels:
+    category: Azure DevOps
+  tags:
+    - create
+    - repository
+    - git
+    - azure-devops
+spec:
+  inputs:
+    properties:
+      organizationName:
+        type: string
+        title: Organization Name
+        description: Name of the Azure DevOps organization
+      projectName:
+        type: string
+        title: Project Name
+        description: Name of the Azure DevOps project
+      repoName:
+        type: string
+        title: Repository Name
+        description: Name of the repository to create
+      initializeWithReadme:
+        type: string
+        title: Initialize with README
+        description: Initialize the repository with a README file
+        enum: ["true", "false"]
+        default: "false"
+    required:
+      - organizationName
+      - projectName
+      - repoName
+  handler:
+    type: console
+    properties:
+      output: |
+        📁 Azure DevOps Repository Creation
+        ===================================
+        Organization: {{inputs.organizationName}}
+        Project: {{inputs.projectName}}
+        Repository Name: {{inputs.repoName}}
+        Initialize with README: {{inputs.initializeWithReadme}}
+
+        ✅ Repository created successfully!

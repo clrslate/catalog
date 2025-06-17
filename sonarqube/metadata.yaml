@@ -1,0 +1,24 @@
+name: sonarqube
+version: 0.1.0
+title: SonarQube
+description: Building blocks for integrating SonarQube in CI/CD pipelines
+owner: Team ClrSlate
+icon: Brands.Sonarqube
+color: "#4E9BCD"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - sonarqube
+  - code-quality
+  - static-analysis
+  - security
+  - cicd
+  - quality-gate
+  - code-scanning
+
+maintainers:
+  - name: Team ClrSlate

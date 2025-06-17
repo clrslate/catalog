@@ -1,0 +1,62 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azureDevOps.board.createWorkItem
+  title: Create Work Item
+  description: Create a new work item in Azure Boards
+  labels:
+    category: Azure DevOps
+  tags:
+    - create
+    - work-item
+    - boards
+    - azure-devops
+spec:
+  inputs:
+    properties:
+      organizationName:
+        type: string
+        title: Organization Name
+        description: Name of the Azure DevOps organization
+      projectName:
+        type: string
+        title: Project Name
+        description: Name of the Azure DevOps project
+      workItemType:
+        type: string
+        title: Work Item Type
+        description: Type of the work item (e.g., Task, Bug, User Story)
+        enum: ["Task", "Bug", "User Story", "Feature", "Epic"]
+        default: "Task"
+      title:
+        type: string
+        title: Title
+        description: Title of the work item
+      description:
+        type: string
+        title: Description
+        description: Description of the work item
+        default: ""
+      assignedTo:
+        type: string
+        title: Assigned To
+        description: Email or name of the assignee
+        default: ""
+    required:
+      - organizationName
+      - projectName
+      - title
+  handler:
+    type: console
+    properties:
+      output: |
+        📋 Azure DevOps Work Item Creation
+        ==================================
+        Organization: {{inputs.organizationName}}
+        Project: {{inputs.projectName}}
+        Work Item Type: {{inputs.workItemType}}
+        Title: {{inputs.title}}
+        Description: {{inputs.description}}
+        Assigned To: {{inputs.assignedTo}}
+
+        ✅ Work item created successfully!

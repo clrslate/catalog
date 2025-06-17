@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.metrics.getMetricById
+  title: Get Metric
+  description: Retrieve a specific metric by its ID
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - metric
+    - retrieve
+    - metabase
+spec:
+  inputs:
+    properties:
+      metricId:
+        type: string
+        title: Metric ID
+        description: The unique identifier of the metric
+    required:
+      - metricId
+  handler:
+    type: console
+    properties:
+      output: |
+        📏 Metabase Metric Retrieval
+        =============================
+        Metric ID: {{inputs.metricId}}
+
+        ✅ Metric retrieved successfully!

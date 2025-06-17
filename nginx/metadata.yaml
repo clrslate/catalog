@@ -1,0 +1,24 @@
+name: nginx
+version: 0.1.0
+title: NGINX
+description: Building blocks for managing NGINX deployments and configurations in Kubernetes
+owner: Team ClrSlate
+icon: Brands.Nginx
+color: "#009639"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - nginx
+  - web-server
+  - kubernetes
+  - ingress
+  - proxy
+  - load-balancer
+  - reverse-proxy
+
+maintainers:
+  - name: Team ClrSlate
