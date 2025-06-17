@@ -4,6 +4,7 @@ metadata:
   name: scaffolding.dotnet.new
   title: Create .NET Project with dotnet new
   description: Scaffold a new .NET project using the dotnet CLI
+  icon: Brands.DotNet
   labels:
     category: Application Scaffolding
   tags:

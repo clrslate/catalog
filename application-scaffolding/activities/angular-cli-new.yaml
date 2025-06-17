@@ -4,6 +4,7 @@ metadata:
   name: scaffolding.angular.cli.new
   title: Create Angular App with Angular CLI
   description: Scaffold a new Angular application using Angular CLI
+  icon: Brands.Angular
   labels:
     category: Application Scaffolding
   tags:

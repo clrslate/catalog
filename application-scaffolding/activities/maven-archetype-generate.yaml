@@ -4,6 +4,7 @@ metadata:
   name: scaffolding.maven.archetype.generate
   title: Generate Maven Project with Archetype
   description: Scaffold a new Java project using Maven Archetypes
+  icon: Brands.Maven
   labels:
     category: Application Scaffolding
   tags:
