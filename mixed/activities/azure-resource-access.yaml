@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azure.infra.resources
+  title: Azure Access
+  description: Configure Azure IAM roles and resource access for cloud services
+  icon: Azure.Logo
+  labels:
+    category: Cloud Access
+  tags:
+    - azure
+    - iam
+    - resources
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Company email address
+      resourceList:
+        type: string
+        title: Resource List
+        description: List of Azure resources the employee should access
+    required:
+      - email
+      - resourceList
+  handler:
+    type: console
+    properties:
+      output: |
+        ☁️ Azure Resource Access Configuration
+        ======================================
+        Email: {{inputs.email}}
+        Resources: {{inputs.resourceList}}
+
+        ✅ Azure resource access configured successfully!

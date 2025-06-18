@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: visualStudio.professional.giveAccess
+  title: Visual Studio Prof Access
+  description: Give user access to Visual Studio Professional
+  icon: Brands.VisualStudio
+  labels:
+    category: Development Tools
+  tags:
+    - visual-studio
+    - access
+    - development
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Employee email address
+    required:
+      - email
+  handler:
+    type: console
+    properties:
+      output: |
+        💻 Visual Studio Professional Access
+        =====================================
+        Email: {{inputs.email}}
+
+        ✅ Visual Studio Professional access granted successfully!

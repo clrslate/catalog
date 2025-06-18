@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: commonOperations.approval
+  title: Manual Approval
+  description: Request manual approval for workflow operations
+  icon: Brands.Approval
+  labels:
+    category: Workflow Management
+  tags:
+    - approval
+    - manual
+    - workflow
+spec:
+  inputs:
+    properties:
+      approverEmail:
+        type: string
+        title: Approver's Email
+        description: Email address of the person to send the approval request
+    required:
+      - approverEmail
+  handler:
+    type: console
+    properties:
+      output: |
+        ✋ Manual Approval Request
+        ==========================
+        Approver: {{inputs.approverEmail}}
+
+        ⏳ Approval request sent, waiting for manual approval...

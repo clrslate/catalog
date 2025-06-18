@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: grafana.user.create
+  title: Create User
+  description: Create a new user in Grafana
+  icon: Brands.Grafana
+  labels:
+    category: Monitoring Tools
+  tags:
+    - grafana
+    - user
+    - create
+spec:
+  inputs:
+    properties:
+      username:
+        type: string
+        title: Username
+        description: Username of the new user
+      email:
+        type: string
+        title: Email
+        description: Email address of the user
+    required:
+      - username
+      - email
+  handler:
+    type: console
+    properties:
+      output: |
+        📊 Grafana User Creation
+        ========================
+        Username: {{inputs.username}}
+        Email: {{inputs.email}}
+        Password: [MASKED]
+
+        ✅ Grafana user created successfully!

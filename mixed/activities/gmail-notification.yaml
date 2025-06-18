@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: gmail.operation.notification
+  title: Gmail Notification
+  description: Send notification via Gmail
+  icon: Brands.Gmail
+  labels:
+    category: Notifications
+  tags:
+    - gmail
+    - notification
+    - email
+spec:
+  inputs:
+    properties:
+      recipient:
+        type: string
+        title: Recipient Email
+        description: Email address of the recipient
+      subject:
+        type: string
+        title: Subject
+        description: Email subject line
+        default: "Notification from ClrSlate"
+      message:
+        type: string
+        title: Message
+        description: Email message content
+    required:
+      - recipient
+      - message
+  handler:
+    type: console
+    properties:
+      output: |
+        📧 Gmail Notification
+        =====================
+        To: {{inputs.recipient}}
+        Subject: {{inputs.subject}}
+        Message: {{inputs.message}}
+
+        ✅ Gmail notification sent successfully!

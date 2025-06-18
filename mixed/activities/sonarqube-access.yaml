@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: sonarQube.resources
+  title: SonarQube Access
+  description: Provide the employee access to SonarQube for code security and quality monitoring
+  icon: Brands.Sonarqube
+  labels:
+    category: Development Tools
+  tags:
+    - sonarqube
+    - access
+    - code-quality
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Employee email address
+    required:
+      - email
+  handler:
+    type: console
+    properties:
+      output: |
+        🔍 SonarQube Access Grant
+        ==========================
+        Email: {{inputs.email}}
+
+        ✅ SonarQube access granted successfully!

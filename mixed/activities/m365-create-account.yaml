@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: microsoft365.createEmployeeAccount
+  title: Create M365 Account
+  description: Set up a new employee account in Microsoft 365
+  icon: Brands.Microsoft365
+  labels:
+    category: Employee Onboarding
+  tags:
+    - microsoft365
+    - employee
+    - account
+spec:
+  inputs:
+    properties:
+      firstName:
+        type: string
+        title: First Name
+        description: First Name of Employee
+      lastName:
+        type: string
+        title: Last Name
+        description: Last Name of Employee
+      email:
+        type: string
+        title: Email
+        description: Company email address assigned to the employee
+    required:
+      - firstName
+      - lastName
+      - email
+  handler:
+    type: console
+    properties:
+      output: |
+        👤 Microsoft 365 Account Creation
+        ==================================
+        First Name: {{inputs.firstName}}
+        Last Name: {{inputs.lastName}}
+        Email: {{inputs.email}}
+
+        ✅ M365 account creation initiated successfully!

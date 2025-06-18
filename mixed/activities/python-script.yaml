@@ -1,0 +1,32 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: python.operation.script
+  title: Run Python Script
+  description: Python script to run on a PostgreSQL database
+  icon: Brands.Python
+  labels:
+    category: Scripting
+  tags:
+    - python
+    - script
+    - database
+spec:
+  inputs:
+    properties:
+      script:
+        type: string
+        title: Script Content
+        description: Python script content to execute
+    required:
+      - script
+  handler:
+    type: console
+    properties:
+      output: |
+        🐍 Python Script Execution
+        ==========================
+        Script Content:
+        {{inputs.script}}
+
+        ✅ Python script execution initiated successfully!

@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: slack.createAccount
+  title: Slack Account
+  description: Set up a Slack account for the employee and assign required channels
+  icon: Brands.Slack
+  labels:
+    category: Employee Onboarding
+  tags:
+    - slack
+    - account
+    - channels
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Company email address
+      channelsList:
+        type: string
+        title: Channels List
+        description: List of Slack channels to assign
+    required:
+      - email
+      - channelsList
+  handler:
+    type: console
+    properties:
+      output: |
+        💬 Slack Account Creation
+        =========================
+        Email: {{inputs.email}}
+        Channels: {{inputs.channelsList}}
+
+        ✅ Slack account created and channels assigned successfully!

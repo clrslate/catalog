@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: slack.operation.notification
+  title: Slack Notification
+  description: Send notification via Slack
+  icon: Brands.Slack
+  labels:
+    category: Notifications
+  tags:
+    - slack
+    - notification
+    - messaging
+spec:
+  inputs:
+    properties:
+      channel:
+        type: string
+        title: Channel
+        description: Slack channel to send message to
+      message:
+        type: string
+        title: Message
+        description: Message content to send
+    required:
+      - channel
+      - message
+  handler:
+    type: console
+    properties:
+      output: |
+        💬 Slack Notification
+        =====================
+        Channel: {{inputs.channel}}
+        Message: {{inputs.message}}
+
+        ✅ Slack notification sent successfully!

@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: LMS.add
+  title: LMS Setup
+  description: Set up Learning Management System for employee training and development
+  icon: Brands.Microsoft365
+  labels:
+    category: Learning & Development
+  tags:
+    - lms
+    - learning
+    - training
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Employee email address
+      lmsConfig:
+        type: string
+        title: LMS Config
+        description: Pre-setup configuration for LMS
+    required:
+      - email
+      - lmsConfig
+  handler:
+    type: console
+    properties:
+      output: |
+        📚 Learning Management System Setup
+        ====================================
+        Email: {{inputs.email}}
+        LMS Configuration: {{inputs.lmsConfig}}
+
+        ✅ LMS setup completed successfully!
