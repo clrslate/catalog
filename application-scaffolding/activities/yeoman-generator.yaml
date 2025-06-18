@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.yo.generator
+  title: Generate Project with Yeoman
+  description: Scaffold a new project using a Yeoman generator
+  labels:
+    category: Application Scaffolding
+  tags:
+    - generate
+    - yeoman
+    - yo
+    - generator
+    - project
+spec:
+  inputs:
+    properties:
+      generator:
+        type: string
+        title: Generator
+        description: Name of the Yeoman generator to use
+      outputDir:
+        type: string
+        title: Output Directory
+        description: Directory to generate the project in
+    required:
+      - generator
+      - outputDir
+  handler:
+    type: console
+    properties:
+      output: |
+        🛠️ Yeoman Project Generation
+        ============================
+        Generator: {{inputs.generator}}
+        Output Directory: {{inputs.outputDir}}
+
+        ✅ Project generated successfully!

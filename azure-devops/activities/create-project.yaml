@@ -1,0 +1,48 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azureDevOps.project.createProject
+  title: Create Project
+  description: Create a new Azure DevOps project
+  labels:
+    category: Azure DevOps
+  tags:
+    - create
+    - project
+    - azure-devops
+spec:
+  inputs:
+    properties:
+      organizationName:
+        type: string
+        title: Organization Name
+        description: Name of the Azure DevOps organization
+      projectName:
+        type: string
+        title: Project Name
+        description: Name of the project to create
+      description:
+        type: string
+        title: Description
+        description: Description of the project
+        default: ""
+      visibility:
+        type: string
+        title: Visibility
+        description: Project visibility (public/private)
+        enum: ["public", "private"]
+        default: "private"
+    required:
+      - organizationName
+      - projectName
+  handler:
+    type: console
+    properties:
+      output: |
+        🚀 Azure DevOps Project Creation
+        ================================
+        Organization: {{inputs.organizationName}}
+        Project Name: {{inputs.projectName}}
+        Description: {{inputs.description}}
+        Visibility: {{inputs.visibility}}
+        ✅ Project creation initiated successfully!

@@ -1,0 +1,54 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azureDevOps.pipeline.createPipeline
+  title: Create Pipeline
+  description: Create a new pipeline in Azure DevOps
+  labels:
+    category: Azure DevOps
+  tags:
+    - create
+    - pipeline
+    - azure-devops
+spec:
+  inputs:
+    properties:
+      organizationName:
+        type: string
+        title: Organization Name
+        description: Name of the Azure DevOps organization
+      projectName:
+        type: string
+        title: Project Name
+        description: Name of the Azure DevOps project
+      pipelineName:
+        type: string
+        title: Pipeline Name
+        description: Name of the pipeline to create
+      repository:
+        type: string
+        title: Repository
+        description: Repository URL to associate with the pipeline
+      yamlPath:
+        type: string
+        title: YAML Path
+        description: Path to the YAML file defining the pipeline
+        default: "azure-pipelines.yml"
+    required:
+      - organizationName
+      - projectName
+      - pipelineName
+      - repository
+  handler:
+    type: console
+    properties:
+      output: |
+        🔧 Azure DevOps Pipeline Creation
+        =================================
+        Organization: {{inputs.organizationName}}
+        Project: {{inputs.projectName}}
+        Pipeline Name: {{inputs.pipelineName}}
+        Repository: {{inputs.repository}}
+        YAML Path: {{inputs.yamlPath}}
+
+        ✅ Pipeline created successfully!

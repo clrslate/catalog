@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: nginx.deployment.updateDeployment
+  title: Update NGINX Deployment
+  description: Update an existing NGINX deployment to use a new ConfigMap
+  labels:
+    category: NGINX
+  tags:
+    - update
+    - deployment
+    - configmap
+    - nginx
+spec:
+  inputs:
+    properties:
+      deploymentName:
+        type: string
+        title: Deployment Name
+        description: Name of the NGINX deployment
+      namespace:
+        type: string
+        title: Namespace
+        description: Namespace of the deployment
+      configMapName:
+        type: string
+        title: ConfigMap Name
+        description: Name of the updated ConfigMap
+    required:
+      - deploymentName
+      - namespace
+      - configMapName
+  handler:
+    type: console
+    properties:
+      output: |
+        🔄 NGINX Deployment Update
+        ==========================
+        Deployment: {{inputs.deploymentName}}
+        Namespace: {{inputs.namespace}}
+        New ConfigMap: {{inputs.configMapName}}
+
+        ✅ Deployment updated successfully!

@@ -1,0 +1,51 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.maven.archetype.generate
+  title: Generate Maven Project with Archetype
+  description: Scaffold a new Java project using Maven Archetypes
+  icon: Brands.Maven
+  labels:
+    category: Application Scaffolding
+  tags:
+    - generate
+    - maven
+    - java
+    - archetype
+    - project
+spec:
+  inputs:
+    properties:
+      archetypeGroupId:
+        type: string
+        title: Archetype Group ID
+        description: Group ID of the Maven Archetype
+      archetypeArtifactId:
+        type: string
+        title: Archetype Artifact ID
+        description: Artifact ID of the Maven Archetype
+      groupId:
+        type: string
+        title: Group ID
+        description: Group ID for the generated project
+      artifactId:
+        type: string
+        title: Artifact ID
+        description: Artifact ID for the generated project
+    required:
+      - archetypeGroupId
+      - archetypeArtifactId
+      - groupId
+      - artifactId
+  handler:
+    type: console
+    properties:
+      output: |
+        ☕ Maven Project Generation
+        ==========================
+        Archetype Group ID: {{inputs.archetypeGroupId}}
+        Archetype Artifact ID: {{inputs.archetypeArtifactId}}
+        Group ID: {{inputs.groupId}}
+        Artifact ID: {{inputs.artifactId}}
+
+        ✅ Maven project generated successfully!

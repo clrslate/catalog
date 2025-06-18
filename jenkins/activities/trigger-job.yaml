@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.job.triggerJob
+  title: Trigger Job
+  description: Trigger a specific job in Jenkins
+  labels:
+    category: Jenkins
+  tags:
+    - trigger
+    - job
+    - execute
+    - jenkins
+spec:
+  inputs:
+    properties:
+      job:
+        type: string
+        title: Job
+        description: Name or ID of the job to trigger
+    required:
+      - job
+  handler:
+    type: console
+    properties:
+      output: |
+        ▶️ Jenkins Job Trigger
+        ======================
+        Job: {{inputs.job}}
+
+        ✅ Job triggered successfully!

@@ -1,0 +1,54 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azureDevOps.artifact.publishArtifact
+  title: Publish Artifact
+  description: Publish an artifact to Azure DevOps
+  labels:
+    category: Azure DevOps
+  tags:
+    - publish
+    - artifact
+    - azure-devops
+spec:
+  inputs:
+    properties:
+      organizationName:
+        type: string
+        title: Organization Name
+        description: Name of the Azure DevOps organization
+      projectName:
+        type: string
+        title: Project Name
+        description: Name of the Azure DevOps project
+      artifactName:
+        type: string
+        title: Artifact Name
+        description: Name of the artifact to publish
+      artifactPath:
+        type: string
+        title: Artifact Path
+        description: Local path to the artifact files
+      pipelineId:
+        type: string
+        title: Pipeline ID
+        description: Pipeline ID to associate the artifact with
+        default: ""
+    required:
+      - organizationName
+      - projectName
+      - artifactName
+      - artifactPath
+  handler:
+    type: console
+    properties:
+      output: |
+        📦 Azure DevOps Artifact Publishing
+        ===================================
+        Organization: {{inputs.organizationName}}
+        Project: {{inputs.projectName}}
+        Artifact Name: {{inputs.artifactName}}
+        Artifact Path: {{inputs.artifactPath}}
+        Pipeline ID: {{inputs.pipelineId}}
+
+        ⬆️ Artifact published successfully!

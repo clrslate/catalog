@@ -1,0 +1,42 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: keycloak.realm.createRealm
+  title: Create Realm
+  description: Create a new realm in Keycloak
+  labels:
+    category: Keycloak
+  tags:
+    - create
+    - realm
+    - keycloak
+spec:
+  inputs:
+    properties:
+      realmName:
+        type: string
+        title: Realm Name
+        description: Name of the new realm to create
+      keycloakUrl:
+        type: string
+        title: Keycloak URL
+        description: Base URL of the Keycloak server
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Admin authentication token for Keycloak
+    required:
+      - realmName
+      - keycloakUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        🏛️ Keycloak Realm Creation
+        ==========================
+        Realm Name: {{inputs.realmName}}
+        Keycloak URL: {{inputs.keycloakUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ Realm created successfully!

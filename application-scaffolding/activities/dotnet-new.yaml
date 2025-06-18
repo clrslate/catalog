@@ -1,0 +1,39 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.dotnet.new
+  title: Create .NET Project with dotnet new
+  description: Scaffold a new .NET project using the dotnet CLI
+  icon: Brands.DotNet
+  labels:
+    category: Application Scaffolding
+  tags:
+    - create
+    - dotnet
+    - csharp
+    - project
+    - cli
+spec:
+  inputs:
+    properties:
+      template:
+        type: string
+        title: Template
+        description: Name of the .NET template to use (e.g., console, webapi)
+      output:
+        type: string
+        title: Output
+        description: Output directory for the project
+    required:
+      - template
+      - output
+  handler:
+    type: console
+    properties:
+      output: |
+        🔷 .NET Project Creation
+        ========================
+        Template: {{inputs.template}}
+        Output: {{inputs.output}}
+
+        ✅ .NET project created successfully!

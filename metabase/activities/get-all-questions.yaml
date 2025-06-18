@@ -1,0 +1,25 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.questions.getAllQuestions
+  title: Get All Questions
+  description: Retrieve multiple questions
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - questions
+    - list
+    - metabase
+spec:
+  inputs:
+    properties: {}
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        📊 Metabase All Questions Retrieval
+        ===================================
+
+        ✅ All questions retrieved successfully!

@@ -1,0 +1,26 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.instance.shutdownInstance
+  title: Shutdown Instance
+  description: Shutdown Jenkins immediately
+  labels:
+    category: Jenkins
+  tags:
+    - shutdown
+    - instance
+    - maintenance
+    - jenkins
+spec:
+  inputs:
+    properties: {}
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🔴 Jenkins Shutdown
+        ===================
+
+        ⚠️ Jenkins will shutdown immediately!
+        ✅ Shutdown command executed successfully!

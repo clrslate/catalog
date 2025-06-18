@@ -1,0 +1,26 @@
+name: gitlab
+version: 0.1.0
+title: GitLab
+description: Building blocks for managing GitLab repositories, pipelines, and projects
+owner: Team ClrSlate
+icon: Brands.GitLab
+color: "#FC6D26"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - gitlab
+  - git
+  - repository
+  - pipeline
+  - ci-cd
+  - issue-tracking
+  - merge-request
+  - devops
+  - version-control
+
+maintainers:
+  - name: Team ClrSlate

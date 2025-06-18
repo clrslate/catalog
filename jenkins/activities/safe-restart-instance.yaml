@@ -1,0 +1,27 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.instance.safeRestartInstance
+  title: Safely Restart Instance
+  description: Restart Jenkins once no jobs are running
+  labels:
+    category: Jenkins
+  tags:
+    - restart
+    - safe
+    - instance
+    - maintenance
+    - jenkins
+spec:
+  inputs:
+    properties: {}
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🔄 Jenkins Safe Restart
+        ========================
+
+        ⏳ Jenkins will restart after all jobs complete
+        ✅ Safe restart command executed successfully!

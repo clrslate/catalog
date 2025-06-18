@@ -1,0 +1,45 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.trigger.subscribe
+  title: Redis Trigger
+  description: Subscribe to a Redis channel
+  labels:
+    category: Redis
+  tags:
+    - trigger
+    - subscribe
+    - channel
+    - redis
+spec:
+  inputs:
+    properties:
+      channels:
+        type: string
+        title: Channels
+        description: Channels to subscribe to. Multiple channels can be defined with commas
+      jsonParseBody:
+        type: string
+        title: JSON Parse Body
+        description: Whether to try to parse the message to an object
+        enum: ["true", "false"]
+        default: "false"
+      onlyMessage:
+        type: string
+        title: Only Message
+        description: Whether to return only the message property
+        enum: ["true", "false"]
+        default: "false"
+    required:
+      - channels
+  handler:
+    type: console
+    properties:
+      output: |
+        🔔 Redis Channel Subscription
+        =============================
+        Channels: {{inputs.channels}}
+        JSON Parse Body: {{inputs.jsonParseBody}}
+        Only Message: {{inputs.onlyMessage}}
+
+        ✅ Subscribed to channels successfully!

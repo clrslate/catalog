@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: gitlab.pipeline.runPipeline
+  title: Run Pipeline
+  description: Trigger a pipeline run in GitLab
+  labels:
+    category: GitLab
+  tags:
+    - run
+    - pipeline
+    - trigger
+    - ci-cd
+    - gitlab
+spec:
+  inputs:
+    properties:
+      projectId:
+        type: string
+        title: Project ID
+        description: ID of the project where the pipeline will run
+      branch:
+        type: string
+        title: Branch
+        description: Branch to trigger the pipeline on
+        default: "main"
+    required:
+      - projectId
+  handler:
+    type: console
+    properties:
+      output: |
+        🚀 GitLab Pipeline Execution
+        ============================
+        Project ID: {{inputs.projectId}}
+        Branch: {{inputs.branch}}
+
+        ✅ Pipeline triggered successfully!

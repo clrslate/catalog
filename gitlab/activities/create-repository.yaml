@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: gitlab.repo.createRepository
+  title: Create Repository
+  description: Create a new repository in a GitLab project
+  labels:
+    category: GitLab
+  tags:
+    - create
+    - repository
+    - repo
+    - gitlab
+spec:
+  inputs:
+    properties:
+      repoName:
+        type: string
+        title: Repository Name
+        description: Name of the repository to create
+      visibility:
+        type: string
+        title: Visibility
+        description: Repository visibility (public/private)
+        enum: ["public", "private"]
+        default: "private"
+    required:
+      - repoName
+  handler:
+    type: console
+    properties:
+      output: |
+        📁 GitLab Repository Creation
+        =============================
+        Repository Name: {{inputs.repoName}}
+        Visibility: {{inputs.visibility}}
+
+        ✅ Repository created successfully!

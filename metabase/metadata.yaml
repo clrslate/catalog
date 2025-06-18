@@ -1,0 +1,25 @@
+name: metabase
+version: 0.1.0
+title: Metabase
+description: Use the Metabase API
+owner: Team ClrSlate
+icon: Brands.Metabase
+color: "#FC6D26"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - metabase
+  - analytics
+  - business-intelligence
+  - dashboard
+  - data-visualization
+  - api
+  - metrics
+  - databases
+
+maintainers:
+  - name: Team ClrSlate

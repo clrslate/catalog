@@ -1,0 +1,30 @@
+name: application-scaffolding
+version: 0.1.0
+title: Application Scaffolding
+description: Building blocks for scaffolding applications using popular tools and templates
+owner: Team ClrSlate
+icon: Generic.Scaffolding
+color: "#4CAF50"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - scaffolding
+  - template
+  - project-generation
+  - cookiecutter
+  - dotnet
+  - react
+  - nextjs
+  - maven
+  - angular
+  - yeoman
+  - flask
+  - project-setup
+  - boilerplate
+
+maintainers:
+  - name: Team ClrSlate

@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.questions.getQuestionById
+  title: Get Question
+  description: Retrieve a specific question by its ID
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - question
+    - retrieve
+    - metabase
+spec:
+  inputs:
+    properties:
+      questionId:
+        type: string
+        title: Question ID
+        description: The unique identifier of the question
+    required:
+      - questionId
+  handler:
+    type: console
+    properties:
+      output: |
+        📊 Metabase Question Retrieval
+        ==============================
+        Question ID: {{inputs.questionId}}
+
+        ✅ Question retrieved successfully!

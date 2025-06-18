@@ -1,0 +1,25 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.metrics.getAllMetrics
+  title: Get All Metrics
+  description: Retrieve multiple metrics
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - metrics
+    - list
+    - metabase
+spec:
+  inputs:
+    properties: {}
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        📏 Metabase All Metrics Retrieval
+        =================================
+
+        ✅ All metrics retrieved successfully!

@@ -1,0 +1,25 @@
+name: keycloak
+version: 0.1.0
+title: Keycloak
+description: Building blocks for managing Keycloak realms, clients, users, and roles
+owner: Team ClrSlate
+icon: Brands.KeyCloak
+color: "#2C2C2C"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - keycloak
+  - identity
+  - authentication
+  - authorization
+  - sso
+  - oauth
+  - oidc
+  - security
+
+maintainers:
+  - name: Team ClrSlate

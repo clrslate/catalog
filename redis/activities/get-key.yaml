@@ -1,0 +1,50 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.operations.getKey
+  title: Get Key
+  description: Retrieve a key from Redis
+  labels:
+    category: Redis
+  tags:
+    - get
+    - key
+    - retrieve
+    - redis
+spec:
+  inputs:
+    properties:
+      propertyName:
+        type: string
+        title: Property Name
+        description: Name of the property to write received data to. Supports dot-notation. Example 'data.person[0].name'
+        default: "propertyName"
+      key:
+        type: string
+        title: Key
+        description: Name of the key to get from Redis
+      keyType:
+        type: string
+        title: Key Type
+        description: The type of the key to get
+        default: "automatic"
+      dotNotation:
+        type: string
+        title: Dot Notation
+        description: By default, dot-notation is used in property names. This means that 'a.b' will set the property 'b' underneath 'a' so { 'a'{ 'b' value} }. If that is not intended, this can be deactivated, and it will then set { 'a.b' value } instead
+        enum: ["true", "false"]
+        default: "true"
+    required:
+      - key
+  handler:
+    type: console
+    properties:
+      output: |
+        📤 Redis Key Retrieval
+        ======================
+        Key: {{inputs.key}}
+        Key Type: {{inputs.keyType}}
+        Property Name: {{inputs.propertyName}}
+        Dot Notation: {{inputs.dotNotation}}
+
+        ✅ Key retrieved successfully!

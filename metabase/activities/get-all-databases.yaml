@@ -1,0 +1,25 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.databases.getAllDatabases
+  title: Get All Databases
+  description: Retrieve multiple databases
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - databases
+    - list
+    - metabase
+spec:
+  inputs:
+    properties: {}
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🗃️ Metabase All Databases Retrieval
+        ====================================
+
+        ✅ All databases retrieved successfully!

@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.instance.quietDownInstance
+  title: Quiet Down Instance
+  description: Put Jenkins in quiet mode
+  labels:
+    category: Jenkins
+  tags:
+    - quiet
+    - instance
+    - maintenance
+    - jenkins
+spec:
+  inputs:
+    properties:
+      reason:
+        type: string
+        title: Reason
+        description: Reason for entering quiet mode
+    required:
+      - reason
+  handler:
+    type: console
+    properties:
+      output: |
+        🔇 Jenkins Quiet Mode
+        =====================
+        Reason: {{inputs.reason}}
+
+        ✅ Jenkins entered quiet mode successfully!

@@ -1,0 +1,48 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: keycloak.user.deleteUser
+  title: Delete User
+  description: Delete a user from a Keycloak realm
+  labels:
+    category: Keycloak
+  tags:
+    - delete
+    - user
+    - keycloak
+spec:
+  inputs:
+    properties:
+      realmName:
+        type: string
+        title: Realm Name
+        description: Name of the realm containing the user
+      username:
+        type: string
+        title: Username
+        description: Username of the user to delete
+      keycloakUrl:
+        type: string
+        title: Keycloak URL
+        description: Base URL of the Keycloak server
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Admin authentication token for Keycloak
+    required:
+      - realmName
+      - username
+      - keycloakUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        🗑️ Keycloak User Deletion
+        ==========================
+        Realm Name: {{inputs.realmName}}
+        Username: {{inputs.username}}
+        Keycloak URL: {{inputs.keycloakUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ User deleted successfully!

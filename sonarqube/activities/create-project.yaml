@@ -1,0 +1,49 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: sonarqube.project.createProject
+  title: Create SonarQube Project
+  description: Create a new project in SonarQube
+  labels:
+    category: SonarQube
+  tags:
+    - create
+    - project
+    - setup
+    - sonarqube
+spec:
+  inputs:
+    properties:
+      projectKey:
+        type: string
+        title: Project Key
+        description: Unique key for the new SonarQube project
+      projectName:
+        type: string
+        title: Project Name
+        description: Name of the SonarQube project
+      sonarHostUrl:
+        type: string
+        title: SonarQube Host URL
+        description: SonarQube server URL
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Authentication token for the SonarQube server
+    required:
+      - projectKey
+      - projectName
+      - sonarHostUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        🏗️ SonarQube Project Creation
+        =============================
+        Project Key: {{inputs.projectKey}}
+        Project Name: {{inputs.projectName}}
+        SonarQube URL: {{inputs.sonarHostUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ Project created successfully!

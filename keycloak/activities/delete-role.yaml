@@ -1,0 +1,48 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: keycloak.role.deleteRole
+  title: Delete Role
+  description: Delete a role from a Keycloak realm
+  labels:
+    category: Keycloak
+  tags:
+    - delete
+    - role
+    - keycloak
+spec:
+  inputs:
+    properties:
+      realmName:
+        type: string
+        title: Realm Name
+        description: Name of the realm containing the role
+      roleName:
+        type: string
+        title: Role Name
+        description: Name of the role to delete
+      keycloakUrl:
+        type: string
+        title: Keycloak URL
+        description: Base URL of the Keycloak server
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Admin authentication token for Keycloak
+    required:
+      - realmName
+      - roleName
+      - keycloakUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        🗑️ Keycloak Role Deletion
+        ==========================
+        Realm Name: {{inputs.realmName}}
+        Role Name: {{inputs.roleName}}
+        Keycloak URL: {{inputs.keycloakUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ Role deleted successfully!

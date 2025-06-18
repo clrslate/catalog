@@ -53,7 +53,7 @@ spec:
   handler:
     type: tekton.pipelineRef
     properties:
-      pipeline: helm.pipelineRef.helm-install
+      pipeline: helm.pipelineRef.helm-install 
       inputs:
         cluster: "{{inputs.cluster._name}}"
         helmChart: "observability.records.helmChart.grafana"

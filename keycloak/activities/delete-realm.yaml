@@ -1,0 +1,42 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: keycloak.realm.deleteRealm
+  title: Delete Realm
+  description: Delete a realm from Keycloak
+  labels:
+    category: Keycloak
+  tags:
+    - delete
+    - realm
+    - keycloak
+spec:
+  inputs:
+    properties:
+      realmName:
+        type: string
+        title: Realm Name
+        description: Name of the realm to delete
+      keycloakUrl:
+        type: string
+        title: Keycloak URL
+        description: Base URL of the Keycloak server
+      authToken:
+        type: string
+        title: Authentication Token
+        description: Admin authentication token for Keycloak
+    required:
+      - realmName
+      - keycloakUrl
+      - authToken
+  handler:
+    type: console
+    properties:
+      output: |
+        🗑️ Keycloak Realm Deletion
+        ===========================
+        Realm Name: {{inputs.realmName}}
+        Keycloak URL: {{inputs.keycloakUrl}}
+        Auth Token: [PROTECTED]
+
+        ✅ Realm deleted successfully!

@@ -1,0 +1,25 @@
+name: kafka
+version: 0.1.0
+title: Kafka
+description: Sends messages to a Kafka topic
+owner: Team ClrSlate
+icon: Brands.Kafka
+color: "#FC6D26"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - kafka
+  - messaging
+  - streaming
+  - producer
+  - consumer
+  - event-driven
+  - pub-sub
+  - apache-kafka
+
+maintainers:
+  - name: Team ClrSlate

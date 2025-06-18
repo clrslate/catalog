@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.angular.cli.new
+  title: Create Angular App with Angular CLI
+  description: Scaffold a new Angular application using Angular CLI
+  icon: Brands.Angular
+  labels:
+    category: Application Scaffolding
+  tags:
+    - create
+    - angular
+    - typescript
+    - cli
+    - spa
+spec:
+  inputs:
+    properties:
+      appName:
+        type: string
+        title: App Name
+        description: Name of the new Angular application
+      style:
+        type: string
+        title: Style
+        description: CSS preprocessor to use (e.g., SCSS, CSS)
+    required:
+      - appName
+  handler:
+    type: console
+    properties:
+      output: |
+        🅰️ Angular App Creation
+        =======================
+        App Name: {{inputs.appName}}
+        Style: {{inputs.style}}
+
+        ✅ Angular application created successfully!

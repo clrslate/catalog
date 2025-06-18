@@ -1,0 +1,44 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: redis.operations.push
+  title: Push
+  description: Push data to a Redis list
+  labels:
+    category: Redis
+  tags:
+    - push
+    - list
+    - data
+    - redis
+spec:
+  inputs:
+    properties:
+      list:
+        type: string
+        title: List
+        description: Name of the list in Redis
+      messageData:
+        type: string
+        title: Message Data
+        description: Data to push
+      tail:
+        type: string
+        title: Tail
+        description: Whether to push data to the end of the list
+        enum: ["true", "false"]
+        default: "false"
+    required:
+      - list
+      - messageData
+  handler:
+    type: console
+    properties:
+      output: |
+        ⬆️ Redis List Push
+        ==================
+        List: {{inputs.list}}
+        Message Data: {{inputs.messageData}}
+        Tail: {{inputs.tail}}
+
+        ✅ Data pushed successfully!

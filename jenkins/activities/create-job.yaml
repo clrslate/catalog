@@ -1,0 +1,36 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.job.createJob
+  title: Create Job
+  description: Create a new job in Jenkins
+  labels:
+    category: Jenkins
+  tags:
+    - create
+    - job
+    - jenkins
+spec:
+  inputs:
+    properties:
+      newJob:
+        type: string
+        title: New Job
+        description: Name of the new Jenkins job
+      xml:
+        type: string
+        title: XML Configuration
+        description: XML configuration for the new job
+    required:
+      - newJob
+      - xml
+  handler:
+    type: console
+    properties:
+      output: |
+        🏗️ Jenkins Job Creation
+        ========================
+        New Job: {{inputs.newJob}}
+        XML Configuration: [PROVIDED]
+
+        ✅ Job created successfully!

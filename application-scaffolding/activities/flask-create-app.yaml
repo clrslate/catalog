@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: scaffolding.flask.create-app
+  title: Create Flask App
+  description: Scaffold a new Flask application using Flask CLI
+  labels:
+    category: Application Scaffolding
+  tags:
+    - create
+    - flask
+    - python
+    - web-app
+spec:
+  inputs:
+    properties:
+      appName:
+        type: string
+        title: App Name
+        description: Name of the new Flask application
+      directory:
+        type: string
+        title: Directory
+        description: Directory to generate the Flask application in
+    required:
+      - appName
+      - directory
+  handler:
+    type: console
+    properties:
+      output: |
+        🐍 Flask App Creation
+        =====================
+        App Name: {{inputs.appName}}
+        Directory: {{inputs.directory}}
+
+        ✅ Flask application created successfully!

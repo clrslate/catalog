@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: nginx.configmap.createConfigMap
+  title: Create ConfigMap for NGINX
+  description: Create a ConfigMap with NGINX configuration
+  labels:
+    category: NGINX
+  tags:
+    - create
+    - configmap
+    - configuration
+    - nginx
+spec:
+  inputs:
+    properties:
+      configMapName:
+        type: string
+        title: ConfigMap Name
+        description: Name of the ConfigMap to create
+      namespace:
+        type: string
+        title: Namespace
+        description: Kubernetes namespace for the ConfigMap
+      nginxConf:
+        type: string
+        title: NGINX Configuration
+        description: Content of the NGINX configuration file
+    required:
+      - configMapName
+      - namespace
+      - nginxConf
+  handler:
+    type: console
+    properties:
+      output: |
+        📝 NGINX ConfigMap Creation
+        ===========================
+        ConfigMap Name: {{inputs.configMapName}}
+        Namespace: {{inputs.namespace}}
+        Configuration: {{inputs.nginxConf}}
+
+        ✅ ConfigMap created successfully!

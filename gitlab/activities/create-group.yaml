@@ -1,0 +1,38 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: gitlab.group.createGroup
+  title: Create Group
+  description: Create a new group in GitLab
+  labels:
+    category: GitLab
+  tags:
+    - create
+    - group
+    - organization
+    - gitlab
+spec:
+  inputs:
+    properties:
+      groupName:
+        type: string
+        title: Group Name
+        description: Name of the group to create
+      visibility:
+        type: string
+        title: Visibility
+        description: Group visibility (public/private)
+        enum: ["public", "private"]
+        default: "private"
+    required:
+      - groupName
+  handler:
+    type: console
+    properties:
+      output: |
+        👥 GitLab Group Creation
+        ========================
+        Group Name: {{inputs.groupName}}
+        Visibility: {{inputs.visibility}}
+
+        ✅ Group created successfully!

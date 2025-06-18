@@ -1,0 +1,36 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jenkins.job.copyJob
+  title: Copy Job
+  description: Copy a specific job in Jenkins
+  labels:
+    category: Jenkins
+  tags:
+    - copy
+    - job
+    - jenkins
+spec:
+  inputs:
+    properties:
+      job:
+        type: string
+        title: Job
+        description: Name or ID of the job to copy
+      newJob:
+        type: string
+        title: New Job
+        description: Name of the new Jenkins job
+    required:
+      - job
+      - newJob
+  handler:
+    type: console
+    properties:
+      output: |
+        📋 Jenkins Job Copy
+        ===================
+        Source Job: {{inputs.job}}
+        New Job: {{inputs.newJob}}
+
+        ✅ Job copied successfully!

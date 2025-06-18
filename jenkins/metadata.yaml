@@ -1,0 +1,25 @@
+name: jenkins
+version: 0.1.0
+title: Jenkins
+description: Consume Jenkins API
+owner: Team ClrSlate
+icon: Brands.Jenkins
+color: "#1F4788"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
+keywords:
+  - jenkins
+  - ci-cd
+  - automation
+  - build
+  - deployment
+  - api
+  - jobs
+  - pipeline
+
+maintainers:
+  - name: Team ClrSlate

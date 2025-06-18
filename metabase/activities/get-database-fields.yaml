@@ -1,0 +1,32 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: metabase.databases.getDatabaseFields
+  title: Get Database Fields
+  description: Retrieve fields from a specific database
+  labels:
+    category: Metabase
+  tags:
+    - get
+    - database
+    - fields
+    - schema
+    - metabase
+spec:
+  inputs:
+    properties:
+      databaseId:
+        type: string
+        title: Database ID
+        description: The ID of the database
+        default: ""
+    required: []
+  handler:
+    type: console
+    properties:
+      output: |
+        🗃️ Metabase Database Fields Retrieval
+        ======================================
+        Database ID: {{inputs.databaseId}}
+
+        ✅ Database fields retrieved successfully!

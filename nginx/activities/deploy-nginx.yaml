@@ -1,0 +1,42 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: nginx.deployment.deployNginx
+  title: Deploy NGINX
+  description: Deploy an NGINX instance on Kubernetes
+  labels:
+    category: NGINX
+  tags:
+    - deploy
+    - nginx
+    - kubernetes
+spec:
+  inputs:
+    properties:
+      namespace:
+        type: string
+        title: Namespace
+        description: Kubernetes namespace to deploy NGINX
+      replicas:
+        type: string
+        title: Replicas
+        description: Number of NGINX replicas
+        default: "1"
+      configMapName:
+        type: string
+        title: ConfigMap Name
+        description: Name of the ConfigMap for NGINX configuration
+    required:
+      - namespace
+      - configMapName
+  handler:
+    type: console
+    properties:
+      output: |
+        🚀 NGINX Deployment
+        ===================
+        Namespace: {{inputs.namespace}}
+        Replicas: {{inputs.replicas}}
+        ConfigMap: {{inputs.configMapName}}
+
+        ✅ NGINX deployed successfully!

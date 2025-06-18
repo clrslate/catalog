@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: gitlab.issue.createIssue
+  title: Create Issue
+  description: Create a new issue in a GitLab repository
+  labels:
+    category: GitLab
+  tags:
+    - create
+    - issue
+    - ticket
+    - gitlab
+spec:
+  inputs:
+    properties:
+      projectId:
+        type: string
+        title: Project ID
+        description: ID of the project where the issue will be created
+      title:
+        type: string
+        title: Title
+        description: Title of the issue
+    required:
+      - projectId
+      - title
+  handler:
+    type: console
+    properties:
+      output: |
+        🐛 GitLab Issue Creation
+        ========================
+        Project ID: {{inputs.projectId}}
+        Title: {{inputs.title}}
+
+        ✅ Issue created successfully!
