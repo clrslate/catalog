@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: jira.createAccount
+  title: Jira Service Desk
+  description: Set up a Jira account for the employee and provide access to relevant project boards
+  icon: Brands.Jira
+  labels:
+    category: Development Tools
+  tags:
+    - jira
+    - account
+    - projects
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Employee email address
+    required:
+      - email
+  handler:
+    type: console
+    properties:
+      output: |
+        📋 Jira Account Creation
+        ========================
+        Email: {{inputs.email}}
+
+        ✅ Jira account created and project access granted successfully!

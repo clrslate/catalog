@@ -1,0 +1,536 @@
+apiVersion: core.clrslate.io
+kind: WorkflowStack
+metadata:
+  isSelfServiceAction: true
+  folderPath: Teams/Admin
+  name: workstreamA
+  title: 'Startup - Workstream A: Identity & HR'
+  description: Basic onboarding common for all employees
+  icon: Brands.Microsoft365
+  tags:
+  - Microsoft365
+  - AAD
+  - Zoho
+  labels: {}
+  annotations: {}
+spec:
+  variables:
+  - id: faffb82ba1698695
+    name: var_email
+    typeName: String
+    isArray: false
+    storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+  - id: bbff224a89e87d80
+    name: var_role
+    typeName: String
+    isArray: false
+    storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+  - id: ee4d4c9b29ce1550
+    name: var_aadSecurityGroup
+    typeName: String
+    isArray: false
+    storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+  inputs:
+  - uIHint: singleline
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: String
+    isArray: false
+    name: FirstName
+    displayName: First Name
+    description: ''
+    category: ''
+  - uIHint: singleline
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: String
+    isArray: false
+    name: LastName
+    displayName: Last Name
+    description: ''
+    category: ''
+  - uIHint: singleline
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: String
+    isArray: false
+    name: JoiningDate
+    displayName: Joining Date
+    description: ''
+    category: ''
+  - uIHint: singleline
+    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    type: String
+    isArray: false
+    name: Manager
+    displayName: Manager
+    description: ''
+    category: ''
+  outputs:
+  - type: String
+    isArray: false
+    name: m365account
+    displayName: M365 Account
+    description: ''
+    category: Primitives
+  - type: String
+    isArray: false
+    name: AADEmployee
+    displayName: AAD Employee
+    description: ''
+    category: Primitives
+  - type: String
+    isArray: false
+    name: ZohoProfile
+    displayName: Zoho Profile
+    description: ''
+    category: Primitives
+  - type: String
+    isArray: false
+    name: CreatedEmail
+    displayName: Created Email
+    description: ''
+    category: Primitives
+  customProperties:
+    icon: Brands.Microsoft365
+    color: 
+    tags:
+    - Microsoft365
+    - AAD
+    - Zoho
+    isSelfServiceAction: true
+    folderPath: Teams/Admin
+  options:
+    usableAsActivity: true
+    autoUpdateConsumingWorkflows: true
+  root:
+    id: c2cc369ae4ebcec
+    nodeId: Workflow1:c2cc369ae4ebcec
+    name: Flowchart1
+    type: Elsa.Flowchart
+    version: 1
+    customProperties:
+      notFoundConnections: []
+      canStartWorkflow: false
+      runAsynchronously: false
+    metadata: {}
+    activities:
+    - id: b7c6db6674d1aaef
+      nodeId: Workflow1:c2cc369ae4ebcec:b7c6db6674d1aaef
+      name: Start1
+      type: Elsa.Start
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 111.357421875
+            y: 133.8427734375
+          size:
+            width: 101.3125
+            height: 49.333335876464844
+    - variable:
+        id: faffb82ba1698695
+        name: var_email
+        typeName: String
+        storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      value:
+        typeName: Object
+        expression:
+          type: Liquid
+          value: '{{Inputs.FirstName}}.{{Inputs.LastName}}@clrslate.io'
+      id: 100bff35c54582e7
+      nodeId: Workflow1:c2cc369ae4ebcec:100bff35c54582e7
+      name: SetVariable1
+      type: Elsa.SetVariable
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 368.6572265625
+            y: 133.8427734375
+          size:
+            width: 152.3229217529297
+            height: 49.333335876464844
+    - variable:
+        id: ee4d4c9b29ce1550
+        name: var_aadSecurityGroup
+        typeName: String
+        storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      value:
+        typeName: Object
+        expression:
+          type: Literal
+          value: Engineering
+      id: e35669a5a906ed10
+      nodeId: Workflow1:c2cc369ae4ebcec:e35669a5a906ed10
+      name: SetVariable3
+      type: Elsa.SetVariable
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 368.6572265625
+            y: 228.0712890625
+          size:
+            width: 152.3229217529297
+            height: 49.333335876464844
+    - result: null
+      id: 7262046a0e8a94ca
+      nodeId: Workflow1:c2cc369ae4ebcec:7262046a0e8a94ca
+      name: microsoft365.createemployeeaccount1
+      type: microsoft365.createemployeeaccount
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 660.498046875
+            y: 39.6142578125
+          size:
+            width: 222.25
+            height: 49.333335876464844
+      inputFirstName:
+        typeName: String
+        expression:
+          type: Input
+          value: FirstName
+        memoryReference:
+          id: 7262046a0e8a94ca:input-input-first-name
+      inputLastName:
+        typeName: String
+        expression:
+          type: Input
+          value: LastName
+        memoryReference:
+          id: 7262046a0e8a94ca:input-input-last-name
+      inputEmail:
+        typeName: String
+        expression:
+          type: Variable
+          value:
+            id: faffb82ba1698695
+            name: var_email
+            typeName: String
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        memoryReference:
+          id: 7262046a0e8a94ca:input-input-email
+    - result: null
+      id: d16a1f02e617d3ed
+      nodeId: Workflow1:c2cc369ae4ebcec:d16a1f02e617d3ed
+      name: azure.aad.addemployee1
+      type: azure.aad.addemployee
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 961.787109375
+            y: 39.6142578125
+          size:
+            width: 171.2291717529297
+            height: 49.333335876464844
+      inputEmail:
+        typeName: String
+        expression:
+          type: Variable
+          value:
+            id: faffb82ba1698695
+            name: var_email
+            typeName: String
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        memoryReference:
+          id: d16a1f02e617d3ed:input-input-email
+      inputSecurityGroup:
+        typeName: String
+        expression:
+          type: Variable
+          value:
+            id: ee4d4c9b29ce1550
+            name: var_aadSecurityGroup
+            typeName: String
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        memoryReference:
+          id: d16a1f02e617d3ed:input-input-security-group
+    - variable:
+        id: bbff224a89e87d80
+        name: var_role
+        typeName: String
+        storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      value:
+        typeName: Object
+        expression:
+          type: Literal
+          value: SDE-1
+      id: 1a14fba4e577d898
+      nodeId: Workflow1:c2cc369ae4ebcec:1a14fba4e577d898
+      name: SetVariable2
+      type: Elsa.SetVariable
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 368.6572265625
+            y: 39.6142578125
+          size:
+            width: 152.3229217529297
+            height: 49.333335876464844
+    - outputName:
+        typeName: String
+        expression:
+          type: Literal
+          value: m365account
+      outputValue:
+        typeName: Object
+        expression:
+          type: Liquid
+          value: 'Created Microsoft 365 account with email Id: {{Variables.var_email}} '
+      id: c6a9c5b164b5febb
+      nodeId: Workflow1:c2cc369ae4ebcec:c6a9c5b164b5febb
+      name: SetOutput1
+      type: Elsa.SetOutput
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 984.9327239990234
+            y: 133.9084186553955
+          size:
+            width: 106.98958587646484
+            height: 49.333335876464844
+    - result: null
+      id: e663477d35347b0a
+      nodeId: Workflow1:c2cc369ae4ebcec:e663477d35347b0a
+      name: zoho.employee.addprofile1
+      type: zoho.employee.addprofile
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 961.787109375
+            y: 208.0712890625
+          size:
+            width: 153.1666717529297
+            height: 49.333335876464844
+      inputRole:
+        typeName: String
+        expression:
+          type: Variable
+          value:
+            id: bbff224a89e87d80
+            name: var_role
+            typeName: String
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        memoryReference:
+          id: e663477d35347b0a:input-input-role
+      inputEmail:
+        typeName: String
+        expression:
+          type: Variable
+          value:
+            id: faffb82ba1698695
+            name: var_email
+            typeName: String
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        memoryReference:
+          id: e663477d35347b0a:input-input-email
+      inputJoiningDate:
+        typeName: String
+        expression:
+          type: Input
+          value: JoiningDate
+        memoryReference:
+          id: e663477d35347b0a:input-input-joining-date
+      inputManager:
+        typeName: String
+        expression:
+          type: Input
+          value: Manager
+        memoryReference:
+          id: e663477d35347b0a:input-input-manager
+    - outputName:
+        typeName: String
+        expression:
+          type: Literal
+          value: ZohoProfile
+      outputValue:
+        typeName: Object
+        expression:
+          type: Liquid
+          value: 'Zoho Profile setup successful with role: {{Variables.var_role}}'
+      id: 1602b4f673f657b2
+      nodeId: Workflow1:c2cc369ae4ebcec:1602b4f673f657b2
+      name: SetOutput3
+      type: Elsa.SetOutput
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1175.3634948730469
+            y: 208.1369342803955
+          size:
+            width: 106.98958587646484
+            height: 49.333335876464844
+    - outputName:
+        typeName: String
+        expression:
+          type: Literal
+          value: AADEmployee
+      outputValue:
+        typeName: Object
+        expression:
+          type: Liquid
+          value: 'AAD employee created successfully with security group: {{Variables.var_aadSecurityGroup}}'
+      id: 79a2afe2855b9d4f
+      nodeId: Workflow1:c2cc369ae4ebcec:79a2afe2855b9d4f
+      name: SetOutput4
+      type: Elsa.SetOutput
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1369.3895416259766
+            y: 39.67990303039551
+          size:
+            width: 106.98958587646484
+            height: 49.333335876464844
+    - outputName:
+        typeName: String
+        expression:
+          type: Literal
+          value: CreatedEmail
+      outputValue:
+        typeName: Object
+        expression:
+          type: Variable
+          value:
+            id: faffb82ba1698695
+            name: var_email
+            typeName: String
+            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      id: 41d9ff528aca6ed8
+      nodeId: Workflow1:c2cc369ae4ebcec:41d9ff528aca6ed8
+      name: SetOutput2
+      type: Elsa.SetOutput
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1205.3895416259766
+            y: 39.6142578125
+          size:
+            width: 106.98958587646484
+            height: 49.333335876464844
+    variables: []
+    connections:
+    - source:
+        activity: 41d9ff528aca6ed8
+        port: Done
+      target:
+        activity: 79a2afe2855b9d4f
+        port: In
+      vertices: []
+    - source:
+        activity: 7262046a0e8a94ca
+        port: Done
+      target:
+        activity: e663477d35347b0a
+        port: In
+      vertices: []
+    - source:
+        activity: e663477d35347b0a
+        port: Done
+      target:
+        activity: 1602b4f673f657b2
+        port: In
+      vertices: []
+    - source:
+        activity: 7262046a0e8a94ca
+        port: Done
+      target:
+        activity: c6a9c5b164b5febb
+        port: In
+      vertices: []
+    - source:
+        activity: d16a1f02e617d3ed
+        port: Done
+      target:
+        activity: 41d9ff528aca6ed8
+        port: In
+      vertices: []
+    - source:
+        activity: 1a14fba4e577d898
+        port: Done
+      target:
+        activity: 7262046a0e8a94ca
+        port: In
+      vertices: []
+    - source:
+        activity: 100bff35c54582e7
+        port: Done
+      target:
+        activity: 7262046a0e8a94ca
+        port: In
+      vertices: []
+    - source:
+        activity: e35669a5a906ed10
+        port: Done
+      target:
+        activity: 7262046a0e8a94ca
+        port: In
+      vertices: []
+    - source:
+        activity: 7262046a0e8a94ca
+        port: Done
+      target:
+        activity: d16a1f02e617d3ed
+        port: In
+      vertices: []
+    - source:
+        activity: b7c6db6674d1aaef
+        port: Done
+      target:
+        activity: 100bff35c54582e7
+        port: In
+      vertices: []
+    - source:
+        activity: b7c6db6674d1aaef
+        port: Done
+      target:
+        activity: 1a14fba4e577d898
+        port: In
+      vertices: []
+    - source:
+        activity: b7c6db6674d1aaef
+        port: Done
+      target:
+        activity: e35669a5a906ed10
+        port: In
+      vertices: []

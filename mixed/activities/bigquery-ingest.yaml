@@ -1,0 +1,44 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: google.bigQuery.ingest
+  title: Ingest Data
+  description: Ingest data from different datasources into BigQuery data warehouse
+  icon: Brands.BigQuery
+  labels:
+    category: Data Processing
+  tags:
+    - bigquery
+    - ingest
+    - data
+    - google-cloud
+spec:
+  inputs:
+    properties:
+      dataSource:
+        type: string
+        title: Data Source
+        description: Source of data to ingest
+      dataset:
+        type: string
+        title: Dataset
+        description: BigQuery dataset name
+      table:
+        type: string
+        title: Table
+        description: BigQuery table name
+    required:
+      - dataSource
+      - dataset
+      - table
+  handler:
+    type: console
+    properties:
+      output: |
+        🔄 BigQuery Data Ingestion
+        ===========================
+        Data Source: {{inputs.dataSource}}
+        Dataset: {{inputs.dataset}}
+        Table: {{inputs.table}}
+
+        ✅ BigQuery data ingestion initiated successfully!

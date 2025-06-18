@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: spark.operation.etl
+  title: Process Data (ETL)
+  description: Cleans and structures data for the warehouse. Extract, Transform and Load (ETL)
+  icon: Brands.Spark
+  labels:
+    category: Data Processing
+  tags:
+    - spark
+    - etl
+    - data
+spec:
+  inputs:
+    properties:
+      sourceDataset:
+        type: string
+        title: Source Dataset
+        description: Source dataset for ETL processing
+      targetDataset:
+        type: string
+        title: Target Dataset
+        description: Target dataset for processed data
+      transformationRules:
+        type: string
+        title: Transformation Rules
+        description: Data transformation rules to apply
+        default: "Default transformation rules"
+    required:
+      - sourceDataset
+      - targetDataset
+  handler:
+    type: console
+    properties:
+      output: |
+        ⚡ Spark ETL Processing
+        =======================
+        Source Dataset: {{inputs.sourceDataset}}
+        Target Dataset: {{inputs.targetDataset}}
+        Transformation Rules: {{inputs.transformationRules}}
+
+        ✅ Spark ETL process initiated successfully!

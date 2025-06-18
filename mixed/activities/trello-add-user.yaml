@@ -1,0 +1,31 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: trello.addUser
+  title: Trello Access
+  description: Add user to organization in Trello for collaboration
+  icon: Brands.Trello
+  labels:
+    category: Collaboration Tools
+  tags:
+    - trello
+    - user
+    - collaboration
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Employee email address
+    required:
+      - email
+  handler:
+    type: console
+    properties:
+      output: |
+        📌 Trello User Addition
+        =======================
+        Email: {{inputs.email}}
+
+        ✅ User added to Trello organization successfully!

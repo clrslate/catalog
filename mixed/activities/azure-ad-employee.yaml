@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azure.aad.addEmployee
+  title: AAD Employee
+  description: Register the employee in Azure Active Directory (AAD) and configure security settings
+  icon: Azure.Logo
+  labels:
+    category: Employee Onboarding
+  tags:
+    - azure
+    - active-directory
+    - employee
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Company email address
+      securityGroup:
+        type: string
+        title: Security Group
+        description: Default security group assignment
+      sso:
+        type: string
+        title: SSO
+        description: Enable SSO for company tools
+        default: "true"
+    required:
+      - email
+      - securityGroup
+  handler:
+    type: console
+    properties:
+      output: |
+        🔐 Azure AD Employee Registration
+        ==================================
+        Email: {{inputs.email}}
+        Security Group: {{inputs.securityGroup}}
+        SSO Enabled: {{inputs.sso}}
+
+        ✅ Azure AD employee registration initiated successfully!

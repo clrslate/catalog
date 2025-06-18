@@ -1,0 +1,43 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: postgreSql.extractData
+  title: Extract Data
+  description: Extract data from a PostgreSQL database
+  icon: Brands.PostgreSql
+  labels:
+    category: Database Operations
+  tags:
+    - postgresql
+    - extract
+    - data
+spec:
+  inputs:
+    properties:
+      databaseName:
+        type: string
+        title: Database Name
+        description: Name of the Database
+      tableName:
+        type: string
+        title: Table Name
+        description: Table from which data will be extracted
+      timeOffset:
+        type: string
+        title: Time Offset
+        description: Time difference from present, how old data should be extracted
+    required:
+      - databaseName
+      - tableName
+      - timeOffset
+  handler:
+    type: console
+    properties:
+      output: |
+        🗃️ PostgreSQL Data Extraction
+        ==============================
+        Database: {{inputs.databaseName}}
+        Table: {{inputs.tableName}}
+        Time Offset: {{inputs.timeOffset}}
+
+        ✅ PostgreSQL data extraction initiated successfully!

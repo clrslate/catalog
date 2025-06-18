@@ -1,0 +1,49 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: zoho.employee.addProfile
+  title: Zoho Profile
+  description: Set up an employee profile in Zoho People
+  icon: Brands.Zoho
+  labels:
+    category: Employee Onboarding
+  tags:
+    - zoho
+    - employee
+    - profile
+spec:
+  inputs:
+    properties:
+      role:
+        type: string
+        title: Role
+        description: Employee's designated role
+      email:
+        type: string
+        title: Email
+        description: Company email address
+      joiningDate:
+        type: string
+        title: Joining Date
+        description: Official start date of the employee
+      manager:
+        type: string
+        title: Manager
+        description: Assigned reporting manager in the organization
+    required:
+      - role
+      - email
+      - joiningDate
+      - manager
+  handler:
+    type: console
+    properties:
+      output: |
+        👥 Zoho Employee Profile Creation
+        ==================================
+        Role: {{inputs.role}}
+        Email: {{inputs.email}}
+        Joining Date: {{inputs.joiningDate}}
+        Manager: {{inputs.manager}}
+
+        ✅ Zoho employee profile created successfully!

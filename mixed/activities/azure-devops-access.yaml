@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: azure.devops.giveAccess
+  title: DevOps Access
+  description: Provide access to specific projects in Azure DevOps
+  icon: Azure.DevOps
+  labels:
+    category: Development Tools
+  tags:
+    - azure-devops
+    - access
+    - projects
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Company email address
+      projectList:
+        type: string
+        title: Project List
+        description: List of projects the employee has access to
+    required:
+      - email
+      - projectList
+  handler:
+    type: console
+    properties:
+      output: |
+        🚀 Azure DevOps Access Grant
+        =============================
+        Email: {{inputs.email}}
+        Projects: {{inputs.projectList}}
+
+        ✅ Azure DevOps access granted successfully!

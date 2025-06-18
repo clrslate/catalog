@@ -1,0 +1,32 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: bash.operation.script
+  title: Run Bash Script
+  description: Bash script to run on a PostgreSQL database
+  icon: Brands.Bash
+  labels:
+    category: Scripting
+  tags:
+    - bash
+    - script
+    - database
+spec:
+  inputs:
+    properties:
+      script:
+        type: string
+        title: Script Content
+        description: Bash script content to execute
+    required:
+      - script
+  handler:
+    type: console
+    properties:
+      output: |
+        💻 Bash Script Execution
+        =========================
+        Script Content:
+        {{inputs.script}}
+
+        ✅ Bash script execution initiated successfully!

@@ -1,0 +1,37 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: teams.invite
+  title: Teams Invites
+  description: Send invitations to Microsoft Teams channels as per role requirements
+  icon: Brands.Teams
+  labels:
+    category: Employee Onboarding
+  tags:
+    - teams
+    - invite
+    - channels
+spec:
+  inputs:
+    properties:
+      email:
+        type: string
+        title: Email
+        description: Company email address
+      channelsList:
+        type: string
+        title: Channels List
+        description: List of Teams channels to assign
+    required:
+      - email
+      - channelsList
+  handler:
+    type: console
+    properties:
+      output: |
+        📋 Microsoft Teams Channel Invitations
+        =======================================
+        Email: {{inputs.email}}
+        Channels: {{inputs.channelsList}}
+
+        ✅ Teams channel invitations sent successfully!
