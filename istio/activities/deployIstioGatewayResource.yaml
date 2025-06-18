@@ -1,0 +1,51 @@
+
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: istio.activity.deployIstioGatewayResource
+  title: Deploy Gateway Resource
+  description: Deploy Istio Gateway Resource
+  labels:
+    category: Istio
+  tags:
+    - create
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: The namespace where the Istio Gateway Resource will be deployed
+      domain:
+        type: string
+        title: Domain
+        description: The domain for the Istio Gateway Resource
+      name:
+        type: string
+        title: Gateway Name
+        description: The name of the Istio Gateway Resource
+        default: gateway
+    required:
+      - cluster
+      - namespace
+      - domain
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: helm.pipelineRef.helm-install
+      inputs: 
+        cluster: "{{inputs.cluster._name}}"
+        helmChart: "istio.records.helmChart.gateway-resource"
+        releaseName: "{{inputs.name}}"
+        namespace: "{{inputs.namespace}}"
+        valuesFile: |
+          ingress:
+            domain: "{{inputs.domain}}"
+          httpsRedirection: true

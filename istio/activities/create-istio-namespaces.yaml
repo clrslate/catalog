@@ -1,0 +1,64 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: istio.activity.create-namespaces
+  title: Istio Enabled Namespace
+  description: An activity that creates Istio enabled namespaces in the given clusters
+  labels:
+    category: Istio
+    owner: clrslate
+    package: istio
+  tags:
+    - tekton
+    - kubernetes
+    - create
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        title: Namespace
+        description: The name of the namespace to create
+    required:
+      - cluster
+      - namespace
+  mirrored:
+    command:
+      type: string
+      value: |
+        kubectl create namespace {{inputs.namespace}} --dry-run=client -o json | jq '.metadata += {"labels":{"istio-injection":"enabled"}}' | kubectl apply -f -
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: k8s.pipelineRef.kubectl-script
+      inputs:
+        script: '{{inputs.command}}'
+        cluster: '{{inputs.cluster._name}}'
+      resources:
+        newNamespace:
+          apiVersion: records.clrslate.io
+          kind: k8s.model.namespace
+          metadata:
+            name: "k8s.model.namespace.{{inputs.namespace}}"
+            title: "{{inputs.namespace}}"
+            description: "Kubernetes namespace {{inputs.namespace}}"
+            icon: Kubernetes.Logo
+            labels:
+              category: Kubernetes
+            tags:
+              - kubernetes
+              - namespace
+              - istio
+          spec:
+            name: "{{inputs.namespace}}"
+            cluster: "{{inputs.cluster._metadata.name}}"
+
+
+  

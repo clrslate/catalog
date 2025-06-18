@@ -12,8 +12,10 @@ spec:
     properties:
       name:
         type: string
-        description: User-given name of the tenant
-        minLength: 1
+        description: Tenant Name
+      domain:
+        type: string
+        description: Domain for the tenant, used for routing and access
       environment:
         type: object
         format: resource

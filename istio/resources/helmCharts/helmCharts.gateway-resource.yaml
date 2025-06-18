@@ -1,0 +1,10 @@
+apiVersion: records.clrslate.io
+kind: helm.model.helmChart
+metadata:
+  name: istio.records.helmChart.gateway-resource
+  title: Istio Gateway Resource Chart
+  description: Istio gateway resource helm chart for managing ingress traffic
+spec:
+  name: istio-gateway
+  repository: https://clrslate.github.io/helm-repo
+  version: 0.2.0
