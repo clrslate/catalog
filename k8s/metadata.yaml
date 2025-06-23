@@ -3,6 +3,10 @@ version: 1.0.0
 title: Kubernetes
 description: Kubernetes resource models and integrations
 icon: Kubernetes.Logo
+keywords:
+  - kubernetes
+  - containers
+  - namespaces
 maintainers:
   - name: ClrSlate Team
     email: team@clrslate.io
