@@ -1,0 +1,21 @@
+name: demos
+version: 0.1.0
+title: Demos & Examples
+description: Collection of example workflows, demonstrations, and reference implementations.
+owner: Team ClrSlate
+icon: Generic.PlayCircle
+color: "#28a745"
+
+# Keywords for search and discovery
+keywords:
+  - demos
+  - examples
+  - workflows
+  - reference
+
+# Required dependencies (comma-separated)
+required_dependencies: []
+
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io
