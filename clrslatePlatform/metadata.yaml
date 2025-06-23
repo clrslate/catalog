@@ -1,12 +1,13 @@
 name: clrslatePlatform
 version: 0.0.1
 title: ClrSlate Platform
-description: ClrSlate Platform
+description: ClrSlate Platform deployment and tenant management
 owner: Team ClrSlate
 icon: Brands.ClrSlate
-color: '#52C8EF'
+color: "#52C8EF"
 keywords:
   - clrslate-platform
+  - deployment
 maintainers:
   - name: ClrSlate Team
     email: team@clrslate.io

@@ -1,11 +1,14 @@
 name: helm
 version: 0.0.1
-title: Helm Package
-description: Helm Package
+title: Helm
+description: Helm chart management and Kubernetes deployment automation
 owner: Team ClrSlate
 icon: Kubernetes.Helm
 keywords:
   - helm
+  - kubernetes
+  - charts
+  - deployment
 maintainers:
   - name: ClrSlate Team
     email: team@clrslate.io

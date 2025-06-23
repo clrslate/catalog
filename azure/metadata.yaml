@@ -1,11 +1,16 @@
 name: azure
 version: 0.1.0
 title: Azure
-description: Azure cloud infrastructure resources
+description: Azure cloud infrastructure management and resource provisioning
 owner: Team ClrSlate
 icon: Azure.Logo
-color: '#0078D7'
+color: "#0078D7"
 
+# Keywords for search and discovery
+keywords:
+  - azure
+  - cloud
+  - infrastructure
 # Optional dependencies (comma-separated)
 optional_dependencies:
   - k8s
@@ -13,3 +18,7 @@ optional_dependencies:
 
 # Required dependencies (comma-separated)
 required_dependencies: []
+
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io
