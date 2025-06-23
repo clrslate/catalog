@@ -3,8 +3,13 @@ title: Istio
 description: ClrSlate package for managing Istio resources and operations in Kubernetes environments.
 version: 0.1.0
 icon: Brands.Istio
-color: '#466BB0'
+color: "#466BB0"
 owner: Team ClrSlate
+keywords:
+  - istio
+  - service-mesh
+  - kubernetes
+  - gateway
 maintainers:
   - name: ClrSlate Team
     email: support@clrslate.io

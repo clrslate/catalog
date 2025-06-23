@@ -1,12 +1,22 @@
 name: github
 version: 0.0.1
-title: GitHub Package
-description: GitHub Package
+title: GitHub
+description: Building blocks for managing GitHub repositories, project scaffolding, and integrations.
 owner: Team ClrSlate
 icon: Brands.GitHub
-color: '#181717'
+color: "#181717"
+
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
+
+# Keywords for search and discovery
 keywords:
   - github
+  - devops
+  - repository-management
+  - pipeline-integration
+
 maintainers:
   - name: ClrSlate Team
     email: team@clrslate.io
