@@ -9,10 +9,8 @@ color: "#0078D7"
 # Keywords for search and discovery
 keywords:
   - azure
-  - cloud-infrastructure
-  - kubernetes
-  - resource-management
-
+  - cloud
+  - infrastructure
 # Optional dependencies (comma-separated)
 optional_dependencies:
   - k8s

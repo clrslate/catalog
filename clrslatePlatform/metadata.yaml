@@ -8,8 +8,7 @@ color: "#52C8EF"
 keywords:
   - clrslate-platform
   - deployment
-  - tenant-onboarding
-  - platform-management
+
 maintainers:
   - name: ClrSlate Team
     email: team@clrslate.io

@@ -14,8 +14,9 @@ required_dependencies: []
 keywords:
   - github
   - devops
-  - repository-management
-  - pipeline-integration
+  - repository
+  - pipeline
+
 
 maintainers:
   - name: ClrSlate Team
