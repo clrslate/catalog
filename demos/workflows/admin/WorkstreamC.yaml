@@ -3,51 +3,51 @@ kind: WorkflowStack
 metadata:
   folderPath: Teams/Admin
   name: workstreamC
-  title: 'Startup Workstream C: Code Quality, Testing & Infrastructure'
+  title: "Startup Workstream C: Code Quality, Testing & Infrastructure"
   description: access to SonarQube for static code analysis, Postman API testing
   icon: Brands.Sonarqube
   tags:
-  - Azure
-  - SonarQube
+    - Azure
+    - SonarQube
   labels: {}
   annotations: {}
 spec:
   variables:
-  - id: 72c7a8c5b57c2583
-    name: var_resources
-    typeName: String
-    isArray: false
-    storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    - id: 72c7a8c5b57c2583
+      name: var_resources
+      typeName: String
+      isArray: false
+      storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
   inputs:
-  - uIHint: singleline
-    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
-    type: String
-    isArray: false
-    name: Email
-    displayName: Email
-    description: ''
-    category: ''
+    - uIHint: singleline
+      storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      type: String
+      isArray: false
+      name: Email
+      displayName: Email
+      description: ""
+      category: ""
   outputs:
-  - type: String
-    isArray: false
-    name: AzureAccess
-    displayName: Azure Access
-    description: ''
-    category: Primitives
-  - type: String
-    isArray: false
-    name: SonarQubeSetup
-    displayName: SonarQubeSetup
-    description: ''
-    category: Primitives
+    - type: String
+      isArray: false
+      name: AzureAccess
+      displayName: Azure Access
+      description: ""
+      category: Primitives
+    - type: String
+      isArray: false
+      name: SonarQubeSetup
+      displayName: SonarQubeSetup
+      description: ""
+      category: Primitives
   customProperties:
     icon: Brands.Sonarqube
-    color: 
+    color:
     tags:
-    - Azure
-    - SonarQube
+      - Azure
+      - SonarQube
     folderPath: Teams/Admin
-    isSelfServiceAction: 
+    isSelfServiceAction:
   options:
     usableAsActivity: true
     autoUpdateConsumingWorkflows: true
@@ -63,193 +63,199 @@ spec:
       runAsynchronously: false
     metadata: {}
     activities:
-    - id: 4147c2610e55c2c
-      nodeId: Workflow1:3bd47bd524c3ba1c:4147c2610e55c2c
-      name: Start1
-      type: Elsa.Start
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: -259.1242218017578
-            y: -89.16731262207031
-          size:
-            width: 101.3125
-            height: 49.333335876464844
-    - variable:
-        id: 72c7a8c5b57c2583
-        name: var_resources
-        typeName: String
-        storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
-      value:
-        typeName: Object
-        expression:
-          type: Literal
-          value: Azure Sql Database, ADB2C, CosmosDb
-      id: 643e4f992fd89eb1
-      nodeId: Workflow1:3bd47bd524c3ba1c:643e4f992fd89eb1
-      name: SetVariable1
-      type: Elsa.SetVariable
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: -104.72250175476074
-            y: -138.2645378112793
-          size:
-            width: 152.3229217529297
-            height: 49.333335876464844
-    - result: null
-      id: 20eeb5ec1d95e926
-      nodeId: Workflow1:3bd47bd524c3ba1c:20eeb5ec1d95e926
-      name: sonarqube.resources1
-      type: sonarqube.resources
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: -104.72250175476074
-            y: -20
-          size:
-            width: 202.27084350585938
-            height: 49.333335876464844
-      inputEmail:
-        typeName: String
-        expression:
-          type: Input
-          value: Email
-        memoryReference:
-          id: 20eeb5ec1d95e926:input-input-email
-    - outputName:
-        typeName: String
-        expression:
-          type: Literal
-          value: SonarQubeSetup
-      outputValue:
-        typeName: Object
-        expression:
-          type: Literal
-          value: SonarQube Setup successful.
-      id: daad24b59f35a75a
-      nodeId: Workflow1:3bd47bd524c3ba1c:daad24b59f35a75a
-      name: SetOutput2
-      type: Elsa.SetOutput
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: 200
-            y: -20
-          size:
-            width: 106.98958587646484
-            height: 49.333335876464844
-    - result: null
-      id: 7ff0b6e79356e0c6
-      nodeId: Workflow1:3bd47bd524c3ba1c:7ff0b6e79356e0c6
-      name: azure.infra.resources1
-      type: azure.infra.resources
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: 121.94416809082031
-            y: -138.2645378112793
-          size:
-            width: 162.9791717529297
-            height: 49.333335876464844
-      inputEmail:
-        typeName: String
-        expression:
-          type: Input
-          value: Email
-        memoryReference:
-          id: 7ff0b6e79356e0c6:input-input-email
-      inputResourceList:
-        typeName: String
-        expression:
-          type: Variable
-          value:
-            id: 72c7a8c5b57c2583
-            name: var_resources
-            typeName: String
-            storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
-        memoryReference:
-          id: 7ff0b6e79356e0c6:input-input-resource-list
-    - outputName:
-        typeName: String
-        expression:
-          type: Literal
-          value: AzureAccess
-      outputValue:
-        typeName: Object
-        expression:
-          type: Liquid
-          value: 'Azure Access given for following resources: {{Variables.var_resources}}'
-      id: 80e5f4bd692bc0a2
-      nodeId: Workflow1:3bd47bd524c3ba1c:80e5f4bd692bc0a2
-      name: SetOutput1
-      type: Elsa.SetOutput
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: 381.330322265625
-            y: -138.2645378112793
-          size:
-            width: 106.98958587646484
-            height: 49.333335876464844
+      - id: 4147c2610e55c2c
+        nodeId: Workflow1:3bd47bd524c3ba1c:4147c2610e55c2c
+        name: Start1
+        type: Elsa.Start
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: -259.1242218017578
+              y: -89.16731262207031
+            size:
+              width: 101.3125
+              height: 49.333335876464844
+            displayText: Start
+      - variable:
+          id: 72c7a8c5b57c2583
+          name: var_resources
+          typeName: String
+          storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+        value:
+          typeName: Object
+          expression:
+            type: Literal
+            value: Azure Sql Database, ADB2C, CosmosDb
+        id: 643e4f992fd89eb1
+        nodeId: Workflow1:3bd47bd524c3ba1c:643e4f992fd89eb1
+        name: SetVariable1
+        type: Elsa.SetVariable
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: -104.72250175476074
+              y: -138.2645378112793
+            size:
+              width: 152.3229217529297
+              height: 49.333335876464844
+            displayText: Set Variable
+      - result: null
+        id: 20eeb5ec1d95e926
+        nodeId: Workflow1:3bd47bd524c3ba1c:20eeb5ec1d95e926
+        name: sonarqube.resources1
+        type: sonarqube.resources
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: -104.72250175476074
+              y: -20
+            size:
+              width: 202.27084350585938
+              height: 49.333335876464844
+            displayText: SonarQube Setup
+        inputEmail:
+          typeName: String
+          expression:
+            type: Input
+            value: Email
+          memoryReference:
+            id: 20eeb5ec1d95e926:input-input-email
+      - outputName:
+          typeName: String
+          expression:
+            type: Literal
+            value: SonarQubeSetup
+        outputValue:
+          typeName: Object
+          expression:
+            type: Literal
+            value: SonarQube Setup successful.
+        id: daad24b59f35a75a
+        nodeId: Workflow1:3bd47bd524c3ba1c:daad24b59f35a75a
+        name: SetOutput2
+        type: Elsa.SetOutput
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: 200
+              y: -20
+            size:
+              width: 106.98958587646484
+              height: 49.333335876464844
+            displayText: Set Output
+      - result: null
+        id: 7ff0b6e79356e0c6
+        nodeId: Workflow1:3bd47bd524c3ba1c:7ff0b6e79356e0c6
+        name: azure.infra.resources1
+        type: azure.infra.resources
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: 121.94416809082031
+              y: -138.2645378112793
+            size:
+              width: 162.9791717529297
+              height: 49.333335876464844
+            displayText: Azure Access
+        inputEmail:
+          typeName: String
+          expression:
+            type: Input
+            value: Email
+          memoryReference:
+            id: 7ff0b6e79356e0c6:input-input-email
+        inputResourceList:
+          typeName: String
+          expression:
+            type: Variable
+            value:
+              id: 72c7a8c5b57c2583
+              name: var_resources
+              typeName: String
+              storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+          memoryReference:
+            id: 7ff0b6e79356e0c6:input-input-resource-list
+      - outputName:
+          typeName: String
+          expression:
+            type: Literal
+            value: AzureAccess
+        outputValue:
+          typeName: Object
+          expression:
+            type: Liquid
+            value: "Azure Access given for following resources: {{Variables.var_resources}}"
+        id: 80e5f4bd692bc0a2
+        nodeId: Workflow1:3bd47bd524c3ba1c:80e5f4bd692bc0a2
+        name: SetOutput1
+        type: Elsa.SetOutput
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: 381.330322265625
+              y: -138.2645378112793
+            size:
+              width: 106.98958587646484
+              height: 49.333335876464844
+            displayText: Set Output
     variables: []
     connections:
-    - source:
-        activity: 4147c2610e55c2c
-        port: Done
-      target:
-        activity: 643e4f992fd89eb1
-        port: In
-      vertices: []
-    - source:
-        activity: 4147c2610e55c2c
-        port: Done
-      target:
-        activity: 20eeb5ec1d95e926
-        port: In
-      vertices: []
-    - source:
-        activity: 643e4f992fd89eb1
-        port: Done
-      target:
-        activity: 7ff0b6e79356e0c6
-        port: In
-      vertices: []
-    - source:
-        activity: 7ff0b6e79356e0c6
-        port: Done
-      target:
-        activity: 80e5f4bd692bc0a2
-        port: In
-      vertices: []
-    - source:
-        activity: 20eeb5ec1d95e926
-        port: Done
-      target:
-        activity: daad24b59f35a75a
-        port: In
-      vertices: []
+      - source:
+          activity: 4147c2610e55c2c
+          port: Done
+        target:
+          activity: 643e4f992fd89eb1
+          port: In
+        vertices: []
+      - source:
+          activity: 4147c2610e55c2c
+          port: Done
+        target:
+          activity: 20eeb5ec1d95e926
+          port: In
+        vertices: []
+      - source:
+          activity: 643e4f992fd89eb1
+          port: Done
+        target:
+          activity: 7ff0b6e79356e0c6
+          port: In
+        vertices: []
+      - source:
+          activity: 7ff0b6e79356e0c6
+          port: Done
+        target:
+          activity: 80e5f4bd692bc0a2
+          port: In
+        vertices: []
+      - source:
+          activity: 20eeb5ec1d95e926
+          port: Done
+        target:
+          activity: daad24b59f35a75a
+          port: In
+        vertices: []

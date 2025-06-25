@@ -4,7 +4,7 @@ metadata:
   isSelfServiceAction: true
   folderPath: Teams/Admin
   name: 1startup.technical.onboarding
-  title: 'Startup: Technical Onboarding'
+  title: "Startup: Technical Onboarding"
   description: Onboarding Technical Employee
   icon: Brands.VisualStudio
   tags: []
@@ -12,90 +12,90 @@ metadata:
   annotations: {}
 spec:
   variables:
-  - id: 17216aff3bd2252e
-    name: var_emailid
-    typeName: String
-    isArray: false
-    storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+    - id: 17216aff3bd2252e
+      name: var_emailid
+      typeName: String
+      isArray: false
+      storageDriverTypeName: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
   inputs:
-  - uIHint: singleline
-    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
-    type: String
-    isArray: false
-    name: FirstName
-    displayName: First Name
-    description: ''
-    category: Primitives
-  - uIHint: singleline
-    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
-    type: String
-    isArray: false
-    name: LastName
-    displayName: Last Name
-    description: ''
-    category: Primitives
-  - uIHint: singleline
-    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
-    type: String
-    isArray: false
-    name: Manager
-    displayName: Manager
-    description: ''
-    category: Primitives
-  - uIHint: singleline
-    storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
-    type: String
-    isArray: false
-    name: JoiningDate
-    displayName: Joining Date
-    description: ''
-    category: Primitives
+    - uIHint: singleline
+      storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      type: String
+      isArray: false
+      name: FirstName
+      displayName: First Name
+      description: ""
+      category: Primitives
+    - uIHint: singleline
+      storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      type: String
+      isArray: false
+      name: LastName
+      displayName: Last Name
+      description: ""
+      category: Primitives
+    - uIHint: singleline
+      storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      type: String
+      isArray: false
+      name: Manager
+      displayName: Manager
+      description: ""
+      category: Primitives
+    - uIHint: singleline
+      storageDriverType: Elsa.Workflows.WorkflowInstanceStorageDriver, Elsa.Workflows.Core
+      type: String
+      isArray: false
+      name: JoiningDate
+      displayName: Joining Date
+      description: ""
+      category: Primitives
   outputs:
-  - type: String
-    isArray: false
-    name: Microsoft365Account
-    displayName: Microsoft 365 Account
-    description: ''
-    category: Primitives
-  - type: String
-    isArray: false
-    name: AADEmployee
-    displayName: AAD Employee
-    description: ''
-    category: Primitives
-  - type: Object
-    isArray: false
-    name: ZohoProfile
-    displayName: Zoho Profile
-    description: ''
-    category: Primitives
-  - type: String
-    isArray: false
-    name: DevopsAccess
-    displayName: Devops Access
-    description: ''
-    category: Primitives
-  - type: String
-    isArray: false
-    name: VisualStudioProfAccess
-    displayName: Visual Studio Prof Access
-    description: ''
-    category: Primitives
-  - type: String
-    isArray: false
-    name: SonarQubeSetup
-    displayName: SonarQube Setup
-    description: ''
-    category: Primitives
-  - type: String
-    isArray: false
-    name: AzureAccess
-    displayName: Azure Access
-    description: ''
-    category: Primitives
+    - type: String
+      isArray: false
+      name: Microsoft365Account
+      displayName: Microsoft 365 Account
+      description: ""
+      category: Primitives
+    - type: String
+      isArray: false
+      name: AADEmployee
+      displayName: AAD Employee
+      description: ""
+      category: Primitives
+    - type: Object
+      isArray: false
+      name: ZohoProfile
+      displayName: Zoho Profile
+      description: ""
+      category: Primitives
+    - type: String
+      isArray: false
+      name: DevopsAccess
+      displayName: Devops Access
+      description: ""
+      category: Primitives
+    - type: String
+      isArray: false
+      name: VisualStudioProfAccess
+      displayName: Visual Studio Prof Access
+      description: ""
+      category: Primitives
+    - type: String
+      isArray: false
+      name: SonarQubeSetup
+      displayName: SonarQube Setup
+      description: ""
+      category: Primitives
+    - type: String
+      isArray: false
+      name: AzureAccess
+      displayName: Azure Access
+      description: ""
+      category: Primitives
   customProperties:
     icon: Brands.VisualStudio
-    color: 
+    color:
     tags: []
     folderPath: Teams/Admin
     isSelfServiceAction: true
@@ -113,169 +113,173 @@ spec:
       runAsynchronously: false
     metadata: {}
     activities:
-    - workflowDefinitionId: df5af3543385e6e6
-      workflowDefinitionVersionId: 106f7df09feaf09d
-      latestAvailablePublishedVersion: 1
-      latestAvailablePublishedVersionId: 106f7df09feaf09d
-      id: a5a12b702901eab2
-      nodeId: Workflow2:84fcc8aa17598b7:a5a12b702901eab2
-      name: Startup:WorkstreamB:DeveloperTools&Environment1
-      type: Startup:WorkstreamB:DeveloperTools&Environment
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: -200
-            y: 40
-          size:
-            width: 458.72918701171875
-            height: 49.333335876464844
-      email:
-        typeName: String
-        expression:
-          type: Input
-          value: ''
-        memoryReference:
-          id: a5a12b702901eab2:input-email
-      devopsAccess:
-        typeName: String
-        memoryReference:
-          id: DevopsAccess
-      visualStudioProfessionalAccess:
-        typeName: String
-        memoryReference:
-          id: VisualStudioProfAccess
-    - workflowDefinitionId: 394e36df734f59c8
-      workflowDefinitionVersionId: 2ce1a4b9628a0cff
-      latestAvailablePublishedVersion: 1
-      latestAvailablePublishedVersionId: 2ce1a4b9628a0cff
-      id: 97a4c7fc2855b92d
-      nodeId: Workflow2:84fcc8aa17598b7:97a4c7fc2855b92d
-      name: StartupWorkstreamC:CodeQuality,Testing&Infrastructure1
-      type: StartupWorkstreamC:CodeQuality,Testing&Infrastructure
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: 340
-            y: 40
-          size:
-            width: 498.6875
-            height: 49.333335876464844
-      azureAccess:
-        typeName: String
-        memoryReference:
-          id: AzureAccess
-      sonarQubeSetup:
-        typeName: String
-        memoryReference:
-          id: SonarQubeSetup
-    - workflowDefinitionId: 65c850c8b5991f45
-      workflowDefinitionVersionId: 6e85548ece143a3b
-      latestAvailablePublishedVersion: 5
-      latestAvailablePublishedVersionId: 6e85548ece143a3b
-      id: ec157a85e0b11c64
-      nodeId: Workflow2:84fcc8aa17598b7:ec157a85e0b11c64
-      name: Startup- WorkstreamA:Identity&HR1
-      type: Startup- WorkstreamA:Identity&HR
-      version: 5
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: -600
-            y: 40
-          size:
-            width: 334.88543701171875
-            height: 49.333335876464844
-      firstName:
-        typeName: String
-        expression:
-          type: Input
-          value: FirstName
-        memoryReference:
-          id: ec157a85e0b11c64:input-first-name
-      lastName:
-        typeName: String
-        expression:
-          type: Input
-          value: LastName
-        memoryReference:
-          id: ec157a85e0b11c64:input-last-name
-      joiningDate:
-        typeName: String
-        expression:
-          type: Input
-          value: JoiningDate
-        memoryReference:
-          id: ec157a85e0b11c64:input-joining-date
-      manager:
-        typeName: String
-        expression:
-          type: Input
-          value: Manager
-        memoryReference:
-          id: ec157a85e0b11c64:input-manager
-      m365account:
-        typeName: String
-        memoryReference:
-          id: Microsoft365Account
-      aADEmployee:
-        typeName: String
-        memoryReference:
-          id: AADEmployee
-      zohoProfile:
-        typeName: String
-        memoryReference:
-          id: ZohoProfile
-      createdEmail:
-        typeName: String
-        memoryReference:
-          id: 17216aff3bd2252e
-    - id: 17641578f0c5880c
-      nodeId: Workflow2:84fcc8aa17598b7:17641578f0c5880c
-      name: Start1
-      type: Elsa.Start
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: -782.4878540039062
-            y: 40
-          size:
-            width: 101.3125
-            height: 49.333335876464844
+      - workflowDefinitionId: df5af3543385e6e6
+        workflowDefinitionVersionId: 106f7df09feaf09d
+        latestAvailablePublishedVersion: 1
+        latestAvailablePublishedVersionId: 106f7df09feaf09d
+        id: a5a12b702901eab2
+        nodeId: Workflow2:84fcc8aa17598b7:a5a12b702901eab2
+        name: Startup:WorkstreamB:DeveloperTools&Environment1
+        type: Startup:WorkstreamB:DeveloperTools&Environment
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: -200
+              y: 40
+            size:
+              width: 458.72918701171875
+              height: 49.333335876464844
+            displayText: WorkStreamB:Dev Tools & Env.
+        email:
+          typeName: String
+          expression:
+            type: Input
+            value: ""
+          memoryReference:
+            id: a5a12b702901eab2:input-email
+        devopsAccess:
+          typeName: String
+          memoryReference:
+            id: DevopsAccess
+        visualStudioProfessionalAccess:
+          typeName: String
+          memoryReference:
+            id: VisualStudioProfAccess
+      - workflowDefinitionId: 394e36df734f59c8
+        workflowDefinitionVersionId: 2ce1a4b9628a0cff
+        latestAvailablePublishedVersion: 1
+        latestAvailablePublishedVersionId: 2ce1a4b9628a0cff
+        id: 97a4c7fc2855b92d
+        nodeId: Workflow2:84fcc8aa17598b7:97a4c7fc2855b92d
+        name: StartupWorkstreamC:CodeQuality,Testing&Infrastructure1
+        type: StartupWorkstreamC:CodeQuality,Testing&Infrastructure
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: 340
+              y: 40
+            size:
+              width: 498.6875
+              height: 49.333335876464844
+            displayText: WorkStreamC:Code Quality, Testing & Infra
+        azureAccess:
+          typeName: String
+          memoryReference:
+            id: AzureAccess
+        sonarQubeSetup:
+          typeName: String
+          memoryReference:
+            id: SonarQubeSetup
+      - workflowDefinitionId: 65c850c8b5991f45
+        workflowDefinitionVersionId: 6e85548ece143a3b
+        latestAvailablePublishedVersion: 5
+        latestAvailablePublishedVersionId: 6e85548ece143a3b
+        id: ec157a85e0b11c64
+        nodeId: Workflow2:84fcc8aa17598b7:ec157a85e0b11c64
+        name: Startup- WorkstreamA:Identity&HR1
+        type: Startup- WorkstreamA:Identity&HR
+        version: 5
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: -600
+              y: 40
+            size:
+              width: 334.88543701171875
+              height: 49.333335876464844
+            displayText: WorkStreamA:Identity&HR
+        firstName:
+          typeName: String
+          expression:
+            type: Input
+            value: FirstName
+          memoryReference:
+            id: ec157a85e0b11c64:input-first-name
+        lastName:
+          typeName: String
+          expression:
+            type: Input
+            value: LastName
+          memoryReference:
+            id: ec157a85e0b11c64:input-last-name
+        joiningDate:
+          typeName: String
+          expression:
+            type: Input
+            value: JoiningDate
+          memoryReference:
+            id: ec157a85e0b11c64:input-joining-date
+        manager:
+          typeName: String
+          expression:
+            type: Input
+            value: Manager
+          memoryReference:
+            id: ec157a85e0b11c64:input-manager
+        m365account:
+          typeName: String
+          memoryReference:
+            id: Microsoft365Account
+        aADEmployee:
+          typeName: String
+          memoryReference:
+            id: AADEmployee
+        zohoProfile:
+          typeName: String
+          memoryReference:
+            id: ZohoProfile
+        createdEmail:
+          typeName: String
+          memoryReference:
+            id: 17216aff3bd2252e
+      - id: 17641578f0c5880c
+        nodeId: Workflow2:84fcc8aa17598b7:17641578f0c5880c
+        name: Start1
+        type: Elsa.Start
+        version: 1
+        customProperties:
+          canStartWorkflow: false
+          runAsynchronously: false
+        metadata:
+          designer:
+            position:
+              x: -782.4878540039062
+              y: 40
+            size:
+              width: 101.3125
+              height: 49.333335876464844
+            displayText: Start
     variables: []
     connections:
-    - source:
-        activity: 17641578f0c5880c
-        port: Done
-      target:
-        activity: ec157a85e0b11c64
-        port: In
-      vertices: []
-    - source:
-        activity: ec157a85e0b11c64
-        port: Done
-      target:
-        activity: a5a12b702901eab2
-        port: In
-      vertices: []
-    - source:
-        activity: a5a12b702901eab2
-        port: Done
-      target:
-        activity: 97a4c7fc2855b92d
-        port: In
-      vertices: []
+      - source:
+          activity: 17641578f0c5880c
+          port: Done
+        target:
+          activity: ec157a85e0b11c64
+          port: In
+        vertices: []
+      - source:
+          activity: ec157a85e0b11c64
+          port: Done
+        target:
+          activity: a5a12b702901eab2
+          port: In
+        vertices: []
+      - source:
+          activity: a5a12b702901eab2
+          port: Done
+        target:
+          activity: 97a4c7fc2855b92d
+          port: In
+        vertices: []
