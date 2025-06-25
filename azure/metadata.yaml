@@ -11,13 +11,6 @@ keywords:
   - azure
   - cloud
   - infrastructure
-# Optional dependencies (comma-separated)
-optional_dependencies:
-  - k8s
-  - externalDns
-
-# Required dependencies (comma-separated)
-required_dependencies: []
 
 maintainers:
   - name: ClrSlate Team

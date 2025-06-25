@@ -6,9 +6,6 @@ owner: Team ClrSlate
 icon: Brands.KeyCloak
 color: "#2C2C2C"
 
-# Optional dependencies
-optional_dependencies: []
-required_dependencies: []
 
 # Keywords for search and discovery
 keywords:

@@ -6,9 +6,6 @@ owner: Team ClrSlate
 icon: Brands.GitLab
 color: "#FC6D26"
 
-# Optional dependencies
-optional_dependencies: []
-required_dependencies: []
 
 # Keywords for search and discovery
 keywords:

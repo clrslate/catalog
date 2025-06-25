@@ -4,8 +4,6 @@ title: MongoDB
 description: ClrSlate package for managing MongoDB resources, models, and activities.
 owner: Team ClrSlate
 icon: Brands.MongoDb
-required_dependencies: []
-optional_dependencies: []
 color: "#47A248"
 keywords:
   - mongodb
