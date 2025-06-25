@@ -3,7 +3,7 @@ kind: WorkflowStack
 metadata:
   isSelfServiceAction: true
   folderPath: Teams/Admin
-  name: 1startup.technical.onboarding
+  name: 1startup.technical.onboarding.uniqueId
   title: "Startup: Technical Onboarding"
   description: Onboarding Technical Employee
   icon: Brands.VisualStudio
