@@ -45,6 +45,8 @@ spec:
             domain:
               base: {{inputs.environment.gateway.domain}}
               sub: {{inputs.tenantNameSlug}}
+          image:
+            pullPolicy: Always
       resources:
         newTenant:
           apiVersion: records.clrslate.io

@@ -10,7 +10,7 @@ spec:
   values: |
     image:
       repository: clrslate/demo/workflow.server
-      tag: latest
+      tag: production
       pullPolicy: IfNotPresent
     env:
       DOTNET_ENVIRONMENT: "beta"

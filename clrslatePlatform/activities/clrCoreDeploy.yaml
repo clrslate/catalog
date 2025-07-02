@@ -11,18 +11,24 @@ metadata:
 spec:
   inputs:
     properties:
-      aksCluster:
+      environment:
         type: object
         format: resource
-        title: AKS Cluster
-        description: Azure Kubernetes Service Cluster
+        title: Environment
+        description: Target Environment
         specifications:
-          type: azure.model.aks
-      namespace:
+          type: clrslatePlatform.model.clrslate-environment
+      tenantName:
         type: string
-        description: The namespace of the Helm release (optional, defaults to chart namespace)
+        title: Tenant Name
+        description: The name of the tenant to deploy Forge for
     required:
-      - aksCluster
+      - environment
+      - tenantName
+  mirrored:
+    tenantNameSlug:
+      type: string
+      value: "{{inputs.tenantName | kebabize}}"
   resources:
     helmChart:
       type: RecordEntry
@@ -32,10 +38,19 @@ spec:
     properties:
       pipeline: helm.pipelineRef.helm-install
       inputs:
-        cluster: "{{inputs.aksCluster._name}}"
-        helmChart: "{{inputs.helmChart._name}}"
-        releaseName: clrcore
-        namespace: "{{inputs.namespace}}"
+        cluster: "{{inputs.environment.cluster._name}}"
+        helmChart: "clrslatePlatform.records.helmChart.clrCore"
+        releaseName: clrCore
+        namespace: "{{inputs.tenantNameSlug}}"
+        valuesFile: |
+          ingress:
+            enabled: true
+            gateway: {{inputs.environment.gateway.name}}
+            domain:
+              base: {{inputs.environment.gateway.domain}}
+              sub: {{inputs.tenantNameSlug}}-api
+          image:
+            pullPolicy: Always
 
 
 

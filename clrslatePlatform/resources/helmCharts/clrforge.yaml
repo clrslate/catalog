@@ -16,6 +16,8 @@ spec:
     image:
       registry: clrslate.azurecr.io
       repository: clrslate/demo/workflow.studio
+      tag: production
+      pullPolicy: IfNotPresent
     ingress:
       enabled: false
     secrets:
