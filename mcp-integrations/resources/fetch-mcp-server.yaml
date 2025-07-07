@@ -1,0 +1,16 @@
+apiVersion: agent.clrslate.io
+kind: McpIntegration
+metadata:
+  name: mcp-integrations.integration.fetch-mcp
+  title: MCP Fetch Server
+  description: Fetch MCP server providing web content retrieval capabilities
+  icon: Brands.Mcp
+  color: '#52C8EF'
+  tags:
+    - fetch
+    - web
+    - content
+    - retrieval
+spec:
+  server:
+    url: https://fetch-mcp.clrslate.com

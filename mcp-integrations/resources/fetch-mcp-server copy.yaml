@@ -1,0 +1,16 @@
+apiVersion: agent.clrslate.io
+kind: McpIntegration
+metadata:
+  name: mcp-integrations.integration.context7
+  title: MCP Context 7 Server
+  description: Context 7 MCP server to provide Up-to-date documentation for LLMs and AI code editors
+  icon: Brands.Mcp
+  color: '#52C8EF'
+  tags:
+    - context7
+    - documentation
+    - llm
+    - ai
+spec:
+  server:
+    url: https://mcp.context7.com/mcp

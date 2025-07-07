@@ -1,0 +1,14 @@
+name: mcp-integrations
+version: 0.1.0
+title: MCP Integrations
+description: Model Context Protocol (MCP) integrations and server configurations for AI-powered development workflows
+owner: Team ClrSlate
+icon: Brands.Mcp
+color: '#52C8EF'
+keywords:
+  - mcp
+  - model-context-protocol
+  - ai
+  - integrations
+  - agents
+  - servers
