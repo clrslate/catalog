@@ -40,7 +40,7 @@ spec:
       inputs:
         cluster: "{{inputs.environment.cluster._name}}"
         helmChart: "clrslatePlatform.records.helmChart.clrCore"
-        releaseName: clrCore
+        releaseName: clrcore
         namespace: "{{inputs.tenantNameSlug}}"
         valuesFile: |
           ingress:
@@ -51,6 +51,7 @@ spec:
               sub: {{inputs.tenantNameSlug}}-api
           image:
             pullPolicy: Always
+            tag: 234
 
 
 

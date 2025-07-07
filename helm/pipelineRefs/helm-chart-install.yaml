@@ -101,7 +101,7 @@ spec:
       clusterName: '{{inputs.cluster.name}}'
       resourceGroupName: '{{inputs.cluster.resourceGroup.name}}'
     secretMounts:
-      azureCredentialsRef: "{{inputs.cluster.credentials._name}}"
+      azureCredentialsRef: "{{inputs.cluster.resourceGroup.subscription.credentials._name}}"
     files:
       values.yaml: |
         {% if inputs.valuesFile %}{{inputs.valuesFile}}{% else %}# Default empty values file{% endif %}

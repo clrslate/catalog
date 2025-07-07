@@ -17,6 +17,7 @@ spec:
       - subscriptionId
   relations:
     credentials:
+      type: object
       title: Azure Credentials
       description: The Azure Service Principal credentials for this subscription.
       format: secret

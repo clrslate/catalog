@@ -47,6 +47,7 @@ spec:
               sub: {{inputs.tenantNameSlug}}
           image:
             pullPolicy: Always
+            tag: 234
       resources:
         newTenant:
           apiVersion: records.clrslate.io

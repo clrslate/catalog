@@ -28,7 +28,9 @@ spec:
     credentials:
       type: object
       format: secret
-      value: '{{resourceGroup.subscription.credentials._name}}'
+      value: '{{inputs.resourceGroup.subscription.credentials._name}}'
+      specifications:
+        type: azure.secret.clientCredentials
     loginScript:
       type: string
       value: |

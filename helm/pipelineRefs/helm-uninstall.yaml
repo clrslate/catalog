@@ -91,4 +91,4 @@ spec:
       clusterName: '{{inputs.cluster.name}}'
       resourceGroupName: '{{inputs.cluster.resourceGroup.name}}'
     secretMounts:
-      azureCredentialsRef: "{{inputs.cluster.credentials._name}}"
+      azureCredentialsRef: "{{inputs.cluster.resourceGroup.subscription.credentials._name}}"

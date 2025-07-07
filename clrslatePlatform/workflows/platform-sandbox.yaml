@@ -2,9 +2,9 @@ apiVersion: core.clrslate.io
 kind: WorkflowStack
 metadata:
   isSelfServiceAction: true
-  name: clrslate-tenant-onboarding
-  title: Tenant Onboarding
-  description: Workflow for onboarding a new Tenant to ClrSlate Platform
+  name: clrslate-platform-sandbox
+  title: Platform Sandbox
+  description: Create a Tenant sandbox in ClrSlate Platform
   icon: Brands.ClrSlate
   color: '#52C8EF'
   tags:

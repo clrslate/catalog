@@ -14,5 +14,7 @@ maintainers:
   - name: ClrSlate Team
     email: support@clrslate.io
 dependencies:
-  - k8s
-  - helm
+  - name: k8s
+    version: 1.0.0
+  - name: helm
+    version: 0.0.1
