@@ -6,6 +6,9 @@ owner: Team ClrSlate
 icon: Azure.DevOps
 color: "#0078D7"
 
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
 
 # Keywords for search and discovery
 keywords:

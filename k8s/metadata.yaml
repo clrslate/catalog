@@ -10,6 +10,3 @@ keywords:
 maintainers:
   - name: ClrSlate Team
     email: team@clrslate.io
-dependencies:
-  - name: azure
-    version: 0.1.0

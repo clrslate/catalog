@@ -6,6 +6,9 @@ owner: Team ClrSlate
 icon: Brands.Jenkins
 color: "#1F4788"
 
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
 
 # Keywords for search and discovery
 keywords:

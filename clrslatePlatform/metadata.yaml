@@ -8,15 +8,7 @@ color: "#52C8EF"
 keywords:
   - clrslate-platform
   - deployment
-dependencies:
-  - name: azure
-    version: 0.1.0
-  - name: k8s
-    version: 1.0.0
-  - name: helm
-    version: 0.0.1
-  - name: istio
-    version: 0.1.0
+
 maintainers:
   - name: ClrSlate Team
     email: team@clrslate.io

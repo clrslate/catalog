@@ -6,6 +6,9 @@ owner: Team ClrSlate
 icon: Brands.GitHub
 color: "#181717"
 
+# Optional dependencies
+optional_dependencies: []
+required_dependencies: []
 
 # Keywords for search and discovery
 keywords:

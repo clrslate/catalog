@@ -17,7 +17,6 @@ spec:
         type: string
         description: The Azure region where the resource group is located.
       subscription:
-        type: object
         title: Azure Subscription
         description: The Azure Subscription associated with this resource group.
         format: resource
@@ -27,4 +26,3 @@ spec:
     required:
       - name
       - location
-      - subscription
