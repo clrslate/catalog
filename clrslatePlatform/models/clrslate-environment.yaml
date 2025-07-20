@@ -12,18 +12,21 @@ spec:
     properties:
       cluster:
         type: object
+        title: Cluster
         format: resource
         description: Reference to the AKS cluster for this environment
         specifications:
           type: azure.model.aks
       gateway:
         type: object
+        title: Gateway
         format: resource
         description: Reference to the ClrSlateGateway for this environment
         specifications:
           type: clrslatePlatform.model.clrslate-gateway
       realmCredentials:
         type: object
+        title: Realm Credentials
         format: secret
         description: Reference to the ClrSlateGateway for this environment
         specifications:

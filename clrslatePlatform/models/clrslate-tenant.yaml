@@ -11,12 +11,15 @@ spec:
       - environment
     properties:
       name:
+        title: Tenant Name
         type: string
         description: Tenant Name
       domain:
+        title: Domain
         type: string
         description: Domain for the tenant, used for routing and access
       environment:
+        title: Environment
         type: object
         format: resource
         description: Reference to the ClrSlateEnvironment for this tenant
@@ -25,10 +28,16 @@ spec:
   mirrored:
     slug:
       type: string
+      title: Slug
+      description: Slug for the tenant, computed from the name
+      pattern: '^[a-z0-9-]+$'
+      min_length: 3
+      max_length: 50
       value: "{{inputs.name | downcase | replace: ' ', '-' }}"
     cluster:
       type: object
       format: resource
+      title: Cluster
       description: Reference to the AKS cluster for this tenant
       value: "{{inputs.environment.cluster._name}}"
       specifications:
