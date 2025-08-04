@@ -1,0 +1,10 @@
+name: demoPage
+version: 0.0.1
+title: "Demo: Page feature"
+description: A demo package for showcasing page features
+owner: Team ClrSlate
+icon: Brands.ClrSlate
+color: "#52C8EF"
+maintainers:
+  - name: ClrSlate Team
+    email: team@clrslate.io

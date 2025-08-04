@@ -1,0 +1,20 @@
+apiVersion: views.clrslate.io
+kind: ListView
+metadata:
+  name: clrslatePlatform.environment.views.list
+  title: Environments
+  description: List of environments and their details
+  icon: "fa-solid fa-user-tie"
+spec:
+  resourceName: environments
+  kind: 
+  - clrslatePlatform.model.clrslate-environment
+  actions:
+    addExisting:
+      title: Add Existing Environment
+      description: Add an existing environment to the platform
+      icon: Icons.Material.Filled.Add
+      handler: 
+        type: add-resource
+        spec: 
+          kind: clrslatePlatform.model.clrslate-environment

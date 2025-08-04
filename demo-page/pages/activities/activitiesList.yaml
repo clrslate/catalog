@@ -1,0 +1,12 @@
+apiVersion: views.clrslate.io
+kind: ListView
+metadata:
+  name: clrslatePlatform.activities.views.list
+  title: Activities
+  description: List of activities and their details
+  icon: Icons.Material.Outlined.ViewCarousel
+spec:
+  resourceName: actions
+  kind: 
+  - Activity
+      
