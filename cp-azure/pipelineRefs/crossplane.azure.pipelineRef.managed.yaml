@@ -30,6 +30,7 @@ spec:
       - script
   pipeline:
     pipelineRef: crossplane.pipelines.azure.namespaced
+    serviceAccount: 'tekton-actions-account'
     params:
       namespace: '{{inputs.namespace}}'
       providerConfig: '{{inputs.providerConfig}}'

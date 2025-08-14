@@ -20,10 +20,6 @@ spec:
         type: string
         title: Resource Group name
         description: Name of the resource group to create
-      namespace:
-        type: string
-        title: Resource Group namespace
-        description: Namespace for the resource group
       location:
         type: string
         format: lookup
@@ -48,7 +44,7 @@ spec:
           kind: ResourceGroup
           metadata:
             name: {{inputs.name}}
-            namespace: {{inputs.namespace}}
+            namespace: {{ global.Org.Identifier }}
           spec:
             forProvider:
               location: {{inputs.location}}

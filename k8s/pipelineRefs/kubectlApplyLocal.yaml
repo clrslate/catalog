@@ -1,0 +1,45 @@
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: k8s.pipelineRef.kubectl-apply-tenant
+  title: Kubectl Apply Tenant
+  description: An activity that applies the given kubernetes yaml file for the tenant
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: k8s
+  tags:
+    - kubernetes
+    - create
+spec:
+  schema:
+    properties:
+      namespace:
+        type: string
+        title: Namespace
+        description: The namespace to apply the kubernetes resources to
+      values:
+        type: string
+        format: yaml
+        description: Values file template to be used by the kubectl command
+      serviceAccount:
+        type: string
+        title: Service Account
+        description: The service account to use for the kubectl command
+    required:
+      - values
+  mirrored:
+    serviceAccountName:
+      type: string
+      title: Service Account Name
+      description: The name of the service account to use for the kubectl command
+      value: |
+        {% if inputs.serviceAccount %}{{inputs.serviceAccount}}{% else %}default{% endif %}
+  pipeline:
+    pipelineRef: k8s.script.local.pipeline
+    serviceAccount: '{{ inputs.serviceAccountName }}'
+    params:
+      script: |
+        kubectl apply -f manifests/values.yaml -n {{ inputs.namespace }}
+    files:
+      values.yaml: '{{inputs.values}}'

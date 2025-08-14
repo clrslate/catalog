@@ -22,6 +22,11 @@ spec:
         type: string
         title: Tenant Name
         description: The name of the tenant to deploy Forge for
+      serviceAccountName:
+        type: string
+        title: Service Account Name
+        description: The name of the service account to use
+        default: clrcore
     required:
       - environment
       - tenantName
@@ -52,6 +57,9 @@ spec:
           image:
             pullPolicy: Always
             tag: 234
+          serviceAccountName: {{inputs.serviceAccountName | kebabize}}
+          env:
+            tenant__identifier: "{{inputs.tenantNameSlug}}"
 
 
 

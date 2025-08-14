@@ -41,19 +41,39 @@ spec:
               namespace: {{ Global.Org.Identifier }}
               name: {{ inputs.subscription._safeName  }}-secret
               key: creds
-    configureSecretScript:
+    providerCredentialsJson:
       type: string
-      title: Configure Secret Script
-      description: The script to configure the secret for the provider config
+      title: Provider Credentials JSON
+      description: The provider credentials in JSON format
       value: |
-        kubectl create secret generic {{ inputs.subscription._safeName  }}-secret \
-          --from-literal=creds="$(cat /manifests/credentials.yaml)" \
-          --namespace={{ global.Org.Identifier }} \
-          --dry-run=client -o yaml | kubectl apply -f -
+        {
+          "subscriptionId": "{{ inputs.subscription.subscriptionId }}",
+          "tenantId": "{{ inputs.subscription.tenantId }}",
+          "clientId": "{{ inputs.subscription.clientId }}",
+          "clientSecret": "{{ inputs.subscription.clientSecret }}"
+          "activeDirectoryEndpointUrl": "{{ inputs.subscription.activeDirectoryEndpointUrl  }}",
+          "resourceManagerEndpointUrl": "{{ inputs.subscription.resourceManagerEndpointUrl  }}",
+          "activeDirectoryGraphResourceId": "{{ inputs.subscription.activeDirectoryGraphResourceId  }}",
+          "sqlManagementEndpointUrl": "{{ inputs.subscription.sqlManagementEndpointUrl }}",
+          "galleryEndpointUrl": "{{ inputs.subscription.galleryEndpointUrl  }}",
+          "managementEndpointUrl": "{{ inputs.subscription.managementEndpointUrl }}"  
+        }
   handler:
-    type: console
+    type: tekton.pipelineRef
     properties:
-      output: |
-        Subscription: {{ inputs.subscription._safeName }}
-        Provider Config: 
-        {{ inputs.providerDefinition }}
+      pipeline: k8s.pipelineRef.kubectl-apply-tenant
+      inputs:
+        serviceAccount: tekton-actions-account
+        namespace: '{{ global.Org.Identifier }}'
+        values: |
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: {{ inputs.subscription._safeName  }}-secret
+            namespace: {{ global.Org.Identifier | kebabize }}
+          type: Opaque
+          data:
+            creds: {{ inputs.providerCredentialsJson | base64 }}
+          ---
+          {{ inputs.providerDefinition }}
+          

@@ -10,7 +10,7 @@ spec:
   - name: image
     type: string
     description: The image to use for the script step
-    default: clrslatepublic.azurecr.io/tools/azure:20250513.210758
+    default: clrslatepublic.azurecr.io/tools/azure:latest
   tasks:
   - name: script-task
     taskSpec:

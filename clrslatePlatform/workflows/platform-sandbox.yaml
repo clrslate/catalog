@@ -3,6 +3,7 @@ kind: WorkflowStack
 metadata:
   isSelfServiceAction: true
   name: clrslate-platform-sandbox
+  safeName: clrslate-platform-sandbox
   title: Platform Sandbox
   description: Create a Tenant sandbox in ClrSlate Platform
   icon: Brands.ClrSlate
@@ -198,10 +199,10 @@ spec:
         memoryReference:
           id: bfacb718e9d2fe01:input-input-namespace
     - result: null
-      id: f2d8fe2d7b24167e
-      nodeId: Workflow1:869501addba8c28c:f2d8fe2d7b24167e
-      name: clrslateplatform.activity.deployforge1
-      type: clrslateplatform.activity.deployforge
+      id: 81cbf6e8933b3130
+      nodeId: Workflow1:869501addba8c28c:81cbf6e8933b3130
+      name: clrslateplatform.activity.setupapigateway1
+      type: clrslateplatform.activity.setupapigateway
       version: 1
       customProperties:
         canStartWorkflow: false
@@ -209,30 +210,25 @@ spec:
       metadata:
         designer:
           position:
-            x: 1780
+            x: 1833.7854919433594
             y: 40
           size:
-            width: 181.296875
-            height: 50
-        displayText: Deploy ClrForge
-      inputEnvironment:
+            width: 155.85226440429688
+            height: 49.786930084228516
+      inputCluster:
         typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
         expression:
-          type: Input
-          value: Environment
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
         memoryReference:
-          id: f2d8fe2d7b24167e:input-input-environment
+          id: 81cbf6e8933b3130:input-input-cluster
       inputTenantName:
         typeName: String
         expression:
-          type: Liquid
-          value: '{{Inputs.TenantName | kebabize }}'
+          type: Input
+          value: TenantName
         memoryReference:
-          id: f2d8fe2d7b24167e:input-input-tenant-name
-      newTenant:
-        typeName: Resource
-        memoryReference:
-          id: NewTenant
+          id: 81cbf6e8933b3130:input-input-tenant-name
     - result: null
       id: 6642907dd6a803d3
       nodeId: Workflow1:869501addba8c28c:6642907dd6a803d3
@@ -245,7 +241,7 @@ spec:
       metadata:
         designer:
           position:
-            x: 1198.9609375
+            x: 1543.804672241211
             y: 40
           size:
             width: 214.109375
@@ -282,7 +278,7 @@ spec:
           size:
             width: 294.515625
             height: 50
-        displayText: Setup App Secrets
+        displayText: Configure Authentication
         description: Configure ClrSlate application secrets on Kubernetes
       inputAksCluster:
         typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
@@ -318,10 +314,10 @@ spec:
         memoryReference:
           id: 4aaf499e8e95b18b:input-input-credentials
     - result: null
-      id: 81cbf6e8933b3130
-      nodeId: Workflow1:869501addba8c28c:81cbf6e8933b3130
-      name: clrslateplatform.activity.setupapigateway1
-      type: clrslateplatform.activity.setupapigateway
+      id: f2d8fe2d7b24167e
+      nodeId: Workflow1:869501addba8c28c:f2d8fe2d7b24167e
+      name: clrslateplatform.activity.deployforge1
+      type: clrslateplatform.activity.deployforge
       version: 1
       customProperties:
         canStartWorkflow: false
@@ -329,10 +325,46 @@ spec:
       metadata:
         designer:
           position:
-            x: 1517.0845947265625
-            y: 40.10653495788574
+            x: 1387.3600616455078
+            y: 135
           size:
-            width: 155.85226440429688
+            width: 273.90625
+            height: 50
+        displayText: Deploy ClrForge (Dashboard)
+      inputEnvironment:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: Input
+          value: Environment
+        memoryReference:
+          id: f2d8fe2d7b24167e:input-input-environment
+      inputTenantName:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: f2d8fe2d7b24167e:input-input-tenant-name
+      newTenant:
+        typeName: Resource
+        memoryReference:
+          id: NewTenant
+    - result: null
+      id: f24712f1b86c5bc1
+      nodeId: Workflow1:869501addba8c28c:f24712f1b86c5bc1
+      name: clrslateplatform.activity.clrcoreserviceaccount1
+      type: clrslateplatform.activity.clrcoreserviceaccount
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1211.8281173706055
+            y: 40
+          size:
+            width: 239.84373474121094
             height: 49.786930084228516
       inputCluster:
         typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
@@ -340,28 +372,87 @@ spec:
           type: JavaScript
           value: context.Inputs.Environment.Cluster
         memoryReference:
-          id: 81cbf6e8933b3130:input-input-cluster
+          id: f24712f1b86c5bc1:input-input-cluster
       inputTenantName:
         typeName: String
         expression:
-          type: Input
-          value: TenantName
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
         memoryReference:
-          id: 81cbf6e8933b3130:input-input-tenant-name
+          id: f24712f1b86c5bc1:input-input-tenant-name
+    - result: null
+      id: 94379d037d1bb3d2
+      nodeId: Workflow1:869501addba8c28c:94379d037d1bb3d2
+      name: clrslateplatform.activity.tektonpipelineserviceaccount1
+      type: clrslateplatform.activity.tektonpipelineserviceaccount
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 2120
+            y: 40.10653495788574
+          size:
+            width: 290.92327880859375
+            height: 49.786930084228516
+      inputCluster:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
+        memoryReference:
+          id: 94379d037d1bb3d2:input-input-cluster
+      inputTenantName:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: 94379d037d1bb3d2:input-input-tenant-name
     variables: []
     connections:
     - source:
-        activity: 6642907dd6a803d3
+        activity: 4aaf499e8e95b18b
         port: Done
       target:
-        activity: 81cbf6e8933b3130
+        activity: f2d8fe2d7b24167e
         port: In
       vertices: []
     - source:
         activity: 81cbf6e8933b3130
         port: Done
       target:
+        activity: 94379d037d1bb3d2
+        port: In
+      vertices: []
+    - source:
         activity: f2d8fe2d7b24167e
+        port: Done
+      target:
+        activity: 81cbf6e8933b3130
+        port: In
+      vertices: []
+    - source:
+        activity: 4aaf499e8e95b18b
+        port: Done
+      target:
+        activity: f24712f1b86c5bc1
+        port: In
+      vertices: []
+    - source:
+        activity: f24712f1b86c5bc1
+        port: Done
+      target:
+        activity: 6642907dd6a803d3
+        port: In
+      vertices: []
+    - source:
+        activity: 6642907dd6a803d3
+        port: Done
+      target:
+        activity: 81cbf6e8933b3130
         port: In
       vertices: []
     - source:
@@ -383,13 +474,6 @@ spec:
         port: Done
       target:
         activity: d5c7721f6bb52ab2
-        port: In
-      vertices: []
-    - source:
-        activity: 4aaf499e8e95b18b
-        port: Done
-      target:
-        activity: 6642907dd6a803d3
         port: In
       vertices: []
     - source:
