@@ -65,12 +65,11 @@ spec:
         type: object
         title: Strategy Config
         description: The workloads rollout strategy
+      namespace:
+        title: Namespace
+        description: The namespace associated with this deployment.
+        format: resource
+        required: true
+        specifications:
+          type: k8s.namespace
     required: []
-  relations:
-    namespace:
-      title: Namespace
-      description: The namespace associated with this deployment.
-      format: resource
-      required: true
-      specifications:
-        type: k8s.namespace

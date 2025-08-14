@@ -14,6 +14,7 @@ spec:
         type: string
         description: The name of the AKS cluster
       resourceGroup:
+        type: object
         title: Azure Resource Group
         description: The Azure Resource Group associated with this Key Vault.
         format: resource

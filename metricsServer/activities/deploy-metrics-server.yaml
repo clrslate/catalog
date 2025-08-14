@@ -62,5 +62,4 @@ spec:
             name: "{{inputs.helmChart.name}}"
             namespace: "{{inputs.helmChart.namespace}}"
             createNamespace: false
-          relations:
             chart: "{{inputs.helmChart._name}}"

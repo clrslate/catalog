@@ -1,0 +1,64 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: clrslatePlatform.activity.setupApiGateway
+  title: API Gateway
+  description: Setup API Gateway for the tenant
+  labels:
+    category: ClrSlate Platform
+spec:
+  inputs:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      tenantName:
+        type: string
+        title: Tenant Name
+        description: The name of the tenant
+    required:
+      - cluster
+      - tenantName
+  mirrored:
+    virtualService:
+      type: string
+      format: yaml
+      title: Virtual Service
+      description: Virtual Service manifest
+      value: |
+        apiVersion: networking.istio.io/v1alpha3
+        kind: VirtualService
+        metadata:
+          name: api-gateway
+          namespace: {{ inputs.tenantName | kebabize }}
+        spec:
+          gateways:
+          - clrslate-app/gateway
+          hosts:
+          - api.clrslate.app
+          http:
+          - match:
+            - uri:
+                prefix: /{{ inputs.tenantName | kebabize }}/
+            rewrite:
+              uri: /
+            route:   
+            - destination:
+                host: clrcore
+                port:
+                  number: 80
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: k8s.pipelineRef.kubectl-apply
+      inputs:
+        cluster: '{{inputs.cluster._name}}'
+        namespace: '{{inputs.tenantName | kebabize}}'
+        values: '{{ inputs.virtualService }}'
+
+
+  

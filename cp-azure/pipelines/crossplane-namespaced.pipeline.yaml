@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: crossplane.pipelines.azure.namespaced
+spec:
+  params:
+  - name: namespace
+    type: string
+    description: target kubernetes namespace for the Crossplane resources
+  - name: providerConfig
+    type: string
+    description: Crossplane provider config to use
+  - name: image
+    type: string
+    description: The image to use for the script step
+    default: clrslatepublic.azurecr.io/tools/azure:latest
+  tasks:
+  - name: script-task
+    taskSpec:
+      steps:
+      - name: script-step
+        image: $(params.image)
+        script: |
+          echo $(params.namespace)
+          echo $(params.providerConfig)
+          cat manifests/resource.yaml
+        volumeMounts:
+        - name: manifests
+          mountPath: /manifests
+          readOnly: true
+            

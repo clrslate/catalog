@@ -1,0 +1,45 @@
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: k8s.pipelineRef.kubectl-apply
+  title: Kubectl Apply
+  description: An activity that applies the given kubernetes yaml file
+  labels:
+    category: Kubernetes
+    owner: clrslate
+    package: k8s
+  tags:
+    - kubernetes
+    - create
+spec:
+  schema:
+    properties:
+      cluster:
+        type: object
+        format: resource
+        title: Target Cluster
+        description: Target Kubernetes Cluster
+        specifications:
+          type: azure.model.aks
+      namespace:
+        type: string
+        description: The namespace to deploy the resources in
+      values:
+        type: string
+        format: yaml
+        description: Values file template to be used by the kubectl command
+    required:
+      - cluster
+      - namespace  
+      - values
+  pipeline:
+    pipelineRef: azure.pipelines.aks-script
+    params:
+      script: |
+        kubectl apply -f manifests/values.yaml -n {{inputs.namespace}}
+      clusterName: '{{inputs.cluster.name}}'
+      resourceGroupName: '{{inputs.cluster.resourceGroup.name}}'
+    files:
+      values.yaml: '{{inputs.values}}'
+    secretMounts:
+      azureCredentialsRef: "{{inputs.cluster.resourceGroup.subscription.credentials._name}}"

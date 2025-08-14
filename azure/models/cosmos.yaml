@@ -36,15 +36,14 @@ spec:
         type: integer
         description: The provisioned throughput in Request Units per second (RU/s)
         minimum: 400
+      resourceGroup:
+        title: Azure Resource Group
+        description: The Azure Resource Group associated with this Key Vault.
+        format: resource
+        required: true
+        specifications:
+          type: azure.model.resourceGroup
     required:
       - name
       - endpoint
       - kind
-  relations:
-    resourceGroup:
-      title: Azure Resource Group
-      description: The Azure Resource Group associated with this Key Vault.
-      format: resource
-      required: true
-      specifications:
-        type: azure.model.resourceGroup

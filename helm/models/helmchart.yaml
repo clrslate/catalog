@@ -9,19 +9,24 @@ spec:
     properties:
       name:
         type: string
+        title: Name
         description: The name of the Helm chart
       version:
         type: string
+        title: Version
         description: The version of the Helm chart
       repository:
         type: string
+        title: Repository
         description: The URL of the Helm chart repository
       namespace:
         type: string
+        title: Namespace
         description: The default namespace for the Helm chart
       values:
         type: string
-        description: default values to be used for the chart
+        title: Values
+        description: Default values to be used for the chart
     required:
       - name
   

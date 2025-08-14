@@ -39,13 +39,12 @@ spec:
         type: string
         title: Total CPU (milli-cores)
         description: Total CPU capacity of the Node
+      cluster:
+        title: Cluster
+        description: The Kubernetes cluster this Node belongs to
+        format: resource
+        required: false
+        many: false
+        specifications:
+          type: k8s.cluster
     required: []
-  relations:
-    cluster:
-      title: Cluster
-      description: The Kubernetes cluster this Node belongs to
-      format: resource
-      required: false
-      many: false
-      specifications:
-        type: k8s.cluster

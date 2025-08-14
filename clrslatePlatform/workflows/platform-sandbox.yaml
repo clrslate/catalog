@@ -166,42 +166,6 @@ spec:
         memoryReference:
           id: d5c7721f6bb52ab2:input-input-namespace
     - result: null
-      id: f2d8fe2d7b24167e
-      nodeId: Workflow1:869501addba8c28c:f2d8fe2d7b24167e
-      name: clrslateplatform.activity.deployforge1
-      type: clrslateplatform.activity.deployforge
-      version: 1
-      customProperties:
-        canStartWorkflow: false
-        runAsynchronously: false
-      metadata:
-        designer:
-          position:
-            x: 1501.6640625
-            y: 40
-          size:
-            width: 181.296875
-            height: 50
-        displayText: Deploy ClrForge
-      inputEnvironment:
-        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
-        expression:
-          type: Input
-          value: Environment
-        memoryReference:
-          id: f2d8fe2d7b24167e:input-input-environment
-      inputTenantName:
-        typeName: String
-        expression:
-          type: Liquid
-          value: '{{Inputs.TenantName | kebabize }}'
-        memoryReference:
-          id: f2d8fe2d7b24167e:input-input-tenant-name
-      newTenant:
-        typeName: Resource
-        memoryReference:
-          id: NewTenant
-    - result: null
       id: bfacb718e9d2fe01
       nodeId: Workflow1:869501addba8c28c:bfacb718e9d2fe01
       name: istio.activity.create-namespaces1
@@ -233,6 +197,74 @@ spec:
           value: '{{Inputs.TenantName | kebabize }}'
         memoryReference:
           id: bfacb718e9d2fe01:input-input-namespace
+    - result: null
+      id: f2d8fe2d7b24167e
+      nodeId: Workflow1:869501addba8c28c:f2d8fe2d7b24167e
+      name: clrslateplatform.activity.deployforge1
+      type: clrslateplatform.activity.deployforge
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1780
+            y: 40
+          size:
+            width: 181.296875
+            height: 50
+        displayText: Deploy ClrForge
+      inputEnvironment:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: Input
+          value: Environment
+        memoryReference:
+          id: f2d8fe2d7b24167e:input-input-environment
+      inputTenantName:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: f2d8fe2d7b24167e:input-input-tenant-name
+      newTenant:
+        typeName: Resource
+        memoryReference:
+          id: NewTenant
+    - result: null
+      id: 6642907dd6a803d3
+      nodeId: Workflow1:869501addba8c28c:6642907dd6a803d3
+      name: clrslateplatform.activity.deploycore1
+      type: clrslateplatform.activity.deploycore
+      version: 1
+      customProperties:
+        canStartWorkflow: false
+        runAsynchronously: false
+      metadata:
+        designer:
+          position:
+            x: 1198.9609375
+            y: 40
+          size:
+            width: 214.109375
+            height: 50
+        displayText: Deploy ClrCore
+      inputEnvironment:
+        typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
+        expression:
+          type: Input
+          value: Environment
+        memoryReference:
+          id: 6642907dd6a803d3:input-input-environment
+      inputTenantName:
+        typeName: String
+        expression:
+          type: Liquid
+          value: '{{Inputs.TenantName | kebabize }}'
+        memoryReference:
+          id: 6642907dd6a803d3:input-input-tenant-name
     - result: null
       id: 4aaf499e8e95b18b
       nodeId: Workflow1:869501addba8c28c:4aaf499e8e95b18b
@@ -286,10 +318,10 @@ spec:
         memoryReference:
           id: 4aaf499e8e95b18b:input-input-credentials
     - result: null
-      id: 6642907dd6a803d3
-      nodeId: Workflow1:869501addba8c28c:6642907dd6a803d3
-      name: clrslateplatform.activity.deploycore1
-      type: clrslateplatform.activity.deploycore
+      id: 81cbf6e8933b3130
+      nodeId: Workflow1:869501addba8c28c:81cbf6e8933b3130
+      name: clrslateplatform.activity.setupapigateway1
+      type: clrslateplatform.activity.setupapigateway
       version: 1
       customProperties:
         canStartWorkflow: false
@@ -297,28 +329,41 @@ spec:
       metadata:
         designer:
           position:
-            x: 1198.9609375
-            y: 40
+            x: 1517.0845947265625
+            y: 40.10653495788574
           size:
-            width: 214.109375
-            height: 50
-        displayText: Deploy ClrCore
-      inputEnvironment:
+            width: 155.85226440429688
+            height: 49.786930084228516
+      inputCluster:
         typeName: Elsa.Expressions.Models.Expression, Elsa.Expressions
         expression:
-          type: Input
-          value: Environment
+          type: JavaScript
+          value: context.Inputs.Environment.Cluster
         memoryReference:
-          id: 6642907dd6a803d3:input-input-environment
+          id: 81cbf6e8933b3130:input-input-cluster
       inputTenantName:
         typeName: String
         expression:
-          type: Liquid
-          value: '{{Inputs.TenantName | kebabize }}'
+          type: Input
+          value: TenantName
         memoryReference:
-          id: 6642907dd6a803d3:input-input-tenant-name
+          id: 81cbf6e8933b3130:input-input-tenant-name
     variables: []
     connections:
+    - source:
+        activity: 6642907dd6a803d3
+        port: Done
+      target:
+        activity: 81cbf6e8933b3130
+        port: In
+      vertices: []
+    - source:
+        activity: 81cbf6e8933b3130
+        port: Done
+      target:
+        activity: f2d8fe2d7b24167e
+        port: In
+      vertices: []
     - source:
         activity: bfacb718e9d2fe01
         port: Done
@@ -345,13 +390,6 @@ spec:
         port: Done
       target:
         activity: 6642907dd6a803d3
-        port: In
-      vertices: []
-    - source:
-        activity: 6642907dd6a803d3
-        port: Done
-      target:
-        activity: f2d8fe2d7b24167e
         port: In
       vertices: []
     - source:

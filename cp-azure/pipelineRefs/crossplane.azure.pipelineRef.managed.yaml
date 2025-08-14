@@ -1,0 +1,38 @@
+apiVersion: tekton.clrslate.io
+kind: PipelineRef
+metadata:
+  name: crossplane.azure.pipelineRef.managed
+  title: Azure Resource
+  description: A pipeline reference that allows you to create a managed resource in Azure using Crossplane
+  tags:
+    - crossplane
+    - tekton
+    - kubernetes
+    - create
+spec:
+  schema:
+    properties:
+      providerConfig:
+        type: string
+        title: Azure Provider Config
+        description: Provider config reference for Azure
+      crossplaneResource:
+        type: string
+        format: yaml
+        title: Crossplane Resource
+        description: Target Crossplane Resource to be provisioned
+      namespace:
+        type: string
+        title: Target Namespace
+        description: Target Kubernetes namespace for the Crossplane resources
+    required:
+      - providerConfig
+      - script
+  pipeline:
+    pipelineRef: crossplane.pipelines.azure.namespaced
+    params:
+      namespace: '{{inputs.namespace}}'
+      providerConfig: '{{inputs.providerConfig}}'
+    files:
+      resource.yaml: |
+        {% if inputs.crossplaneResource %}{{inputs.crossplaneResource}}{% else %}# Default empty values file{% endif %}

@@ -17,10 +17,10 @@ spec:
         type: string
         description: The Azure region where the resource group is located.
       subscription:
+        type: object
         title: Azure Subscription
         description: The Azure Subscription associated with this resource group.
         format: resource
-        required: true
         specifications:
           type: azure.model.subscription
     required:

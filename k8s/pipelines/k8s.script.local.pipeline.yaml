@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: k8s.script.local.pipeline
+spec:
+  params:
+  - name: script
+    type: string
+    description: The script to run in the pipeline
+  - name: image
+    type: string
+    description: The image to use for the script step
+    default: clrslatepublic.azurecr.io/tools/azure:20250513.210758
+  tasks:
+  - name: script-task
+    taskSpec:
+      steps:
+      - name: script-step
+        image: $(params.image)
+        script: |
+          $(params.script)
+        volumeMounts:
+        - name: manifests
+          mountPath: /manifests
+          readOnly: true
+            

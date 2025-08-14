@@ -1,0 +1,58 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: crossplane.azure.activity.create-resource-group
+  title: Resource Group
+  description: An activity to manage Azure resource group using Crossplane
+  logo: Azure.Logo
+  labels:
+    category: Azure Crossplane
+    executionType: DesiredState
+  tags:
+    - crossplane
+    - azure
+    - resourceGroup
+    - apply
+spec:
+  inputs:
+    properties:
+      name:
+        type: string
+        title: Resource Group name
+        description: Name of the resource group to create
+      namespace:
+        type: string
+        title: Resource Group namespace
+        description: Namespace for the resource group
+      location:
+        type: string
+        format: lookup
+        title: Location           
+        description: The location of the resource group
+        default: centralindia
+        specifications:
+          type: azure.lookups.locations
+      providerConfig:
+        type: string
+        title: Provider Config
+        description: The provider config to use
+  handler:
+    type: tekton.pipelineRef
+    properties:
+      pipeline: crossplane.azure.pipelineRef.managed
+      inputs:
+        providerConfig: '{{inputs.providerConfig}}'
+        namespace: '{{inputs.namespace}}'
+        crossplaneResource: |
+          apiVersion: azure.m.upbound.io/v1beta1
+          kind: ResourceGroup
+          metadata:
+            name: {{inputs.name}}
+            namespace: {{inputs.namespace}}
+          spec:
+            forProvider:
+              location: {{inputs.location}}
+              tags:
+                provisioner: clrslate
+            providerConfigRef:
+              name: {{inputs.providerConfig}}

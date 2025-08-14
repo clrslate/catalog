@@ -1,0 +1,59 @@
+apiVersion: core.clrslate.io
+kind: Activity
+metadata:
+  name: crossplane.azure.activity.configure-provider-config
+  title: Configure Provider Config
+  description: An activity to configure Crossplane provider config for Azure
+  logo: Azure.Logo
+  labels:
+    category: Azure Crossplane
+    executionType: DesiredState
+  tags:
+    - crossplane
+    - azure
+    - resourceGroup
+    - apply
+spec:
+  inputs:
+    properties:
+      subscription:
+        type: object
+        format: resource        
+        title: Azure Subscription
+        description: The subscription to create the resource group in
+        specifications:
+          type: azure.model.subscription
+  mirrored:
+    providerDefinition:
+      type: string
+      title: Provider Definition
+      description: The provider config definition template
+      value: |
+        apiVersion: azure.m.upbound.io/v1beta1
+        kind: ProviderConfig
+        metadata:
+          name: {{ inputs.subscription._safeName  }}
+          namespace: {{ global.Org.Identifier }}
+        spec:
+          credentials:
+            source: Secret
+            secretRef:
+              namespace: {{ Global.Org.Identifier }}
+              name: {{ inputs.subscription._safeName  }}-secret
+              key: creds
+    configureSecretScript:
+      type: string
+      title: Configure Secret Script
+      description: The script to configure the secret for the provider config
+      value: |
+        kubectl create secret generic {{ inputs.subscription._safeName  }}-secret \
+          --from-literal=creds="$(cat /manifests/credentials.yaml)" \
+          --namespace={{ global.Org.Identifier }} \
+          --dry-run=client -o yaml | kubectl apply -f -
+  handler:
+    type: console
+    properties:
+      output: |
+        Subscription: {{ inputs.subscription._safeName }}
+        Provider Config: 
+        {{ inputs.providerDefinition }}

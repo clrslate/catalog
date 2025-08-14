@@ -25,15 +25,14 @@ spec:
       registryPath:
         type: string
         description: The login server / path for the container registry (e.g., myregistry.azurecr.io)
+      resourceGroup:
+        title: Azure Resource Group
+        description: The Azure Resource Group associated with this Key Vault.
+        format: resource
+        required: true
+        specifications:
+          type: azure.model.resourceGroup
     required:
       - name
       - loginServer
       - sku
-  relations:
-    resourceGroup:
-      title: Azure Resource Group
-      description: The Azure Resource Group associated with this Key Vault.
-      format: resource
-      required: true
-      specifications:
-        type: azure.model.resourceGroup

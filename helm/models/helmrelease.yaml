@@ -9,22 +9,32 @@ spec:
     properties:
       name:
         type: string
+        title: Name
         description: The name of the Helm release
       namespace:
         type: string
+        title: Namespace
         description: The namespace of the Helm release
       createNamespace:
         type: boolean
+        title: Create Namespace
         description: Whether to create the namespace for the Helm release
         default: false
       values:
         type: object
+        title: Values
         description: Collection of key-value pairs to be used for the Helm chart installation
-        additionalProperties:
-          type: string
       valuesFile:
         type: string
+        title: Values File
         description: Values file template to be used for the Helm chart installation
+      chart:
+        type: object
+        title: Helm Chart
+        description: The Helm chart to be used for the release
+        format: resource
+        specifications:
+          type: helm.model.helmChart
     required:
       - name
       - namespace  
@@ -55,12 +65,3 @@ spec:
         {%- endif -%}
         {%- capture command -%}helm upgrade --install {{inputs.name}} {{inputs.chart.name}} {{inputs.versionFlag}}{{repoFlag}} --namespace {{inputs.namespace}} {{createNsFlag}} {{setValues}}{%- endcapture -%}
         {{- command | strip -}}
-  relations:
-    chart:
-      title: Helm Chart
-      description: The Helm chart to be used for the release
-      format: resource
-      required: true
-      many: false
-      specifications:
-        type: helm.model.helmChart

@@ -13,14 +13,13 @@ spec:
       subscriptionId:
         type: string
         description: The Azure Subscription ID.
+      credentials:
+        type: object
+        title: Azure Credentials
+        description: The Azure Service Principal credentials for this subscription.
+        format: secret
+        required: true
+        specifications:
+          type: azure.secret.clientCredentials
     required:
       - subscriptionId
-  relations:
-    credentials:
-      type: object
-      title: Azure Credentials
-      description: The Azure Service Principal credentials for this subscription.
-      format: secret
-      required: true
-      specifications:
-        type: azure.secret.clientCredentials
